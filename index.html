@@ -5,57 +5,76 @@
 
 <meta charset="UTF-8">
 
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="viewport"
+content="width=device-width, initial-scale=1.0">
 
 <title>Our Story — Chapter Two ❤️</title>
 
-<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect"
+href="https://fonts.googleapis.com">
 
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="preconnect"
+href="https://fonts.gstatic.com"
+crossorigin>
 
-<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Great+Vibes&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&family=Great+Vibes&display=swap"
+rel="stylesheet">
 
-<link rel="stylesheet" href="style.css">
+<link rel="stylesheet"
+href="style.css">
 
 </head>
 
 <body>
 
-<!-- ========================= -->
-<!-- LOADING SCREEN -->
-<!-- ========================= -->
+<!-- =====================================
+LOADING SCREEN
+===================================== -->
 
 <div id="loadingScreen">
 
-<div class="loaderHeart">❤️</div>
+<div class="loaderHeart">
+❤️
+</div>
 
-<h1>Loading Our Story...</h1>
+<h1>
+Loading Our Story...
+</h1>
 
-<p>730+ Days • Countless Memories • Forever To Go ♾️</p>
+<p>
+Please wait...
+</p>
 
 </div>
 
-<!-- ========================= -->
-<!-- LOVE GATE -->
-<!-- ========================= -->
+<!-- =====================================
+LOVE GATE
+===================================== -->
 
-<div id="loveGate" class="hidden">
+<section id="loveGate"
+class="hidden">
 
 <div class="gateCard">
 
-<h1>💌</h1>
+<h1>
+💌
+</h1>
 
-<h2>Before Entering...</h2>
+<h2>
+Before You Enter...
+</h2>
 
 <p>
 
-Say one thing you love about us ❤️
+Say one nice thing about me ❤️
 
 </p>
 
 <div class="loveMeter">
 
-<div id="meterBar"></div>
+<div id="meterBar">
+
+</div>
 
 </div>
 
@@ -65,54 +84,83 @@ Love Meter ❤️ 0%
 
 </p>
 
-<input
-id="loveInput"
-type="text"
-placeholder="Type something sweet...">
-
 <p id="typingStatus">
 
-🥺 Waiting for something sweet...
+🥺 Waiting...
 
 </p>
 
-<button id="openBtn">
+<input
 
-Open Our Story ❤️
+id="loveInput"
+
+type="text"
+
+placeholder="Write something sweet...">
+
+<button
+id="openBtn">
+
+Unlock Our Story ❤️
 
 </button>
 
 </div>
 
-</div>
+</section>
 
-<!-- ========================= -->
-<!-- WEBSITE -->
-<!-- ========================= -->
+<!-- =====================================
+MAIN WEBSITE
+===================================== -->
 
-<div id="website" class="hidden">
+<div
+id="website"
+class="hidden">
 
 <!-- MUSIC -->
 
-<audio id="bgMusic" loop>
+<audio
+id="bgMusic"
+loop>
 
-<source src="music.mp3" type="audio/mp3">
+<source
+src="music.mp3"
+type="audio/mp3">
 
 </audio>
 
-<button id="musicBtn">
+<button
+id="musicBtn">
 
 🎵
 
 </button>
 
-<!-- ========================= -->
-<!-- HERO -->
-<!-- ========================= -->
+<!-- =====================================
+PAGE 1
+HERO
+===================================== -->
 
-<section class="hero">
+<section
+class="page heroPage">
 
-<img src="hero.jpg" alt="Hero">
+<div class="hero">
+
+<video
+
+autoplay
+
+muted
+
+loop
+
+playsinline>
+
+<source
+src="hero.mp4"
+type="video/mp4">
+
+</video>
 
 <div class="overlay">
 
@@ -130,44 +178,67 @@ Chapter Two ❤️
 
 <p>
 
-730+ Days.
-
-Countless Memories.
-
-One Beautiful Love Story.
+Happy 2nd Anniversary
 
 </p>
 
-<button id="startJourney">
+<button
+id="startJourney">
 
-Begin Our Journey ❤️
+Begin Our Journey →
 
 </button>
 
 </div>
 
-</section>
-<!-- ========================= -->
-<!-- LOVE LETTER -->
-<!-- ========================= -->
+</div>
 
-<section id="letter" class="letterSection">
+</section>
+<!-- =====================================
+PAGE 2
+LOVE LETTER
+===================================== -->
+
+<section
+class="page letterPage hidden">
 
 <div class="letterContainer">
 
 <div class="letterText">
 
-<h2>💌 To My Favourite Person</h2>
+<h2>
+A Letter For You ❤️
+</h2>
 
 <p id="typewriter">
-
 </p>
+
+<button
+id="nextToGallery">
+
+Next →
+
+</button>
 
 </div>
 
-<div class="letterPhoto">
+<div class="letterVideo">
 
-<img src="couple.jpg" alt="Our Picture">
+<video
+
+autoplay
+
+muted
+
+loop
+
+playsinline>
+
+<source
+src="love.mp4"
+type="video/mp4">
+
+</video>
 
 </div>
 
@@ -175,291 +246,179 @@ Begin Our Journey ❤️
 
 </section>
 
-<!-- ========================= -->
-<!-- RELATIONSHIP TIMER -->
-<!-- ========================= -->
+<!-- =====================================
+PAGE 3
+MEMORY WALL
+===================================== -->
 
-<section class="timerSection">
+<section
+class="page galleryPage hidden">
 
 <h2>
 
-❤️ Together Since ❤️
+Our Beautiful Memories ❤️
 
 </h2>
 
 <p>
 
-27 May 2025 • 7:39 PM
+Every picture tells a story...
 
 </p>
 
-<div id="relationshipTimer">
+<div
+id="polaroidWall">
 
-<div>
+<img src="1.jpg" class="polaroid">
 
-<h1 id="days">000</h1>
+<img src="2.jpg" class="polaroid">
 
-<span>Days</span>
+<img src="3.jpg" class="polaroid">
 
-</div>
+<img src="4.jpg" class="polaroid">
 
-<div>
+<img src="5.jpg" class="polaroid">
 
-<h1 id="hours">00</h1>
+<img src="6.jpg" class="polaroid">
 
-<span>Hours</span>
+<img src="7.jpg" class="polaroid">
 
-</div>
-
-<div>
-
-<h1 id="minutes">00</h1>
-
-<span>Minutes</span>
-
-</div>
-
-<div>
-
-<h1 id="seconds">00</h1>
-
-<span>Seconds</span>
-
-</div>
-
-</div>
-
-<p class="timerQuote">
-
-"Every second with you is another beautiful memory." ❤️
-
-</p>
-
-</section>
-
-<!-- ========================= -->
-<!-- MEMORY WALL -->
-<!-- ========================= -->
-
-<section class="memorySection">
-
-<h2>
-
-📸 Our Beautiful Memories
-
-</h2>
-
-<p>
-
-Every picture tells a story... ❤️
-
-</p>
-
-<div class="memoryGrid">
-
-<img src="1.jpg" class="memory">
-
-<img src="2.jpg" class="memory">
-
-<img src="3.jpg" class="memory">
-
-<img src="4.jpg" class="memory">
-
-<img src="5.jpg" class="memory">
-
-<img src="6.jpg" class="memory">
+<img src="8.jpg" class="polaroid">
 
 </div>
 
 </section>
 
-<!-- ========================= -->
-<!-- SECTION END -->
-<!-- ========================= -->
-  <!-- ========================= -->
-<!-- TIMELINE -->
-<!-- ========================= -->
+<!-- =====================================
+PAGE 4
+QUIZ
+===================================== -->
 
-<section class="timelineSection">
-
-<h2>📖 Our Journey</h2>
-
-<div class="timeline">
-
-<div class="timelineItem">
-<span>🌸</span>
-<div>
-<h3>27 May 2025</h3>
-<p>Our beautiful story began.</p>
-</div>
-</div>
-
-<div class="timelineItem">
-<span>💬</span>
-<div>
-<h3>First Conversation</h3>
-<p>The message that changed everything.</p>
-</div>
-</div>
-
-<div class="timelineItem">
-<span>❤️</span>
-<div>
-<h3>First "I Love You"</h3>
-<p>Three words I'll never forget.</p>
-</div>
-</div>
-
-<div class="timelineItem">
-<span>📞</span>
-<div>
-<h3>Favourite Call</h3>
-<p>Hours felt like minutes.</p>
-</div>
-</div>
-
-<div class="timelineItem">
-<span>🥹</span>
-<div>
-<h3>Tough Times</h3>
-<p>We stayed together, no matter what.</p>
-</div>
-</div>
-
-<div class="timelineItem">
-<span>💍</span>
-<div>
-<h3>Second Anniversary</h3>
-<p>730+ days... and forever to go.</p>
-</div>
-</div>
-
-</div>
-
-</section>
-
-<!-- ========================= -->
-<!-- GIFT BOXES -->
-<!-- ========================= -->
-
-<section class="giftSection">
-
-<h2>🎁 Open Your Surprises</h2>
-
-<div class="giftGrid">
-
-<div class="giftBox" data-gift="1">
-🎁
-<p>Love Letter</p>
-</div>
-
-<div class="giftBox" data-gift="2">
-🎵
-<p>Our Song</p>
-</div>
-
-<div class="giftBox" data-gift="3">
-🎤
-<p>Voice Note</p>
-</div>
-
-<div class="giftBox" data-gift="4">
-📜
-<p>Future Letter</p>
-</div>
-
-<div class="giftBox" data-gift="5">
-💍
-<p>Forever Promise</p>
-</div>
-
-</div>
-
-</section>
-
-<!-- Gift Popup -->
-
-<div id="giftPopup" class="hidden">
-
-<div class="popupCard">
-
-<span id="closeGift">✖</span>
-
-<h2 id="giftTitle"></h2>
-
-<div id="giftContent"></div>
-
-</div>
-
-</div>
-
-<!-- ========================= -->
-<!-- COUPLE QUIZ -->
-<!-- ========================= -->
-
-<section class="quizSection">
-
-<h2>🎮 Couple Quiz</h2>
+<section
+class="page quizPage hidden">
 
 <div class="quizCard">
 
-<p id="question">
+<h2>
 
-Loading...
+Couple Quiz ❤️
 
-</p>
+</h2>
 
-<div id="answers"></div>
+<div
+class="progress">
 
-<p id="score">
+<div
+id="progressBar">
 
-Score ❤️ 0 / 5
+</div>
+
+</div>
+
+<h3
+id="question">
+
+Question
+
+</h3>
+
+<div
+id="answers">
+
+</div>
+
+<p
+id="score">
+
+0 / 5
 
 </p>
 
 </div>
 
-  </section>
-  <!-- ========================= -->
-<!-- MEMORY CONSTELLATION -->
-<!-- ========================= -->
+</section>
+<!-- =====================================
+PAGE 5
+MEMORY CONSTELLATION
+===================================== -->
 
-<section class="constellationSection">
+<section class="page constellationPage hidden">
 
-<h2>🌌 Memory Constellation</h2>
+<h2>Memory Constellation ✨</h2>
 
-<p>
-
-Every star holds a memory...
-
-Touch them one by one ❤️
-
-</p>
+<p>Find all the glowing stars ❤️</p>
 
 <div id="constellation">
 
-<div class="star" data-memory="1">⭐</div>
-<div class="star" data-memory="2">⭐</div>
-<div class="star" data-memory="3">⭐</div>
-<div class="star" data-memory="4">⭐</div>
-<div class="star" data-memory="5">⭐</div>
-<div class="star" data-memory="6">⭐</div>
-<div class="star" data-memory="7">⭐</div>
-<div class="star" data-memory="8">⭐</div>
+<!-- Normal Stars -->
+<div class="smallStar" style="top:8%;left:12%;">⭐</div>
+<div class="smallStar" style="top:18%;left:82%;">⭐</div>
+<div class="smallStar" style="top:72%;left:18%;">⭐</div>
+<div class="smallStar" style="top:35%;left:48%;">⭐</div>
+<div class="smallStar" style="top:82%;left:65%;">⭐</div>
+<div class="smallStar" style="top:55%;left:90%;">⭐</div>
+<div class="smallStar" style="top:10%;left:55%;">⭐</div>
+<div class="smallStar" style="top:90%;left:35%;">⭐</div>
+<div class="smallStar" style="top:40%;left:8%;">⭐</div>
+<div class="smallStar" style="top:25%;left:30%;">⭐</div>
 
-<div class="star futureStar" data-memory="future">
+<!-- Clickable Memory Stars -->
 
+<div class="memoryStar glow"
+data-memory="1"
+style="top:12%;left:28%;">
+✨
+</div>
+
+<div class="memoryStar glow"
+data-memory="2"
+style="top:24%;left:70%;">
+✨
+</div>
+
+<div class="memoryStar glow"
+data-memory="3"
+style="top:44%;left:18%;">
+✨
+</div>
+
+<div class="memoryStar glow"
+data-memory="4"
+style="top:58%;left:82%;">
+✨
+</div>
+
+<div class="memoryStar glow"
+data-memory="5"
+style="top:72%;left:42%;">
+✨
+</div>
+
+<div class="memoryStar glow"
+data-memory="6"
+style="top:18%;left:48%;">
+✨
+</div>
+
+<div class="memoryStar glow"
+data-memory="7"
+style="top:82%;left:20%;">
+✨
+</div>
+
+<div class="memoryStar glow futureStar"
+data-memory="future"
+style="top:86%;left:88%;">
 🌠
-
 </div>
 
 </div>
 
 </section>
 
-<!-- ========================= -->
-<!-- STAR POPUP -->
-<!-- ========================= -->
+<!-- =====================================
+MEMORY POPUP
+===================================== -->
 
 <div id="memoryPopup" class="hidden">
 
@@ -483,15 +442,18 @@ Touch them one by one ❤️
 
 </div>
 
-<!-- ========================= -->
-<!-- FINAL LETTER -->
-<!-- ========================= -->
+<!-- =====================================
+PAGE 6
+FINAL LETTER
+===================================== -->
 
-<section class="finalLetter">
+<section class="page endingPage hidden">
+
+<div class="endingCard">
 
 <h1>
 
-💌 One Last Letter
+For You ❤️
 
 </h1>
 
@@ -499,39 +461,16 @@ Touch them one by one ❤️
 
 </p>
 
-</section>
+<h2>
 
-<!-- ========================= -->
-<!-- ENDING -->
-<!-- ========================= -->
+To Be Continued... ♾️
 
-<section id="endingScreen">
+</h2>
 
-<div class="endingContent">
+<button
+id="replayStory">
 
-<h1>
-
-To Be Continued...
-
-♾️
-
-</h1>
-
-<p>
-
-Every ending...
-
-is just the beginning
-
-of another chapter.
-
-❤️
-
-</p>
-
-<button id="replayStory">
-
-💌 Replay Our Story
+Replay Our Story ❤️
 
 </button>
 
@@ -539,27 +478,9 @@ of another chapter.
 
 </section>
 
-<!-- ========================= -->
-<!-- FOOTER -->
-<!-- ========================= -->
-
 <footer>
 
-<h2>
-
-Our Story — Chapter Two ❤️
-
-</h2>
-
-<p>
-
-730+ Days
-
-Countless Memories
-
-Forever To Go ♾️
-
-</p>
+Made With ❤️ For Our Second Anniversary
 
 </footer>
 
