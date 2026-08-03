@@ -1,0 +1,1209 @@
+/* ==========================================
+OUR STORY — CHAPTER TWO ❤️
+STYLE.CSS PART 1
+========================================== */
+
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+}
+
+html{
+scroll-behavior:smooth;
+}
+
+body{
+
+font-family:'Poppins',sans-serif;
+
+background:#090013;
+
+color:white;
+
+overflow-x:hidden;
+
+}
+
+/* Animated Background */
+
+body::before{
+
+content:"";
+
+position:fixed;
+
+inset:0;
+
+background:
+
+radial-gradient(circle at top,#ff4da644,transparent 40%),
+
+radial-gradient(circle at bottom,#7c3aed33,transparent 40%),
+
+linear-gradient(135deg,#090013,#170022,#250035);
+
+z-index:-3;
+
+}
+
+/* Stars */
+
+body::after{
+
+content:"";
+
+position:fixed;
+
+inset:0;
+
+background-image:
+
+radial-gradient(white 1px,transparent 1px);
+
+background-size:35px 35px;
+
+opacity:.18;
+
+animation:starsMove 60s linear infinite;
+
+z-index:-2;
+
+}
+
+@keyframes starsMove{
+
+from{
+
+transform:translateY(0);
+
+}
+
+to{
+
+transform:translateY(-300px);
+
+}
+
+}
+
+/* ==========================================
+LOADING SCREEN
+========================================== */
+
+#loadingScreen{
+
+position:fixed;
+
+inset:0;
+
+background:#050008;
+
+display:flex;
+
+flex-direction:column;
+
+justify-content:center;
+
+align-items:center;
+
+gap:20px;
+
+z-index:999999;
+
+}
+
+.loaderHeart{
+
+font-size:90px;
+
+animation:heartbeat 1s infinite;
+
+}
+
+@keyframes heartbeat{
+
+0%,100%{
+
+transform:scale(1);
+
+}
+
+50%{
+
+transform:scale(1.2);
+
+}
+
+}
+
+#loadingScreen h1{
+
+font-size:42px;
+
+color:#ff7bc8;
+
+}
+
+#loadingScreen p{
+
+color:#ffc6ea;
+
+font-size:18px;
+
+}
+
+/* ==========================================
+LOVE GATE
+========================================== */
+
+#loveGate{
+
+min-height:100vh;
+
+display:flex;
+
+justify-content:center;
+
+align-items:center;
+
+padding:20px;
+
+}
+
+.gateCard{
+
+width:min(500px,95%);
+
+background:rgba(255,255,255,.08);
+
+backdrop-filter:blur(20px);
+
+border:1px solid rgba(255,255,255,.15);
+
+border-radius:30px;
+
+padding:40px;
+
+text-align:center;
+
+box-shadow:0 20px 60px rgba(0,0,0,.5);
+
+}
+
+.gateCard h1{
+
+font-size:80px;
+
+margin-bottom:15px;
+
+}
+
+.gateCard h2{
+
+font-size:35px;
+
+margin-bottom:10px;
+
+}
+
+.gateCard p{
+
+line-height:1.8;
+
+color:#ffd7ef;
+
+}
+
+.loveMeter{
+
+width:100%;
+
+height:14px;
+
+background:#ffffff22;
+
+border-radius:50px;
+
+margin:25px 0;
+
+overflow:hidden;
+
+}
+
+#meterBar{
+
+width:0%;
+
+height:100%;
+
+background:linear-gradient(90deg,#ff4da6,#ff7edb);
+
+transition:.4s;
+
+}
+
+#meterText{
+
+margin-bottom:15px;
+
+font-weight:600;
+
+}
+
+#typingStatus{
+
+margin:18px 0;
+
+font-size:15px;
+
+color:#ffc4df;
+
+}
+
+/* Input */
+
+input{
+
+width:100%;
+
+padding:18px;
+
+border:none;
+
+outline:none;
+
+border-radius:18px;
+
+font-size:18px;
+
+margin-top:10px;
+
+margin-bottom:20px;
+
+}
+
+/* Buttons */
+
+button{
+
+padding:16px 38px;
+
+border:none;
+
+border-radius:40px;
+
+font-size:18px;
+
+font-weight:600;
+
+cursor:pointer;
+
+background:linear-gradient(45deg,#ff3fa4,#ff79db);
+
+color:white;
+
+transition:.35s;
+
+}
+
+button:hover{
+
+transform:translateY(-4px);
+
+box-shadow:0 0 25px hotpink;
+
+}
+
+/* Hidden */
+
+.hidden{
+
+display:none;
+
+}
+
+/* Music Button */
+
+#musicBtn{
+
+position:fixed;
+
+right:20px;
+
+bottom:20px;
+
+width:70px;
+
+height:70px;
+
+border-radius:50%;
+
+font-size:30px;
+
+z-index:999;
+
+}
+/* ==========================================
+HERO SECTION
+========================================== */
+
+.hero{
+
+position:relative;
+
+width:100%;
+
+height:100vh;
+
+overflow:hidden;
+
+}
+
+.hero img{
+
+width:100%;
+
+height:100%;
+
+object-fit:cover;
+
+}
+
+.overlay{
+
+position:absolute;
+
+inset:0;
+
+background:linear-gradient(
+rgba(0,0,0,.35),
+rgba(0,0,0,.75)
+);
+
+display:flex;
+
+flex-direction:column;
+
+justify-content:center;
+
+align-items:center;
+
+text-align:center;
+
+padding:20px;
+
+}
+
+.overlay h1{
+
+font-family:"Great Vibes",cursive;
+
+font-size:90px;
+
+color:white;
+
+text-shadow:
+0 0 25px hotpink,
+0 0 60px deeppink;
+
+}
+
+.overlay h2{
+
+font-size:38px;
+
+margin-top:10px;
+
+color:#ffd4f1;
+
+}
+
+.overlay p{
+
+margin-top:20px;
+
+font-size:22px;
+
+max-width:
+  /* ==========================================
+MEMORY WALL
+========================================== */
+
+.memorySection{
+
+width:min(1200px,92%);
+
+margin:90px auto;
+
+text-align:center;
+
+}
+
+.memorySection h2{
+
+font-size:42px;
+
+color:#ff8fd6;
+
+margin-bottom:15px;
+
+}
+
+.memorySection p{
+
+font-size:18px;
+
+color:#ffd5ec;
+
+margin-bottom:35px;
+
+}
+
+.memoryGrid{
+
+display:grid;
+
+grid-template-columns:repeat(3,1fr);
+
+gap:25px;
+
+}
+
+.memory{
+
+width:100%;
+
+height:280px;
+
+object-fit:cover;
+
+border-radius:22px;
+
+border:4px solid rgba(255,255,255,.15);
+
+box-shadow:0 15px 40px rgba(0,0,0,.4);
+
+transition:.45s;
+
+cursor:pointer;
+
+}
+
+.memory:hover{
+
+transform:scale(1.06) rotate(2deg);
+
+box-shadow:
+
+0 0 25px hotpink,
+
+0 0 60px #ff3fa466;
+
+}
+
+/* ==========================================
+TIMELINE
+========================================== */
+
+.timelineSection{
+
+width:min(1100px,92%);
+
+margin:90px auto;
+
+}
+
+.timelineSection h2{
+
+text-align:center;
+
+font-size:42px;
+
+margin-bottom:50px;
+
+color:#ff9ddb;
+
+}
+
+.timeline{
+
+display:flex;
+
+flex-direction:column;
+
+gap:25px;
+
+}
+
+.timelineItem{
+
+display:flex;
+
+gap:25px;
+
+align-items:flex-start;
+
+background:rgba(255,255,255,.08);
+
+backdrop-filter:blur(20px);
+
+padding:25px;
+
+border-radius:20px;
+
+border-left:5px solid hotpink;
+
+transition:.4s;
+
+}
+
+.timelineItem:hover{
+
+transform:translateX(10px);
+
+}
+
+.timelineItem span{
+
+font-size:40px;
+
+}
+
+.timelineItem h3{
+
+margin-bottom:8px;
+
+font-size:24px;
+
+color:#ff9ad8;
+
+}
+
+.timelineItem p{
+
+line-height:1.8;
+
+color:#fff;
+
+}
+
+/* ==========================================
+GIFT BOXES
+========================================== */
+
+.giftSection{
+
+width:min(1200px,92%);
+
+margin:90px auto;
+
+text-align:center;
+
+}
+
+.giftSection h2{
+
+font-size:42px;
+
+margin-bottom:40px;
+
+color:#ff9ddb;
+
+}
+
+.giftGrid{
+
+display:grid;
+
+grid-template-columns:repeat(auto-fit,minmax(180px,1fr));
+
+gap:25px;
+
+}
+
+.giftBox{
+
+background:rgba(255,255,255,.08);
+
+backdrop-filter:blur(20px);
+
+padding:35px 20px;
+
+border-radius:25px;
+
+cursor:pointer;
+
+border:1px solid rgba(255,255,255,.15);
+
+transition:.4s;
+
+font-size:55px;
+
+}
+
+.giftBox p{
+
+margin-top:15px;
+
+font-size:18px;
+
+}
+
+.giftBox:hover{
+
+transform:translateY(-10px) scale(1.05);
+
+box-shadow:
+
+0 0 25px hotpink,
+
+0 0 60px #ff4da655;
+
+}
+
+/* ==========================================
+GIFT POPUP
+========================================== */
+
+#giftPopup{
+
+position:fixed;
+
+inset:0;
+
+display:flex;
+
+justify-content:center;
+
+align-items:center;
+
+background:rgba(0,0,0,.8);
+
+backdrop-filter:blur(12px);
+
+z-index:99999;
+
+}
+
+.popupCard{
+
+width:min(650px,90%);
+
+background:#180021;
+
+padding:40px;
+
+border-radius:30px;
+
+text-align:center;
+
+position:relative;
+
+border:2px solid hotpink;
+
+box-shadow:
+
+0 0 35px hotpink;
+
+animation:popup .5s ease;
+
+}
+
+@keyframes popup{
+
+from{
+
+transform:scale(.7);
+
+opacity:0;
+
+}
+
+to{
+
+transform:scale(1);
+
+opacity:1;
+
+}
+
+}
+
+#closeGift{
+
+position:absolute;
+
+right:20px;
+
+top:15px;
+
+font-size:28px;
+
+cursor:pointer;
+
+}
+
+#giftTitle{
+
+font-size:34px;
+
+margin-bottom:25px;
+
+color:#ff8fd6;
+
+}
+
+#giftContent{
+
+font-size:20px;
+
+line-height:2;
+
+color:white;
+
+}
+
+#giftPopup.hidden{
+
+display:none;
+
+}
+/* ==========================================
+COUPLE QUIZ
+========================================== */
+
+.quizSection{
+
+width:min(1100px,92%);
+
+margin:90px auto;
+
+text-align:center;
+
+}
+
+.quizSection h2{
+
+font-size:42px;
+
+margin-bottom:30px;
+
+color:#ff9ddb;
+
+}
+
+.quizCard{
+
+background:rgba(255,255,255,.08);
+
+backdrop-filter:blur(20px);
+
+padding:40px;
+
+border-radius:30px;
+
+border:1px solid rgba(255,255,255,.15);
+
+}
+
+#question{
+
+font-size:28px;
+
+margin-bottom:30px;
+
+line-height:1.7;
+
+}
+
+#answers{
+
+display:grid;
+
+gap:18px;
+
+}
+
+.answerBtn{
+
+padding:18px;
+
+border:none;
+
+border-radius:18px;
+
+cursor:pointer;
+
+font-size:18px;
+
+background:#ffffff12;
+
+color:white;
+
+transition:.35s;
+
+}
+
+.answerBtn:hover{
+
+background:hotpink;
+
+transform:scale(1.03);
+
+}
+
+#score{
+
+margin-top:30px;
+
+font-size:22px;
+
+color:#ffd4ec;
+
+}
+
+/* ==========================================
+MEMORY CONSTELLATION
+========================================== */
+
+.constellationSection{
+
+width:min(1200px,92%);
+
+margin:100px auto;
+
+text-align:center;
+
+}
+
+.constellationSection h2{
+
+font-size:44px;
+
+color:#ff9ddb;
+
+margin-bottom:20px;
+
+}
+
+#constellation{
+
+position:relative;
+
+height:600px;
+
+border-radius:30px;
+
+background:#06010d;
+
+overflow:hidden;
+
+border:1px solid rgba(255,255,255,.15);
+
+}
+
+.star{
+
+position:absolute;
+
+font-size:28px;
+
+cursor:pointer;
+
+animation:twinkle 2s infinite alternate;
+
+transition:.3s;
+
+}
+
+.star:hover{
+
+transform:scale(1.5);
+
+filter:drop-shadow(0 0 20px gold);
+
+}
+
+.star:nth-child(1){top:10%;left:20%;}
+.star:nth-child(2){top:18%;left:70%;}
+.star:nth-child(3){top:35%;left:35%;}
+.star:nth-child(4){top:48%;left:80%;}
+.star:nth-child(5){top:62%;left:18%;}
+.star:nth-child(6){top:72%;left:60%;}
+.star:nth-child(7){top:82%;left:40%;}
+.star:nth-child(8){top:25%;left:50%;}
+
+.futureStar{
+
+top:88%;
+
+left:82%;
+
+font-size:40px;
+
+}
+
+@keyframes twinkle{
+
+from{
+
+opacity:.4;
+
+}
+
+to{
+
+opacity:1;
+
+}
+
+}
+
+/* ==========================================
+MEMORY POPUP
+========================================== */
+
+#memoryPopup{
+
+position:fixed;
+
+inset:0;
+
+display:flex;
+
+justify-content:center;
+
+align-items:center;
+
+background:rgba(0,0,0,.85);
+
+z-index:999999;
+
+}
+
+#memoryPopup.hidden{
+
+display:none;
+
+}
+
+/* ==========================================
+FINAL LETTER
+========================================== */
+
+.finalLetter{
+
+width:min(900px,92%);
+
+margin:100px auto;
+
+text-align:center;
+
+}
+
+.finalLetter h1{
+
+font-size:55px;
+
+margin-bottom:30px;
+
+color:#ff9ddb;
+
+}
+
+#endingLetter{
+
+font-size:24px;
+
+line-height:2;
+
+white-space:pre-line;
+
+}
+
+/* ==========================================
+ENDING
+========================================== */
+
+#endingScreen{
+
+padding:120px 20px;
+
+text-align:center;
+
+}
+
+.endingContent h1{
+
+font-size:70px;
+
+font-family:"Great Vibes",cursive;
+
+color:white;
+
+text-shadow:0 0 25px hotpink;
+
+}
+
+.endingContent p{
+
+font-size:24px;
+
+line-height:2;
+
+margin:35px 0;
+
+color:#ffd4ec;
+
+}
+
+#replayStory{
+
+font-size:22px;
+
+padding:18px 45px;
+
+}
+
+/* ==========================================
+FOOTER
+========================================== */
+
+footer{
+
+padding:80px 20px;
+
+text-align:center;
+
+color:#ffc7e8;
+
+}
+
+footer h2{
+
+font-size:34px;
+
+margin-bottom:15px;
+
+}
+
+/* ==========================================
+RESPONSIVE
+========================================== */
+
+@media(max-width:900px){
+
+.overlay h1{
+
+font-size:60px;
+
+}
+
+.overlay h2{
+
+font-size:28px;
+
+}
+
+.overlay p{
+
+font-size:18px;
+
+}
+
+.letterContainer{
+
+grid-template-columns:1fr;
+
+text-align:center;
+
+}
+
+.letterPhoto img{
+
+width:260px;
+
+height:260px;
+
+}
+
+.memoryGrid{
+
+grid-template-columns:1fr;
+
+}
+
+#relationshipTimer{
+
+grid-template-columns:repeat(2,1fr);
+
+}
+
+.timelineItem{
+
+flex-direction:column;
+
+text-align:center;
+
+}
+
+.quizCard{
+
+padding:25px;
+
+}
+
+#question{
+
+font-size:22px;
+
+}
+
+.finalLetter h1{
+
+font-size:42px;
+
+}
+
+.endingContent h1{
+
+font-size:50px;
+
+}
+
+.endingContent p{
+
+font-size:20px;
+
+}
+
+#constellation{
+
+height:420px;
+
+}
+
+}
+
+/* ==========================================
+SMOOTH FADE ANIMATION
+========================================== */
+
+.fadeUp{
+
+opacity:0;
+
+transform:translateY(60px);
+
+transition:1s;
+
+}
+
+.fadeUp.show{
+
+opacity:1;
+
+transform:translateY(0);
+
+}
