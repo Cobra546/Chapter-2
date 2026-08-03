@@ -17,7 +17,7 @@ body{
 
 font-family:'Poppins',sans-serif;
 
-background:#090013;
+background:#080011;
 
 color:white;
 
@@ -25,7 +25,9 @@ overflow-x:hidden;
 
 }
 
-/* Animated Background */
+/* ==========================================
+BACKGROUND
+========================================== */
 
 body::before{
 
@@ -39,15 +41,15 @@ background:
 
 radial-gradient(circle at top,#ff4da644,transparent 40%),
 
-radial-gradient(circle at bottom,#7c3aed33,transparent 40%),
+radial-gradient(circle at bottom,#7c3aed33,transparent 45%),
 
-linear-gradient(135deg,#090013,#170022,#250035);
+linear-gradient(135deg,#080011,#150020,#260035);
 
 z-index:-3;
 
 }
 
-/* Stars */
+/* Animated Stars */
 
 body::after{
 
@@ -61,17 +63,17 @@ background-image:
 
 radial-gradient(white 1px,transparent 1px);
 
-background-size:35px 35px;
+background-size:40px 40px;
 
 opacity:.18;
 
-animation:starsMove 60s linear infinite;
+animation:starMove 70s linear infinite;
 
 z-index:-2;
 
 }
 
-@keyframes starsMove{
+@keyframes starMove{
 
 from{
 
@@ -81,7 +83,7 @@ transform:translateY(0);
 
 to{
 
-transform:translateY(-300px);
+transform:translateY(-500px);
 
 }
 
@@ -97,8 +99,6 @@ position:fixed;
 
 inset:0;
 
-background:#050008;
-
 display:flex;
 
 flex-direction:column;
@@ -107,7 +107,7 @@ justify-content:center;
 
 align-items:center;
 
-gap:20px;
+background:#050008;
 
 z-index:999999;
 
@@ -131,7 +131,7 @@ transform:scale(1);
 
 50%{
 
-transform:scale(1.2);
+transform:scale(1.25);
 
 }
 
@@ -139,17 +139,23 @@ transform:scale(1.2);
 
 #loadingScreen h1{
 
+margin-top:20px;
+
 font-size:42px;
 
-color:#ff7bc8;
+font-family:"Great Vibes",cursive;
+
+color:#ff7fd0;
 
 }
 
 #loadingScreen p{
 
-color:#ffc6ea;
+margin-top:15px;
 
 font-size:18px;
+
+color:#ffd2eb;
 
 }
 
@@ -167,53 +173,57 @@ justify-content:center;
 
 align-items:center;
 
-padding:20px;
+padding:25px;
 
 }
 
 .gateCard{
 
-width:min(500px,95%);
-
-background:rgba(255,255,255,.08);
-
-backdrop-filter:blur(20px);
-
-border:1px solid rgba(255,255,255,.15);
-
-border-radius:30px;
+width:min(520px,95%);
 
 padding:40px;
 
 text-align:center;
 
-box-shadow:0 20px 60px rgba(0,0,0,.5);
+background:rgba(255,255,255,.08);
+
+backdrop-filter:blur(18px);
+
+border-radius:30px;
+
+border:1px solid rgba(255,255,255,.15);
+
+box-shadow:
+
+0 20px 60px rgba(0,0,0,.5);
 
 }
 
 .gateCard h1{
 
-font-size:80px;
-
-margin-bottom:15px;
+font-size:75px;
 
 }
 
 .gateCard h2{
 
-font-size:35px;
+margin-top:10px;
 
-margin-bottom:10px;
+font-size:35px;
 
 }
 
 .gateCard p{
 
+margin-top:12px;
+
 line-height:1.8;
 
-color:#ffd7ef;
+color:#ffd4ec;
 
 }
+
+/* Love Meter */
 
 .loveMeter{
 
@@ -221,11 +231,11 @@ width:100%;
 
 height:14px;
 
-background:#ffffff22;
+margin:30px 0 15px;
+
+background:#ffffff20;
 
 border-radius:50px;
-
-margin:25px 0;
 
 overflow:hidden;
 
@@ -237,7 +247,7 @@ width:0%;
 
 height:100%;
 
-background:linear-gradient(90deg,#ff4da6,#ff7edb);
+background:linear-gradient(90deg,#ff3fa4,#ff83df);
 
 transition:.4s;
 
@@ -245,19 +255,17 @@ transition:.4s;
 
 #meterText{
 
-margin-bottom:15px;
-
 font-weight:600;
 
 }
 
 #typingStatus{
 
-margin:18px 0;
+margin-top:15px;
+
+color:#ffbddd;
 
 font-size:15px;
-
-color:#ffc4df;
 
 }
 
@@ -269,6 +277,8 @@ width:100%;
 
 padding:18px;
 
+margin-top:20px;
+
 border:none;
 
 outline:none;
@@ -277,15 +287,13 @@ border-radius:18px;
 
 font-size:18px;
 
-margin-top:10px;
-
-margin-bottom:20px;
-
 }
 
-/* Buttons */
+/* Button */
 
 button{
+
+margin-top:25px;
 
 padding:16px 38px;
 
@@ -311,7 +319,9 @@ button:hover{
 
 transform:translateY(-4px);
 
-box-shadow:0 0 25px hotpink;
+box-shadow:
+
+0 0 25px hotpink;
 
 }
 
@@ -323,7 +333,9 @@ display:none;
 
 }
 
-/* Music Button */
+/* ==========================================
+MUSIC BUTTON
+========================================== */
 
 #musicBtn{
 
@@ -341,11 +353,53 @@ border-radius:50%;
 
 font-size:30px;
 
-z-index:999;
+z-index:9999;
 
 }
 /* ==========================================
-HERO SECTION
+PAGE
+========================================== */
+
+.page{
+
+width:100%;
+
+min-height:100vh;
+
+display:flex;
+
+justify-content:center;
+
+align-items:center;
+
+padding:50px 20px;
+
+animation:fadePage .8s ease;
+
+}
+
+@keyframes fadePage{
+
+from{
+
+opacity:0;
+
+transform:translateY(40px);
+
+}
+
+to{
+
+opacity:1;
+
+transform:translateY(0);
+
+}
+
+}
+
+/* ==========================================
+HERO PAGE
 ========================================== */
 
 .hero{
@@ -358,9 +412,11 @@ height:100vh;
 
 overflow:hidden;
 
+border-radius:25px;
+
 }
 
-.hero img{
+.hero video{
 
 width:100%;
 
@@ -376,11 +432,6 @@ position:absolute;
 
 inset:0;
 
-background:linear-gradient(
-rgba(0,0,0,.35),
-rgba(0,0,0,.75)
-);
-
 display:flex;
 
 flex-direction:column;
@@ -390,6 +441,14 @@ justify-content:center;
 align-items:center;
 
 text-align:center;
+
+background:linear-gradient(
+
+rgba(0,0,0,.35),
+
+rgba(0,0,0,.75)
+
+);
 
 padding:20px;
 
@@ -404,273 +463,102 @@ font-size:90px;
 color:white;
 
 text-shadow:
-0 0 25px hotpink,
-0 0 60px deeppink;
+
+0 0 20px hotpink,
+
+0 0 40px deeppink;
 
 }
 
 .overlay h2{
 
-font-size:38px;
+font-size:42px;
 
 margin-top:10px;
 
-color:#ffd4f1;
+color:#ffd6ef;
 
 }
 
 .overlay p{
 
-margin-top:20px;
-
-font-size:22px;
-
-max-width:
-  /* ==========================================
-MEMORY WALL
-========================================== */
-
-.memorySection{
-
-width:min(1200px,92%);
-
-margin:90px auto;
-
-text-align:center;
-
-}
-
-.memorySection h2{
-
-font-size:42px;
-
-color:#ff8fd6;
-
-margin-bottom:15px;
-
-}
-
-.memorySection p{
-
-font-size:18px;
-
-color:#ffd5ec;
-
-margin-bottom:35px;
-
-}
-
-.memoryGrid{
-
-display:grid;
-
-grid-template-columns:repeat(3,1fr);
-
-gap:25px;
-
-}
-
-.memory{
-
-width:100%;
-
-height:280px;
-
-object-fit:cover;
-
-border-radius:22px;
-
-border:4px solid rgba(255,255,255,.15);
-
-box-shadow:0 15px 40px rgba(0,0,0,.4);
-
-transition:.45s;
-
-cursor:pointer;
-
-}
-
-.memory:hover{
-
-transform:scale(1.06) rotate(2deg);
-
-box-shadow:
-
-0 0 25px hotpink,
-
-0 0 60px #ff3fa466;
-
-}
-
-/* ==========================================
-TIMELINE
-========================================== */
-
-.timelineSection{
-
-width:min(1100px,92%);
-
-margin:90px auto;
-
-}
-
-.timelineSection h2{
-
-text-align:center;
-
-font-size:42px;
-
-margin-bottom:50px;
-
-color:#ff9ddb;
-
-}
-
-.timeline{
-
-display:flex;
-
-flex-direction:column;
-
-gap:25px;
-
-}
-
-.timelineItem{
-
-display:flex;
-
-gap:25px;
-
-align-items:flex-start;
-
-background:rgba(255,255,255,.08);
-
-backdrop-filter:blur(20px);
-
-padding:25px;
-
-border-radius:20px;
-
-border-left:5px solid hotpink;
-
-transition:.4s;
-
-}
-
-.timelineItem:hover{
-
-transform:translateX(10px);
-
-}
-
-.timelineItem span{
-
-font-size:40px;
-
-}
-
-.timelineItem h3{
-
-margin-bottom:8px;
+margin-top:18px;
 
 font-size:24px;
 
-color:#ff9ad8;
+color:white;
+
+letter-spacing:1px;
 
 }
 
-.timelineItem p{
+#startJourney{
 
-line-height:1.8;
-
-color:#fff;
+margin-top:35px;
 
 }
 
 /* ==========================================
-GIFT BOXES
+LETTER PAGE
 ========================================== */
 
-.giftSection{
+.letterContainer{
 
-width:min(1200px,92%);
-
-margin:90px auto;
-
-text-align:center;
-
-}
-
-.giftSection h2{
-
-font-size:42px;
-
-margin-bottom:40px;
-
-color:#ff9ddb;
-
-}
-
-.giftGrid{
+width:min(1200px,95%);
 
 display:grid;
 
-grid-template-columns:repeat(auto-fit,minmax(180px,1fr));
+grid-template-columns:1fr 380px;
 
-gap:25px;
+gap:45px;
 
-}
-
-.giftBox{
+align-items:center;
 
 background:rgba(255,255,255,.08);
 
 backdrop-filter:blur(20px);
 
-padding:35px 20px;
+padding:40px;
 
-border-radius:25px;
-
-cursor:pointer;
+border-radius:30px;
 
 border:1px solid rgba(255,255,255,.15);
 
-transition:.4s;
-
-font-size:55px;
-
-}
-
-.giftBox p{
-
-margin-top:15px;
-
-font-size:18px;
-
-}
-
-.giftBox:hover{
-
-transform:translateY(-10px) scale(1.05);
-
 box-shadow:
 
-0 0 25px hotpink,
-
-0 0 60px #ff4da655;
+0 20px 60px rgba(0,0,0,.45);
 
 }
 
-/* ==========================================
-GIFT POPUP
-========================================== */
+.letterText h2{
 
-#giftPopup{
+font-size:42px;
 
-position:fixed;
+color:#ff93d6;
 
-inset:0;
+margin-bottom:25px;
+
+}
+
+#typewriter{
+
+font-size:20px;
+
+line-height:2;
+
+min-height:320px;
+
+white-space:pre-line;
+
+}
+
+#nextToGallery{
+
+margin-top:25px;
+
+}
+
+.letterVideo{
 
 display:flex;
 
@@ -678,132 +566,292 @@ justify-content:center;
 
 align-items:center;
 
-background:rgba(0,0,0,.8);
-
-backdrop-filter:blur(12px);
-
-z-index:99999;
-
 }
 
-.popupCard{
+.letterVideo video{
 
-width:min(650px,90%);
+width:340px;
 
-background:#180021;
+height:340px;
 
-padding:40px;
+border-radius:25px;
 
-border-radius:30px;
+object-fit:cover;
 
-text-align:center;
-
-position:relative;
-
-border:2px solid hotpink;
+border:5px solid hotpink;
 
 box-shadow:
 
-0 0 35px hotpink;
+0 0 25px hotpink,
 
-animation:popup .5s ease;
+0 0 60px rgba(255,20,147,.35);
 
-}
-
-@keyframes popup{
-
-from{
-
-transform:scale(.7);
-
-opacity:0;
+transition:.4s;
 
 }
 
-to{
+.letterVideo video:hover{
 
-transform:scale(1);
-
-opacity:1;
+transform:scale(1.05);
 
 }
 
-}
+/* ==========================================
+TIMER
+========================================== */
 
-#closeGift{
+.timerBox{
 
-position:absolute;
+margin-top:35px;
 
-right:20px;
+display:grid;
 
-top:15px;
+grid-template-columns:repeat(4,1fr);
 
-font-size:28px;
-
-cursor:pointer;
-
-}
-
-#giftTitle{
-
-font-size:34px;
-
-margin-bottom:25px;
-
-color:#ff8fd6;
+gap:15px;
 
 }
 
-#giftContent{
+.timeCard{
 
-font-size:20px;
+background:rgba(255,255,255,.08);
 
-line-height:2;
+padding:20px;
 
-color:white;
+border-radius:20px;
+
+text-align:center;
+
+border:1px solid rgba(255,255,255,.15);
 
 }
 
-#giftPopup.hidden{
+.timeCard h1{
 
-display:none;
+font-size:42px;
+
+color:#ff80cb;
+
+}
+
+.timeCard span{
+
+font-size:16px;
+
+color:#fff;
+
+}
+
+/* ==========================================
+GLASS EFFECT
+========================================== */
+
+.glass{
+
+background:rgba(255,255,255,.08);
+
+backdrop-filter:blur(18px);
+
+border:1px solid rgba(255,255,255,.15);
+
+border-radius:25px;
+
+box-shadow:
+
+0 15px 40px rgba(0,0,0,.4);
 
 }
 /* ==========================================
-COUPLE QUIZ
+MEMORY WALL
 ========================================== */
 
-.quizSection{
+.galleryPage{
 
-width:min(1100px,92%);
-
-margin:90px auto;
+flex-direction:column;
 
 text-align:center;
 
 }
 
-.quizSection h2{
+.galleryPage h2{
 
-font-size:42px;
+font-size:52px;
 
-margin-bottom:30px;
+font-family:"Great Vibes",cursive;
 
-color:#ff9ddb;
+color:#ff92d5;
+
+margin-bottom:15px;
+
+}
+
+.galleryPage p{
+
+font-size:20px;
+
+color:#ffd5eb;
+
+margin-bottom:40px;
+
+}
+
+#polaroidWall{
+
+width:100%;
+
+max-width:1200px;
+
+min-height:650px;
+
+position:relative;
+
+margin:auto;
+
+background:rgba(255,255,255,.05);
+
+backdrop-filter:blur(15px);
+
+border-radius:30px;
+
+overflow:hidden;
+
+border:1px solid rgba(255,255,255,.15);
+
+box-shadow:0 20px 60px rgba(0,0,0,.45);
+
+}
+
+/* ==========================================
+POLAROID
+========================================== */
+
+.polaroid{
+
+position:absolute;
+
+width:220px;
+
+background:white;
+
+padding:12px 12px 45px;
+
+border-radius:10px;
+
+box-shadow:0 20px 40px rgba(0,0,0,.35);
+
+opacity:0;
+
+transform:translateY(-700px) rotate(0deg);
+
+transition:1s ease;
+
+}
+
+.polaroid img{
+
+width:100%;
+
+height:230px;
+
+object-fit:cover;
+
+border-radius:6px;
+
+display:block;
+
+}
+
+/* Tape */
+
+.polaroid::before{
+
+content:"";
+
+position:absolute;
+
+width:90px;
+
+height:25px;
+
+background:rgba(255,255,255,.55);
+
+top:-12px;
+
+left:50%;
+
+transform:translateX(-50%) rotate(-4deg);
+
+border-radius:5px;
+
+backdrop-filter:blur(3px);
+
+}
+
+/* ==========================================
+QUIZ
+========================================== */
+
+.quizPage{
+
+flex-direction:column;
 
 }
 
 .quizCard{
 
-background:rgba(255,255,255,.08);
-
-backdrop-filter:blur(20px);
+width:min(750px,95%);
 
 padding:40px;
+
+background:rgba(255,255,255,.08);
+
+backdrop-filter:blur(18px);
 
 border-radius:30px;
 
 border:1px solid rgba(255,255,255,.15);
+
+text-align:center;
+
+}
+
+.quizCard h2{
+
+font-size:44px;
+
+margin-bottom:30px;
+
+color:#ff92d5;
+
+}
+
+/* Progress */
+
+.progress{
+
+width:100%;
+
+height:12px;
+
+background:#ffffff22;
+
+border-radius:30px;
+
+overflow:hidden;
+
+margin-bottom:35px;
+
+}
+
+#progressBar{
+
+width:0%;
+
+height:100%;
+
+background:linear-gradient(90deg,#ff3fa4,#ff83dd);
+
+transition:.5s;
 
 }
 
@@ -811,11 +859,13 @@ border:1px solid rgba(255,255,255,.15);
 
 font-size:28px;
 
+line-height:1.8;
+
 margin-bottom:30px;
 
-line-height:1.7;
-
 }
+
+/* Answers */
 
 #answers{
 
@@ -829,15 +879,15 @@ gap:18px;
 
 padding:18px;
 
+font-size:18px;
+
 border:none;
 
-border-radius:18px;
+border-radius:16px;
 
 cursor:pointer;
 
-font-size:18px;
-
-background:#ffffff12;
+background:rgba(255,255,255,.08);
 
 color:white;
 
@@ -853,294 +903,58 @@ transform:scale(1.03);
 
 }
 
+.answerBtn.correct{
+
+background:#22c55e;
+
+}
+
+.answerBtn.wrong{
+
+background:#ef4444;
+
+}
+
+/* Score */
+
 #score{
 
 margin-top:30px;
 
 font-size:22px;
 
-color:#ffd4ec;
+color:#ffd5eb;
+
+font-weight:600;
 
 }
 
+/* Quiz Complete */
+
+.quizComplete{
+
+font-size:34px;
+
+color:#ff92d5;
+
+animation:pulse 1.5s infinite;
+
+}
+
+@keyframes pulse{
+
+50%{
+
+transform:scale(1.05);
+
+}
+
+}
 /* ==========================================
 MEMORY CONSTELLATION
 ========================================== */
 
-.constellationSection{
-
-width:min(1200px,92%);
-
-margin:100px auto;
-
-text-align:center;
-
-}
-
-.constellationSection h2{
-
-font-size:44px;
-
-color:#ff9ddb;
-
-margin-bottom:20px;
-
-}
-
-#constellation{
-
-position:relative;
-
-height:600px;
-
-border-radius:30px;
-
-background:#06010d;
-
-overflow:hidden;
-
-border:1px solid rgba(255,255,255,.15);
-
-}
-
-.star{
-
-position:absolute;
-
-font-size:28px;
-
-cursor:pointer;
-
-animation:twinkle 2s infinite alternate;
-
-transition:.3s;
-
-}
-
-.star:hover{
-
-transform:scale(1.5);
-
-filter:drop-shadow(0 0 20px gold);
-
-}
-
-.star:nth-child(1){top:10%;left:20%;}
-.star:nth-child(2){top:18%;left:70%;}
-.star:nth-child(3){top:35%;left:35%;}
-.star:nth-child(4){top:48%;left:80%;}
-.star:nth-child(5){top:62%;left:18%;}
-.star:nth-child(6){top:72%;left:60%;}
-.star:nth-child(7){top:82%;left:40%;}
-.star:nth-child(8){top:25%;left:50%;}
-
-.futureStar{
-
-top:88%;
-
-left:82%;
-
-font-size:40px;
-
-}
-
-@keyframes twinkle{
-
-from{
-
-opacity:.4;
-
-}
-
-to{
-
-opacity:1;
-
-}
-
-}
-
-/* ==========================================
-MEMORY POPUP
-========================================== */
-
-#memoryPopup{
-
-position:fixed;
-
-inset:0;
-
-display:flex;
-
-justify-content:center;
-
-align-items:center;
-
-background:rgba(0,0,0,.85);
-
-z-index:999999;
-
-}
-
-#memoryPopup.hidden{
-
-display:none;
-
-}
-
-/* ==========================================
-FINAL LETTER
-========================================== */
-
-.finalLetter{
-
-width:min(900px,92%);
-
-margin:100px auto;
-
-text-align:center;
-
-}
-
-.finalLetter h1{
-
-font-size:55px;
-
-margin-bottom:30px;
-
-color:#ff9ddb;
-
-}
-
-#endingLetter{
-
-font-size:24px;
-
-line-height:2;
-
-white-space:pre-line;
-
-}
-
-/* ==========================================
-ENDING
-========================================== */
-
-#endingScreen{
-
-padding:120px 20px;
-
-text-align:center;
-
-}
-
-.endingContent h1{
-
-font-size:70px;
-
-font-family:"Great Vibes",cursive;
-
-color:white;
-
-text-shadow:0 0 25px hotpink;
-
-}
-
-.endingContent p{
-
-font-size:24px;
-
-line-height:2;
-
-margin:35px 0;
-
-color:#ffd4ec;
-
-}
-
-#replayStory{
-
-font-size:22px;
-
-padding:18px 45px;
-
-}
-
-/* ==========================================
-FOOTER
-========================================== */
-
-footer{
-
-padding:80px 20px;
-
-text-align:center;
-
-color:#ffc7e8;
-
-}
-
-footer h2{
-
-font-size:34px;
-
-margin-bottom:15px;
-
-}
-
-/* ==========================================
-RESPONSIVE
-========================================== */
-
-@media(max-width:900px){
-
-.overlay h1{
-
-font-size:60px;
-
-}
-
-.overlay h2{
-
-font-size:28px;
-
-}
-
-.overlay p{
-
-font-size:18px;
-
-}
-
-.letterContainer{
-
-grid-template-columns:1fr;
-
-text-align:center;
-
-}
-
-.letterPhoto img{
-
-width:260px;
-
-height:260px;
-
-}
-
-.memoryGrid{
-
-grid-template-columns:1fr;
-
-}
-
-#relationshipTimer{
-
-grid-template-columns:repeat(2,1fr);
-
-}
-
-.timelineItem{
+.constellationPage{
 
 flex-direction:column;
 
@@ -1148,62 +962,78 @@ text-align:center;
 
 }
 
-.quizCard{
+.constellationPage h2{
 
-padding:25px;
+font-size:52px;
 
-}
+font-family:"Great Vibes",cursive;
 
-#question{
+color:#ff8fd8;
 
-font-size:22px;
-
-}
-
-.finalLetter h1{
-
-font-size:42px;
+margin-bottom:15px;
 
 }
 
-.endingContent h1{
-
-font-size:50px;
-
-}
-
-.endingContent p{
+.constellationPage p{
 
 font-size:20px;
+
+color:#ffd4ec;
+
+margin-bottom:30px;
 
 }
 
 #constellation{
 
-height:420px;
+position:relative;
+
+width:100%;
+
+max-width:1200px;
+
+height:700px;
+
+border-radius:30px;
+
+overflow:hidden;
+
+background:linear-gradient(180deg,#05010d,#12001f,#05010d);
+
+border:1px solid rgba(255,255,255,.12);
 
 }
 
+/* Background Stars */
+
+.smallStar{
+
+position:absolute;
+
+font-size:18px;
+
+opacity:.35;
+
+animation:twinkle 2s infinite alternate;
+
+pointer-events:none;
+
 }
 
-/* ==========================================
-SMOOTH FADE ANIMATION
-========================================== */
+@keyframes twinkle{
 
-.fadeUp{
+from{
 
-opacity:0;
+opacity:.2;
 
-transform:translateY(60px);
-
-transition:1s;
+transform:scale(.9);
 
 }
 
-.fadeUp.show{
+to{
 
 opacity:1;
 
-transform:translateY(0);
+transform:scale(1.2);
 
 }
