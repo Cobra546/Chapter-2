@@ -1,121 +1,92 @@
-/*=====================================
-OUR STORY — CHAPTER TWO
+/*=========================================
 SUPABASE.JS
-=====================================*/
+VERSION 3
+PART 1
+=========================================*/
 
-// =====================================
-// SUPABASE CONFIG
-// =====================================
+import { createClient } from
+"https://esm.sh/@supabase/supabase-js@2";
+
+/*=========================================
+CONFIG
+=========================================*/
 
 const SUPABASE_URL =
 "https://bhtyestavehwaymfozxw.supabase.co";
 
-const SUPABASE_KEY =
-"sb_publishable_VpUhQZY8bczeIYv-oo8mLQ_YHPTjm7r";
+const SUPABASE_ANON_KEY =
+"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImJodHllc3RhdmVod2F5bWZvenh3Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODU4NDkwODksImV4cCI6MjEwMTQyNTA4OX0.4-8U1fe5LQVTsuFa1kgc8A1PQeBQrh_UTibZsmApPrQ";
 
-const supabaseClient =
-supabase.createClient(
-    SUPABASE_URL,
-    SUPABASE_KEY
+/*=========================================
+CLIENT
+=========================================*/
+
+const supabase = createClient(
+
+SUPABASE_URL,
+
+SUPABASE_ANON_KEY
+
 );
 
-// =====================================
-// SAVE SELFIE
-// =====================================
+/*=========================================
+BUCKET
+=========================================*/
 
-async function saveSelfie(imageData){
+const BUCKET_NAME = "selfies";
 
-    const { data, error } =
-    await supabaseClient
-    .from("selfies")
-    .insert([{
-        image: imageData
-    }]);
+/*=========================================
+CHECK CONNECTION
+=========================================*/
 
-    if(error){
+async function checkSupabase(){
 
-        console.error("❌ Selfie Error:", error);
+try{
 
-    }else{
+const { data, error } =
 
-        console.log("✅ Selfie Saved");
+await supabase.storage
+.from(BUCKET_NAME)
+.list("", { limit: 1 });
 
-    }
+if(error){
 
-}
+console.error(error);
 
-// =====================================
-// SAVE MESSAGE
-// =====================================
-
-async function saveMessage(message){
-
-    const { data, error } =
-    await supabaseClient
-    .from("messages")
-    .insert([{
-        message: message
-    }]);
-
-    if(error){
-
-        console.error("❌ Message Error:", error);
-
-    }else{
-
-        console.log("✅ Message Saved");
-
-    }
+return false;
 
 }
 
-// =====================================
-// SAVE RATING
-// =====================================
+console.log("✅ Supabase Connected");
 
-async function saveRating(rating){
-
-    const { data, error } =
-    await supabaseClient
-    .from("ratings")
-    .insert([{
-        rating: rating
-    }]);
-
-    if(error){
-
-        console.error("❌ Rating Error:", error);
-
-    }else{
-
-        console.log("✅ Rating Saved");
-
-    }
+return true;
 
 }
 
-// =====================================
-// CHECK CONNECTION
-// =====================================
+catch(err){
 
-async function checkConnection(){
+console.error(err);
 
-    const { error } =
-    await supabaseClient
-    .from("messages")
-    .select("*")
-    .limit(1);
-
-    if(error){
-
-        console.error("❌ Supabase Not Connected");
-
-    }else{
-
-        console.log("✅ Supabase Connected Successfully");
-
-    }
+return false;
 
 }
 
-checkConnection();
+}
+
+/*=========================================
+START
+=========================================*/
+
+checkSupabase();
+
+/*=========================================
+EXPORT
+=========================================*/
+
+export {
+
+supabase,
+
+BUCKET_NAME
+
+};
