@@ -314,19 +314,7 @@ showPage("heroPage");
 Hero Button
 ==========================*/
 
-beginJourney.addEventListener(
 
-"click",
-
-()=>{
-
-showPage(
-
-"letterPage"
-
-);  
-
-});
 /*=================================================
  VERSION 3
  PART 2
