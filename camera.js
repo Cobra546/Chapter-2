@@ -1,10 +1,10 @@
-/*=====================================
-OUR STORY — CHAPTER TWO
-camera.js
-PART 1
-=====================================*/
+/*=================================================
+ CAMERA.JS
+ VERSION 3
+ PART 1
+==================================================*/
 
-// Elements
+let cameraStream = null;
 
 const camera =
 document.getElementById("camera");
@@ -12,312 +12,119 @@ document.getElementById("camera");
 const canvas =
 document.getElementById("captureCanvas");
 
-const selfieImage =
-document.getElementById("selfieImage");
-
 const countdown =
 document.getElementById("cameraCountdown");
 
-const cameraStatus =
+const statusText =
 document.getElementById("cameraStatus");
 
-let stream = null;
-
-/*=====================================
+/*=================================
 Start Camera
-=====================================*/
+=================================*/
 
 async function startCamera(){
 
-    countdown.innerHTML = "3";
-    countdown.style.display = "block";
+try{
 
-    cameraStatus.innerHTML =
-    "Opening Camera... 📸";
+cameraStream =
+await navigator.mediaDevices.getUserMedia({
 
-    try{
+video:{
+facingMode:"user",
+width:{ideal:1080},
+height:{ideal:1080}
+},
 
-        stream =
-        await navigator.mediaDevices
-        .getUserMedia({
+audio:false
 
-            video:{
-                facingMode:"user"
-            },
+});
 
-            audio:false
+camera.srcObject =
+cameraStream;
 
-        });
+await camera.play();
 
-        camera.srcObject = stream;
+statusText.innerHTML =
+"Smile... 📸";
 
-        cameraStatus.innerHTML =
-        "Smile 😊";
+setTimeout(()=>{
 
-        startCountdown();
+startCountdown();
 
-    }
-
-    catch(error){
-
-        cameraStatus.innerHTML =
-        "Camera permission denied ❌";
-
-        console.error(error);
-
-    }
+},1000);
 
 }
 
-/*=====================================
+catch(error){
+
+console.error(error);
+
+statusText.innerHTML =
+"❌ Camera permission denied.";
+
+}
+
+}
+
+/*=================================
 Countdown
-=====================================*/
+=================================*/
 
 function startCountdown(){
 
-    let time = 3;
+let time = 3;
 
-    countdown.innerHTML = time;
+countdown.style.display =
+"flex";
 
-    const timer = setInterval(()=>{
+countdown.innerHTML = time;
 
-        time--;
+const timer = setInterval(()=>{
 
-        countdown.innerHTML = time;
+time--;
 
-        if(time<=0){
+if(time>0){
 
-            clearInterval(timer);
+countdown.innerHTML = time;
 
-            countdown.innerHTML = "📸";
-
-            setTimeout(()=>{
-
-                capturePhoto();
-
-            },600);
-
-        }
-
-    },1000);
+return;
 
 }
 
-/*=====================================
-Capture Photo
-=====================================*/
+clearInterval(timer);
 
-function capturePhoto(){
+countdown.innerHTML =
+"📸";
 
-    const ctx =
-    canvas.getContext("2d");
+setTimeout(()=>{
 
-    canvas.width =
-    camera.videoWidth;
+countdown.style.display =
+"none";
 
-    canvas.height =
-    camera.videoHeight;
+/* Capture in Part 2 */
 
-    ctx.drawImage(
+captureSelfie();
 
-        camera,
+},700);
 
-        0,
-
-        0,
-
-        canvas.width,
-
-        canvas.height
-
-    );
-
-    const image =
-    canvas.toDataURL("image/png");
-
-    selfieImage.src = image;
-
-    stopCamera();
-
-    setTimeout(()=>{
-
-        showPage("selfiePage");
-
-    },500);
+},1000);
 
 }
 
-/*=====================================
+/*=================================
 Stop Camera
-=====================================*/
+=================================*/
 
 function stopCamera(){
 
-    if(stream){
+if(!cameraStream) return;
 
-        stream.getTracks().forEach(track=>{
+cameraStream
+.getTracks()
+.forEach(track=>track.stop());
 
-            track.stop();
+camera.srcObject = null;
 
-        });
-
-    }
-
-}
-/*=====================================
-OUR STORY — CHAPTER TWO
-camera.js
-PART 2
-=====================================*/
-
-/*=====================================
-Camera Flash
-=====================================*/
-
-function cameraFlash(){
-
-    const flash =
-    document.getElementById("flashEffect");
-
-    flash.classList.add("flash");
-
-    setTimeout(()=>{
-
-        flash.classList.remove("flash");
-
-    },400);
+cameraStream = null;
 
 }
-
-/*=====================================
-Capture Photo
-(Override Previous Function)
-=====================================*/
-
-function capturePhoto(){
-
-    cameraFlash();
-
-    const ctx =
-    canvas.getContext("2d");
-
-    canvas.width =
-    camera.videoWidth;
-
-    canvas.height =
-    camera.videoHeight;
-
-    ctx.drawImage(
-        camera,
-        0,
-        0,
-        canvas.width,
-        canvas.height
-    );
-
-    const image =
-    canvas.toDataURL("image/png");
-
-    // Show on Selfie Page
-    selfieImage.src = image;
-
-    // Save for Future Star
-    const futureImage =
-    document.getElementById("futureSelfie");
-
-    if(futureImage){
-
-        futureImage.src = image;
-
-    }
-
-    // Save Locally
-    localStorage.setItem(
-        "chapterTwoSelfie",
-        image
-    );
-
-    stopCamera();
-
-    showPage("selfiePage");
-
-    startSelfieTimer();
-
-}
-
-/*=====================================
-Selfie Timer
-=====================================*/
-
-function startSelfieTimer(){
-
-    setTimeout(()=>{
-
-        showMemoryWall();
-
-    },5000);
-
-}
-
-/*=====================================
-Memory Wall
-=====================================*/
-
-function showMemoryWall(){
-
-    showPage("memoryWall");
-
-    const videos =
-    document.querySelectorAll(
-        ".memoryVideo"
-    );
-
-    videos.forEach(video=>{
-
-        video.play().catch(()=>{});
-
-    });
-
-    setTimeout(()=>{
-
-        if(typeof startQuiz==="function"){
-
-            showPage("quizPage");
-
-            startQuiz();
-
-        }
-
-    },12000);
-
-}
-
-/*=====================================
-Restore Saved Selfie
-=====================================*/
-
-window.addEventListener("load",()=>{
-
-    const saved =
-    localStorage.getItem(
-        "chapterTwoSelfie"
-    );
-
-    if(saved){
-
-        selfieImage.src = saved;
-
-        const futureImage =
-        document.getElementById(
-            "futureSelfie"
-        );
-
-        if(futureImage){
-
-            futureImage.src = saved;
-
-        }
-
-    }
-
-});
