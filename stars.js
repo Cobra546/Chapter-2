@@ -1,8 +1,12 @@
-/*=====================================
-OUR STORY — CHAPTER TWO
-stars.js
-PART 1
-=====================================*/
+/*=================================================
+ STARS.JS
+ VERSION 3
+ PART 1
+=================================================*/
+
+/*=========================
+Elements
+=========================*/
 
 const starBackground =
 document.getElementById("starBackground");
@@ -10,165 +14,269 @@ document.getElementById("starBackground");
 const starsContinue =
 document.getElementById("starsContinue");
 
-const memories=[
+/*=========================
+Settings
+=========================*/
 
-"❤️ The day we met.",
-"🥹 Our first smile.",
-"🌙 Late night talks.",
-"🎵 Our favorite songs.",
-"📸 Beautiful memories.",
-"🌹 Every little moment.",
-"✨ Every laugh together.",
-"💖 Forever starts with us."
+const TOTAL_STARS = 10;
 
-];
+let collectedStars = 0;
 
-let unlockedStars=0;
-const totalStars=8;
-
-/*=====================================
+/*=========================
 Start Stars
-=====================================*/
+=========================*/
 
 function startStars(){
 
-    unlockedStars=0;
+starBackground.innerHTML = "";
 
-    starsContinue.classList.add("hidden");
+collectedStars = 0;
 
-    starBackground.innerHTML="";
+starsContinue.classList.add("hidden");
 
-    createStars();
+createStars();
 
 }
 
-/*=====================================
+/*=========================
 Create Stars
-=====================================*/
+=========================*/
 
 function createStars(){
 
-    for(let i=0;i<totalStars;i++){
+for(let i=0;i<TOTAL_STARS;i++){
 
-        const star=
-        document.createElement("div");
+const star = document.createElement("div");
 
-        star.className="star";
+star.className = "star";
 
-        star.style.left=
-        Math.random()*90+"%";
+star.style.left =
+Math.random()*90 + "%";
 
-        star.style.top=
-        Math.random()*80+"%";
+star.style.top =
+Math.random()*90 + "%";
 
-        star.dataset.index=i;
+star.style.animationDelay =
+(Math.random()*2) + "s";
 
-        star.onclick=()=>{
+star.dataset.clicked = "false";
 
-            openMemory(star);
+star.addEventListener(
 
-        };
+"click",
 
-        starBackground.appendChild(star);
+()=>collectStar(star)
 
-    }
+);
 
-}
-
-/*=====================================
-Open Memory
-=====================================*/
-
-function openMemory(star){
-
-    if(star.classList.contains("opened")) return;
-
-    star.classList.add("opened");
-
-    const index=
-    Number(star.dataset.index);
-
-    alert(memories[index]);
-
-    star.style.background="#ff4d6d";
-    star.style.boxShadow=
-    "0 0 30px #ff4d6d";
-
-    unlockedStars++;
-
-    if(unlockedStars===totalStars){
-
-        starsContinue.classList.remove("hidden");
-
-    }
-
-}
-/*=====================================
-OUR STORY — CHAPTER TWO
-stars.js
-PART 2
-=====================================*/
-
-// Continue Button
-
-starsContinue.addEventListener("click",()=>{
-
-    showPage("futurePage");
-
-    startFutureMessage();
-
-});
-
-/*=====================================
-Future Typewriter
-=====================================*/
-
-const futureTypewriter =
-document.getElementById("futureTypewriter");
-
-const futureNext =
-document.getElementById("futureNext");
-
-const futureMessage = `
-
-Dear Love ❤️
-
-No one knows what tomorrow
-will bring...
-
-But if you're with me,
-
-every tomorrow becomes
-my favorite day.
-
-I want more adventures,
-more photos,
-more laughs,
-more memories,
-and many more chapters
-with you.
-
-This is not the end...
-
-It's only the beginning
-of forever. ❤️
-
-`;
-
-let futureIndex = 0;
-
-function startFutureMessage(){
-
-    futureTypewriter.innerHTML = "";
-
-    futureIndex = 0;
-
-    futureNext.style.display = "none";
-
-    typeFuture();
+starBackground.appendChild(star);
 
 }
 
-function typeFuture(){
+}
 
-    if(futureIndex <
+/*=========================
+Collect Star
+=========================*/
+
+function collectStar(star){
+
+if(star.dataset.clicked==="true"){
+
+return;
+
+}
+
+star.dataset.clicked = "true";
+
+collectedStars++;
+
+star.style.transform =
+"scale(2)";
+
+star.style.opacity = "0";
+
+setTimeout(()=>{
+
+star.remove();
+
+},300);
+
+checkStars();
+
+}
+
+/*=========================
+Check Progress
+=========================*/
+
+function checkStars(){
+
+if(collectedStars>=TOTAL_STARS){
+
+starsContinue.classList.remove("hidden");
+
+}
+
+}
+/*=================================================
+ STARS.JS
+ VERSION 3
+ PART 2
+=================================================*/
+
+/*=========================
+Continue Button
+=========================*/
+
+starsContinue.addEventListener(
+
+"click",
+
+openFuturePage
+
+);
+
+/*=========================
+Open Future Page
+=========================*/
+
+function openFuturePage(){
+
+showPage("futurePage");
+
+startFutureStory();
+
+}
+
+/*=========================
+Celebration Effects
+=========================*/
+
+function celebrateStars(){
+
+createHeartRain();
+
+createRosePetals();
+
+flashScreen();
+
+}
+
+/*=========================
+Flash Effect
+=========================*/
+
+function flashScreen(){
+
+const flash =
+
+document.getElementById("flashEffect");
+
+flash.style.opacity = "1";
+
+setTimeout(()=>{
+
+flash.style.opacity = "0";
+
+},300);
+
+}
+
+/*=========================
+After All Stars
+=========================*/
+
+const oldCheckStars = checkStars;
+
+checkStars = function(){
+
+oldCheckStars();
+
+if(collectedStars >= TOTAL_STARS){
+
+celebrateStars();
+
+}
+
+};
+
+/*=========================
+Heart Rain
+=========================*/
+
+function createHeartRain(){
+
+const container =
+
+document.getElementById("heartRain");
+
+container.innerHTML = "";
+
+for(let i=0;i<25;i++){
+
+const heart =
+
+document.createElement("div");
+
+heart.className = "heart";
+
+heart.innerHTML = "❤️";
+
+heart.style.left =
+
+Math.random()*100 + "%";
+
+heart.style.animationDuration =
+
+(4 + Math.random()*3) + "s";
+
+heart.style.animationDelay =
+
+(Math.random()*2) + "s";
+
+container.appendChild(heart);
+
+}
+
+}
+
+/*=========================
+Rose Petals
+=========================*/
+
+function createRosePetals(){
+
+const container =
+
+document.getElementById("rosePetals");
+
+container.innerHTML = "";
+
+for(let i=0;i<20;i++){
+
+const petal =
+
+document.createElement("div");
+
+petal.className = "petal";
+
+petal.innerHTML = "🌹";
+
+petal.style.left =
+
+Math.random()*100 + "%";
+
+petal.style.animationDuration =
+
+(5 + Math.random()*2) + "s";
+
+petal.style.animationDelay =
+
+(Math.random()*2) + "s";
+
+container.appendChild(petal);
+
+}
+
+}
