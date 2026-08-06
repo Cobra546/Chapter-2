@@ -1,505 +1,466 @@
-/*=====================================
-OUR STORY — CHAPTER TWO
-script.js
-PART 1
-=====================================*/
+/*=================================================
+ OUR STORY - CHAPTER TWO
+ SCRIPT.JS
+ VERSION 3
+ PART 1
+==================================================*/
 
-// ---------- Pages ----------
+/*==========================
+Elements
+==========================*/
 
 const pages = document.querySelectorAll(".page");
 
+const loadingPage = document.getElementById("loadingPage");
+const loveGate = document.getElementById("loveGate");
+const heroPage = document.getElementById("heroPage");
+
+const loadingFill = document.getElementById("loadingFill");
+
+const loveInput = document.getElementById("loveInput");
+const unlockBtn = document.getElementById("unlockBtn");
+const gateMessage = document.getElementById("gateMessage");
+
+const beginJourney =
+document.getElementById("beginJourney");
+
+/*==========================
+Current Page
+==========================*/
+
+let currentPage = "loadingPage";
+
+/*==========================
+Positive Words
+==========================*/
+
+const positiveWords = [
+
+"love",
+
+"cute",
+
+"handsome",
+
+"beautiful",
+
+"pretty",
+
+"lovely",
+
+"amazing",
+
+"perfect",
+
+"angel",
+
+"princess",
+
+"queen",
+
+"sweet",
+
+"adorable",
+
+"mine",
+
+"soulmate",
+
+"sunshine",
+
+"i love you",
+
+"my love",
+
+"my queen",
+
+"my princess",
+
+"forever together",
+
+"always yours",
+
+"best girlfriend"
+
+];
+
+/*==========================
+Show Page
+==========================*/
+
 function showPage(id){
 
-    pages.forEach(page=>{
+pages.forEach(page=>{
 
-        page.classList.remove("active");
+page.classList.remove("active");
 
-    });
+});
 
-    document
-    .getElementById(id)
-    .classList.add("active");
+document
+.getElementById(id)
+.classList.add("active");
+
+currentPage=id;
+
+window.scrollTo({
+
+top:0,
+
+behavior:"auto"
+
+});
 
 }
 
-// ---------- Loading ----------
-
-const loadingFill =
-document.getElementById("loadingFill");
+/*==========================
+Loading Animation
+==========================*/
 
 let loading = 0;
 
 const loadingInterval =
+
 setInterval(()=>{
 
-    loading++;
+loading++;
 
-    loadingFill.style.width =
-    loading + "%";
+loadingFill.style.width=
 
-    if(loading>=100){
+loading+"%";
 
-        clearInterval(
-        loadingInterval);
+if(loading>=100){
 
-        setTimeout(()=>{
+clearInterval(
 
-            showPage("loveGate");
+loadingInterval
 
-        },500);
+);
 
-    }
+setTimeout(()=>{
 
-},35);
+startWebsite();
 
-// ---------- Love Gate ----------
+},500);
 
-const loveInput =
-document.getElementById("loveInput");
+}
 
-const unlockBtn =
-document.getElementById("unlockBtn");
+},30);
 
-const gateMessage =
-document.getElementById("gateMessage");
+/*==========================
+Website Start
+==========================*/
 
-const positiveWords=[
+function startWebsite(){
 
-"love",
-"cute",
-"handsome",
-"jaan",
-"baby",
-"beautiful",
-"best",
-"sweet",
-"mine",
-"husband",
-"king",
-"adorable"
+const params =
 
-];
+new URLSearchParams(
 
-unlockBtn.addEventListener("click",()=>{
+window.location.search
 
-    const value=
-    loveInput.value
-    .trim()
-    .toLowerCase();
+);
 
-    const passed=
-    positiveWords.some(word=>
-    value.includes(word));
+const testMode =
 
-    if(passed){
+params.get("test");
 
-        gateMessage.style.color=
-        "#7dffae";
+const page =
 
-        gateMessage.innerHTML=
-        "Unlocked ❤️";
+params.get("page");
 
-        setTimeout(()=>{
+/*==========
 
-            showPage("heroPage");
+TEST MODE
 
-        },900);
+===========*/
 
-    }
+if(testMode==="1"){
 
-    else{
+if(page==="quiz"){
 
-        gateMessage.style.color=
-        "#ff8080";
+showPage("quizPage");
 
-        gateMessage.innerHTML=
-        "Say something sweet ❤️";
+return;
 
-    }
+}
+
+if(page==="memory"){
+
+showPage("memoryWall");
+
+return;
+
+}
+
+if(page==="gift"){
+
+showPage("giftPage");
+
+return;
+
+}
+
+if(page==="future"){
+
+showPage("futurePage");
+
+return;
+
+}
+
+if(page==="ending"){
+
+showPage("postCreditPage");
+
+return;
+
+}
+
+showPage("heroPage");
+
+return;
+
+}
+
+/*==========
+
+NORMAL MODE
+
+===========*/
+
+showPage("loveGate");
+
+}
+
+/*==========================
+Unlock Logic
+==========================*/
+
+unlockBtn.addEventListener(
+
+"click",
+
+unlockWebsite
+
+);
+
+loveInput.addEventListener(
+
+"keydown",
+
+e=>{
+
+if(e.key==="Enter"){
+
+unlockWebsite();
+
+}
 
 });
 
-// Enter key support
+function unlockWebsite(){
 
-loveInput.addEventListener("keydown",e=>{
+const value=
 
-    if(e.key==="Enter"){
+loveInput.value
 
-        unlockBtn.click();
+.toLowerCase()
 
-    }
+.trim();
 
-});
+if(value.length===0){
 
-// ---------- Hero ----------
+gateMessage.innerHTML=
 
-const beginJourney=
-document.getElementById(
-"beginJourney");
+"Say something sweet ❤️";
+
+return;
+
+}
+
+const matched=
+
+positiveWords.some(
+
+word=>
+
+value.includes(word)
+
+);
+
+if(!matched){
+
+gateMessage.innerHTML=
+
+"Only positive words can unlock our story ❤️";
+
+return;
+
+}
+
+gateMessage.innerHTML=
+
+"Unlocked ❤️";
+
+setTimeout(()=>{
+
+showPage("heroPage");
+
+},700);
+
+}
+
+/*==========================
+Hero Button
+==========================*/
 
 beginJourney.addEventListener(
-"click",()=>{
 
-    showPage("letterPage");
+"click",
 
-    startLetter();
+()=>{
+
+showPage(
+
+"letterPage"
+
+);  
 
 });
+/*=================================================
+ VERSION 3
+ PART 2
+ LOVE LETTER • TYPEWRITER • CAMERA TRANSITION
+==================================================*/
 
-// ---------- Letter ----------
+/*==========================
+Elements
+==========================*/
 
-const letterText=
-document.getElementById(
-"letterText");
+const letterText =
+document.getElementById("letterText");
 
-const nextLetterBtn=
-document.getElementById(
-"nextLetterBtn");
+const nextLetterBtn =
+document.getElementById("nextLetterBtn");
 
-const letter=`
+/*==========================
+Letter
+==========================*/
 
-Dear Love ❤️
+const letterMessage = `Dear ❤️,
 
-Thank you for becoming
-the most beautiful part
-of my life.
-
-Every smile,
+Thank you for every smile,
 every laugh,
-every memory with you
-is priceless.
+every memory
+and every moment.
 
-This is only the beginning
-of our forever.
+No matter what happens,
+I will always be grateful
+that you became a part
+of my story.
 
-Happy Chapter Two ❤️
+This website is only
+a small reminder
+that you are special.
 
-`;
+I hope every page
+makes you smile.
 
-let letterIndex=0;
+Happy Anniversary ❤️`;
+
+/*==========================
+Typewriter
+==========================*/
+
+let letterIndex = 0;
+let letterFinished = false;
 
 function startLetter(){
 
-    letterText.innerHTML="";
+letterText.innerHTML = "";
 
-    letterIndex=0;
+nextLetterBtn.classList.add("hidden");
 
-    nextLetterBtn.classList.add(
-    "hidden");
+letterIndex = 0;
 
-    typeLetter();
+letterFinished = false;
+
+typeLetter();
 
 }
 
 function typeLetter(){
 
-    if(letterIndex<
-    letter.length){
+if(letterIndex >= letterMessage.length){
 
-        letterText.innerHTML+=
-        letter.charAt(letterIndex);
+letterFinished = true;
 
-        letterIndex++;
+nextLetterBtn.classList.remove("hidden");
 
-        setTimeout(
-        typeLetter,
-        35);
-
-    }
-
-    else{
-
-        nextLetterBtn.classList.remove(
-        "hidden");
-
-    }
+return;
 
 }
 
-// ---------- Next ----------
+letterText.innerHTML +=
+
+letterMessage.charAt(letterIndex);
+
+letterIndex++;
+
+setTimeout(typeLetter,35);
+
+}
+
+/*==========================
+Open Letter
+==========================*/
+
+document
+.getElementById("beginJourney")
+.addEventListener(
+
+"click",
+
+()=>{
+
+showPage("letterPage");
+
+setTimeout(startLetter,300);
+
+});
+
+/*==========================
+Continue
+==========================*/
 
 nextLetterBtn.addEventListener(
-"click",()=>{
 
-    showPage("cameraPage");
+"click",
 
-    if(typeof startCamera==="function"){
+()=>{
 
-        startCamera();
+showPage("cameraPage");
 
-    }
-
-});
-/*=====================================
-OUR STORY — CHAPTER TWO
-script.js
-PART 2 (FINAL)
-=====================================*/
-
-// Final Letter
-
-const finalLetterText =
-document.getElementById("finalLetterText");
-
-const sealChapterBtn =
-document.getElementById("sealChapterBtn");
-
-const sealChapter =
-`My Love ❤️
-
-Thank you for every smile,
-every laugh,
-every memory,
-and every moment.
-
-If life gives us
-a thousand chapters,
-
-I will still choose you
-in every single one.
-
-Forever begins with us.
-
-❤️`;
-
-let finalIndex = 0;
-
-function startFinalLetter(){
-
-    finalLetterText.innerHTML = "";
-    finalIndex = 0;
-
-    sealChapterBtn.classList.add("hidden");
-
-    typeFinalLetter();
-
-}
-
-function typeFinalLetter(){
-
-    if(finalIndex < sealChapter.length){
-
-        finalLetterText.innerHTML +=
-        sealChapter.charAt(finalIndex);
-
-        finalIndex++;
-
-        setTimeout(typeFinalLetter,35);
-
-    }else{
-
-        sealChapterBtn.classList.remove("hidden");
-
-    }
-
-}
-
-// Seal Chapter
-
-sealChapterBtn.addEventListener("click",()=>{
-
-    showPage("sealPage");
-
-    setTimeout(()=>{
-
-        showPage("giftPage");
-
-    },4000);
+/* Camera Part 3 */
 
 });
 
-// Gift Box
+/*==========================
+Replay Protection
+==========================*/
 
-const giftBox =
-document.getElementById("giftBox");
+function resetLetter(){
 
-const giftItems =
-document.getElementById("giftItems");
+letterIndex = 0;
 
-giftBox.addEventListener("click",()=>{
+letterFinished = false;
 
-    giftItems.classList.remove("hidden");
+letterText.innerHTML = "";
 
-    setTimeout(()=>{
+nextLetterBtn.classList.add(
 
-        showPage("continuePage");
+"hidden"
 
-    },4000);
-
-});
-
-// Continue Page
-
-setTimeout(()=>{
-
-    const page =
-    document.getElementById("continuePage");
-
-    if(page.classList.contains("active")){
-
-        showPage("replayPage");
-
-    }
-
-},8000);
-
-// Replay
-
-document
-.getElementById("replayBtn")
-.addEventListener("click",()=>{
-
-    location.reload();
-
-});
-
-// Restart
-
-document
-.getElementById("restartBtn")
-.addEventListener("click",()=>{
-
-    location.reload();
-
-});
-
-// Credit Scene
-
-const creditText =
-document.getElementById("creditText");
-
-const creditMessage = `
-
-Thank you
-for reading
-Our Story...
-
-Every chapter
-with you
-is my favorite.
-
-See you in
-Chapter Three ❤️
-
-`;
-
-function startCredits(){
-
-    creditText.innerHTML = "";
-
-    let i = 0;
-
-    const timer = setInterval(()=>{
-
-        creditText.innerHTML +=
-        creditMessage.charAt(i);
-
-        i++;
-
-        if(i >= creditMessage.length){
-
-            clearInterval(timer);
-
-            document
-            .getElementById("restartBtn")
-            .classList.remove("hidden");
-
-        }
-
-    },40);
+);
 
 }
-
-// Heart Rain
-
-function createHeartRain(){
-
-    const container =
-    document.getElementById("heartRain");
-
-    for(let i=0;i<25;i++){
-
-        const heart =
-        document.createElement("div");
-
-        heart.className = "heart";
-
-        heart.innerHTML = "❤️";
-
-        heart.style.left =
-        Math.random()*100+"%";
-
-        heart.style.fontSize =
-        (18+Math.random()*20)+"px";
-
-        heart.style.animationDuration =
-        (3+Math.random()*3)+"s";
-
-        container.appendChild(heart);
-
-        setTimeout(()=>{
-
-            heart.remove();
-
-        },6000);
-
-    }
-
-}
-
-// Rose Petals
-
-function createRosePetals(){
-
-    const container =
-    document.getElementById("rosePetals");
-
-    for(let i=0;i<20;i++){
-
-        const petal =
-        document.createElement("div");
-
-        petal.className = "petal";
-
-        petal.innerHTML = "🌹";
-
-        petal.style.left =
-        Math.random()*100+"%";
-
-        petal.style.fontSize =
-        (18+Math.random()*18)+"px";
-
-        petal.style.animationDuration =
-        (4+Math.random()*3)+"s";
-
-        container.appendChild(petal);
-
-        setTimeout(()=>{
-
-            petal.remove();
-
-        },7000);
-
-    }
-
-}
-
-// Fireworks
-
-function launchFireworks(){
-
-    createHeartRain();
-
-    createRosePetals();
-
-}
-
-// Auto Ending Effects
-
-document
-.getElementById("giftBox")
-.addEventListener("click",()=>{
-
-    launchFireworks();
-
-});
