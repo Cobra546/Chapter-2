@@ -1,10 +1,12 @@
-/*=====================================
-OUR STORY — CHAPTER TWO
-quiz.js
-PART 1
-=====================================*/
+/*=================================================
+ QUIZ.JS
+ VERSION 3
+ PART 1
+=================================================*/
 
-// Elements
+/*=========================
+Elements
+=========================*/
 
 const questionNumber =
 document.getElementById("questionNumber");
@@ -21,320 +23,432 @@ document.getElementById("quizOptions");
 const quizResponse =
 document.getElementById("quizResponse");
 
-// Quiz Data
+/*=========================
+Quiz Data
+=========================*/
 
-const quiz = [
-
-{
-question:"Where did our story begin? ❤️",
-options:[
-"The First Chat",
-"The Moon",
-"The Market",
-"The School"
-],
-correct:0
-},
+const quizData = [
 
 {
-question:"Who is the cutest? 🥺",
-options:[
-"You ❤️",
-"Me",
-"Both",
-"No One"
-],
-correct:0
-},
 
-{
-question:"Who says 'I love you' more? 💕",
+question:"Who is the cutest? ❤️",
+
 options:[
 "You",
 "Me",
 "Both",
-"No One"
+"Nobody"
 ],
-correct:2
+
+correct:[
+"You",
+"Me",
+"Both"
+],
+
+response:"Correct ❤️ We are both cute!"
+
 },
 
 {
-question:"What is the strongest thing between us? ❤️",
-options:[
-"Love",
-"Luck",
-"Distance",
-"Time"
-],
-correct:0
-},
 
-{
-question:"Our dream together? 🌎",
-options:[
-"Travel",
-"Forever",
-"Both",
-"Nothing"
-],
-correct:2
-},
+question:"Who loves more? 💕",
 
-{
-question:"Who makes every day special? ✨",
 options:[
-"You ❤️",
+"You",
 "Me",
 "Both",
-"Coffee"
+"Equal"
 ],
-correct:2
+
+correct:[
+"Both",
+"Equal"
+],
+
+response:"Exactly! Love isn't a competition ❤️"
+
 },
 
 {
-question:"What should never end? 💞",
+
+question:"What should we always do?",
+
 options:[
-"Our Story",
-"Our Memories",
-"Our Love",
-"All of These"
+"Stay together",
+"Fight",
+"Ignore",
+"Forget"
 ],
-correct:3
+
+correct:[
+"Stay together"
+],
+
+response:"Forever together ❤️"
+
 },
 
 {
-question:"Ready for Chapter Three? ❤️",
+
+question:"What is most important?",
+
 options:[
+"Trust",
+"Money",
+"Luck",
+"Nothing"
+],
+
+correct:[
+"Trust"
+],
+
+response:"Trust makes love stronger ❤️"
+
+},
+
+{
+
+question:"Our story is...",
+
+options:[
+"Beautiful",
+"Boring",
+"Average",
+"Finished"
+],
+
+correct:[
+"Beautiful"
+],
+
+response:"The best story ever ❤️"
+
+},
+
+{
+
+question:"Who makes me smile?",
+
+options:[
+"You",
+"Nobody",
+"My phone",
+"Everyone"
+],
+
+correct:[
+"You"
+],
+
+response:"Always you ❤️"
+
+},
+
+{
+
+question:"Our future will be...",
+
+options:[
+"Bright",
+"Dark",
+"Unknown",
+"Bad"
+],
+
+correct:[
+"Bright"
+],
+
+response:"In Sha Allah ❤️"
+
+},
+
+{
+
+question:"Will you stay forever?",
+
+options:[
+"Yes ❤️",
 "Always ❤️",
-"Maybe",
-"No",
-"Later"
+"Never",
+"Maybe"
 ],
-correct:0
+
+correct:[
+"Yes ❤️",
+"Always ❤️"
+],
+
+response:"Chapter Three awaits ❤️"
+
 }
 
 ];
 
+/*=========================
+Variables
+=========================*/
+
 let currentQuestion = 0;
+
 let score = 0;
 
-/*=====================================
-Start Quiz
-=====================================*/
-
-function startQuiz(){
-
-currentQuestion = 0;
-score = 0;
-
-loadQuestion();
-
-}
-
-/*=====================================
+/*=========================
 Load Question
-=====================================*/
+=========================*/
 
 function loadQuestion(){
 
-quizResponse.innerHTML = "";
+const q = quizData[currentQuestion];
 
-questionNumber.innerHTML =
-`Question ${currentQuestion+1} / ${quiz.length}`;
+questionNumber.textContent =
+`Question ${currentQuestion + 1} / ${quizData.length}`;
 
-progressFill.style.width =
-`${((currentQuestion)/quiz.length)*100}%`;
+quizQuestion.textContent =
+q.question;
 
-quizQuestion.innerHTML =
-quiz[currentQuestion].question;
+quizResponse.textContent = "";
 
 quizOptions.innerHTML = "";
 
-quiz[currentQuestion].options.forEach(
+progressFill.style.width =
+`${((currentQuestion) / quizData.length) * 100}%`;
 
-(option,index)=>{
+}
+/*=================================================
+ QUIZ.JS
+ VERSION 3
+ PART 2
+=================================================*/
 
-const button =
-document.createElement("button");
+/*=========================
+Create Options
+=========================*/
 
-button.innerHTML = option;
+function renderOptions(){
 
-button.onclick = ()=>{
+const q = quizData[currentQuestion];
 
-checkAnswer(index);
+q.options.forEach(option=>{
 
-};
+const button = document.createElement("button");
+
+button.className = "quizOption";
+
+button.textContent = option;
+
+button.addEventListener(
+
+"click",
+
+()=>checkAnswer(option,button)
+
+);
 
 quizOptions.appendChild(button);
 
 });
 
 }
-/*=====================================
-OUR STORY — CHAPTER TWO
-quiz.js
-PART 2
-=====================================*/
 
-/*=====================================
+/*=========================
 Check Answer
-=====================================*/
+=========================*/
 
-function checkAnswer(selected){
+function checkAnswer(answer,button){
 
-    const correct =
-    quiz[currentQuestion].correct;
+const q = quizData[currentQuestion];
 
-    const buttons =
-    quizOptions.querySelectorAll("button");
+const buttons =
 
-    buttons.forEach(btn=>{
+document.querySelectorAll(".quizOption");
 
-        btn.disabled = true;
+/* Disable all buttons */
 
-    });
+buttons.forEach(btn=>{
 
-    if(selected === correct){
+btn.disabled = true;
 
-        score++;
+});
 
-        quizResponse.innerHTML =
-        "💚 Correct! You're amazing ❤️";
+/* Correct */
 
-        quizResponse.style.color =
-        "#7dffae";
+if(q.correct.includes(answer)){
 
-        buttons[selected].style.background =
-        "#27ae60";
+score++;
 
-    }
+button.classList.add("correct");
 
-    else{
+quizResponse.innerHTML =
 
-        quizResponse.innerHTML =
-        "❤️ Aww... I'll still choose you every time.";
-
-        quizResponse.style.color =
-        "#ffb3c6";
-
-        buttons[selected].style.background =
-        "#e74c3c";
-
-        buttons[correct].style.background =
-        "#27ae60";
-
-    }
-
-    setTimeout(()=>{
-
-        currentQuestion++;
-
-        if(currentQuestion < quiz.length){
-
-            loadQuestion();
-
-        }
-
-        else{
-
-            finishQuiz();
-
-        }
-
-    },1800);
+q.response;
 
 }
 
-/*=====================================
+/* Wrong */
+
+else{
+
+button.classList.add("wrong");
+
+quizResponse.innerHTML =
+
+"Oops 😅 Try remembering our story ❤️";
+
+/* Highlight correct answer */
+
+buttons.forEach(btn=>{
+
+if(q.correct.includes(btn.textContent)){
+
+btn.classList.add("correct");
+
+}
+
+});
+
+}
+
+/* Progress */
+
+progressFill.style.width =
+
+`${((currentQuestion+1)
+
+/quizData.length)*100}%`;
+
+/* Next Question */
+
+setTimeout(()=>{
+
+nextQuestion();
+
+},1500);
+
+}
+
+/*=========================
+Start Quiz
+=========================*/
+
+function startQuiz(){
+
+currentQuestion = 0;
+
+score = 0;
+
+loadQuestion();
+
+renderOptions();
+
+}
+/*=================================================
+ QUIZ.JS
+ VERSION 3
+ PART 3
+=================================================*/
+
+/*=========================
+Next Question
+=========================*/
+
+function nextQuestion(){
+
+currentQuestion++;
+
+if(currentQuestion >= quizData.length){
+
+finishQuiz();
+
+return;
+
+}
+
+loadQuestion();
+
+renderOptions();
+
+}
+
+/*=========================
 Finish Quiz
-=====================================*/
+=========================*/
 
 function finishQuiz(){
 
-    progressFill.style.width = "100%";
+quizQuestion.innerHTML =
 
-    quizQuestion.innerHTML =
-    "🎉 Quiz Completed!";
+"🎉 Quiz Complete!";
 
-    quizOptions.innerHTML = "";
+quizOptions.innerHTML = "";
 
-    let message = "";
+quizResponse.innerHTML =
 
-    if(score === quiz.length){
+`You scored ${score} / ${quizData.length} ❤️`;
 
-        message =
-        `Perfect! ❤️\n\nYou scored ${score}/${quiz.length}.\nYou're officially the Queen of Our Story 👑`;
+progressFill.style.width = "100%";
 
-        createConfetti();
+/* Open Stars Page */
 
-    }
+setTimeout(()=>{
 
-    else if(score >= 6){
+showPage("starsPage");
 
-        message =
-        `Amazing! 💕\n\nYou scored ${score}/${quiz.length}.\nLet's continue our journey.`;
+/* Start stars if available */
 
-    }
+if(typeof startStars === "function"){
 
-    else{
-
-        message =
-        `You scored ${score}/${quiz.length} ❤️\n\nNo worries...\nLove is always the right answer.`;
-
-    }
-
-    quizResponse.innerHTML = message;
-
-    setTimeout(()=>{
-
-        showPage("starsPage");
-
-        if(typeof startStars === "function"){
-
-            startStars();
-
-        }
-
-    },3500);
+startStars();
 
 }
 
-/*=====================================
-Simple Confetti
-=====================================*/
-
-function createConfetti(){
-
-    const container =
-    document.getElementById("confetti");
-
-    if(!container) return;
-
-    for(let i=0;i<40;i++){
-
-        const piece =
-        document.createElement("div");
-
-        piece.innerHTML =
-        Math.random()>0.5 ? "🎉" : "❤️";
-
-        piece.style.position = "absolute";
-        piece.style.left = Math.random()*100+"%";
-        piece.style.top = "-10%";
-        piece.style.fontSize =
-        (18+Math.random()*18)+"px";
-
-        piece.style.animation =
-        `heartFall ${3+Math.random()*2}s linear forwards`;
-
-        container.appendChild(piece);
-
-        setTimeout(()=>{
-
-            piece.remove();
-
-        },5000);
-
-    }
+},1800);
 
 }
+
+/*=========================
+Reset Quiz
+=========================*/
+
+function resetQuiz(){
+
+currentQuestion = 0;
+
+score = 0;
+
+progressFill.style.width = "0%";
+
+quizResponse.innerHTML = "";
+
+quizOptions.innerHTML = "";
+
+}
+
+/*=========================
+Replay Support
+=========================*/
+
+document
+.getElementById("replayBtn")
+?.addEventListener("click",()=>{
+
+resetQuiz();
+
+startQuiz();
+
+showPage("quizPage");
+
+});
+
+/*=========================
+Auto Start
+=========================*/
+
+/* Call this from script.js
+   when you reach quizPage:
+
+   startQuiz();
+
+*/
