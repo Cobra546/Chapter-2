@@ -1,891 +1,1694 @@
-/* =====================================
-OUR STORY — CHAPTER TWO
-STYLE.CSS
-PART 1
-===================================== */
+/*=================================================
+  OUR STORY — CHAPTER TWO
+  STYLE.CSS
+  VERSION 3
+  PART 1
+==================================================*/
 
 *{
-    margin:0;
-    padding:0;
-    box-sizing:border-box;
+margin:0;
+padding:0;
+box-sizing:border-box;
+-webkit-tap-highlight-color:transparent;
+}
+
+:root{
+
+--bg:#05060A;
+
+--bg2:#0F1118;
+
+--primary:#FF4D8D;
+
+--secondary:#FF82B2;
+
+--text:#FFFFFF;
+
+--light:#D9D9D9;
+
+--glass:rgba(255,255,255,.08);
+
+--border:rgba(255,255,255,.12);
+
+--radius:24px;
+
+--transition:.45s;
+
 }
 
 html{
-    scroll-behavior:smooth;
+
+width:100%;
+height:100%;
+overflow:hidden;
+
+scroll-behavior:smooth;
+
 }
 
 body{
-    font-family:'Poppins',sans-serif;
-    overflow:hidden;
-    background:#080812;
-    color:#fff;
-    height:100vh;
+
+width:100%;
+height:100%;
+
+overflow:hidden;
+
+background:linear-gradient(
+180deg,
+var(--bg),
+var(--bg2)
+);
+
+font-family:"Poppins",sans-serif;
+
+color:white;
+
+position:relative;
+
 }
 
-/* Scrollbar */
-
-::-webkit-scrollbar{
-    width:8px;
-}
-
-::-webkit-scrollbar-track{
-    background:#111;
-}
-
-::-webkit-scrollbar-thumb{
-    background:#ff4d6d;
-    border-radius:20px;
-}
-
-/* Hidden */
-
-.hidden{
-    display:none !important;
-}
-
-/* =====================================
-PAGE SYSTEM
-===================================== */
+/*=========================
+Page
+=========================*/
 
 .page{
-    position:fixed;
-    inset:0;
-    display:none;
-    justify-content:center;
-    align-items:center;
-    overflow:hidden;
-    padding:30px;
-    background:
-    radial-gradient(circle at top,#2b1037,#090913 70%);
-    animation:fadePage .8s ease;
+
+position:fixed;
+
+top:0;
+left:0;
+
+width:100%;
+height:100%;
+
+display:flex;
+
+justify-content:center;
+
+align-items:center;
+
+flex-direction:column;
+
+padding:24px;
+
+opacity:0;
+
+visibility:hidden;
+
+pointer-events:none;
+
+transform:translateY(40px);
+
+transition:
+
+opacity .6s,
+
+transform .6s,
+
+visibility .6s;
+
 }
 
 .page.active{
-    display:flex;
-}
 
-@keyframes fadePage{
+opacity:1;
 
-    from{
+visibility:visible;
 
-        opacity:0;
-        transform:scale(1.05);
+pointer-events:auto;
 
-    }
-
-    to{
-
-        opacity:1;
-        transform:scale(1);
-
-    }
+transform:translateY(0);
 
 }
 
-/* =====================================
-COMMON BUTTON
-===================================== */
+/*=========================
+Hidden
+=========================*/
 
-button{
+.hidden{
 
-    cursor:pointer;
-    border:none;
-    outline:none;
-    font-family:inherit;
-
-    padding:15px 35px;
-
-    border-radius:40px;
-
-    background:linear-gradient(
-    135deg,
-    #ff4d6d,
-    #ff7aa2);
-
-    color:white;
-
-    font-size:16px;
-
-    font-weight:600;
-
-    transition:.35s;
-
-    box-shadow:
-    0 8px 25px
-    rgba(255,77,109,.35);
+display:none !important;
 
 }
 
-button:hover{
+/*=========================
+Loading
+=========================*/
 
-    transform:
-    translateY(-4px)
-    scale(1.03);
+.loadingContent{
 
-    box-shadow:
-    0 12px 35px
-    rgba(255,77,109,.5);
+width:100%;
 
-}
+max-width:380px;
 
-button:active{
-
-    transform:scale(.96);
+text-align:center;
 
 }
-
-/* =====================================
-COMMON INPUT
-===================================== */
-
-input{
-
-    width:100%;
-
-    padding:15px 18px;
-
-    border-radius:16px;
-
-    border:2px solid
-    rgba(255,255,255,.12);
-
-    background:
-    rgba(255,255,255,.08);
-
-    color:white;
-
-    font-size:16px;
-
-    outline:none;
-
-    transition:.3s;
-
-}
-
-input::placeholder{
-
-    color:#ddd;
-
-}
-
-input:focus{
-
-    border-color:#ff4d6d;
-
-    box-shadow:
-    0 0 20px
-    rgba(255,77,109,.35);
-
-}
-
-/* =====================================
-CARD STYLE
-===================================== */
-
-.loadingContent,
-.gateCard,
-.letterCard,
-.quizContainer,
-.futureContainer,
-.finalLetterCard,
-.continueBox,
-.creditBox,
-.replayBox,
-.giftWrapper,
-.selfieContainer{
-
-    width:min(92%,600px);
-
-    background:
-    rgba(255,255,255,.08);
-
-    backdrop-filter:blur(18px);
-
-    border:1px solid
-    rgba(255,255,255,.12);
-
-    border-radius:28px;
-
-    padding:35px;
-
-    text-align:center;
-
-    box-shadow:
-
-    0 15px 45px
-
-    rgba(0,0,0,.35);
-
-}
-
-/* =====================================
-LOADING PAGE
-===================================== */
 
 .heartLoader{
 
-    font-size:80px;
+font-size:70px;
 
-    animation:
-    heartbeat 1s infinite;
+animation:heartbeat 1.3s infinite;
 
 }
 
 .loadingContent h1{
 
-    margin-top:18px;
+margin-top:18px;
 
-    font-size:34px;
+font-size:30px;
+
+font-weight:700;
 
 }
 
 .loadingContent p{
 
-    margin-top:12px;
+margin-top:12px;
 
-    opacity:.8;
+color:#cccccc;
 
 }
 
 .loadingBar{
 
-    width:100%;
+margin-top:28px;
 
-    height:12px;
+width:100%;
 
-    background:
-    rgba(255,255,255,.12);
+height:12px;
 
-    border-radius:30px;
+background:#202020;
 
-    overflow:hidden;
+border-radius:100px;
 
-    margin-top:35px;
+overflow:hidden;
 
 }
 
 #loadingFill{
 
-    width:0;
+width:0%;
 
-    height:100%;
+height:100%;
 
-    border-radius:30px;
+background:linear-gradient(
+90deg,
+var(--primary),
+var(--secondary)
+);
 
-    background:
-    linear-gradient(
-    90deg,
-    #ff4d6d,
-    #ffb3c6);
+border-radius:100px;
 
 }
 
-/* =====================================
-LOVE GATE
-===================================== */
+/*=========================
+Love Gate
+=========================*/
 
 .gateCard{
 
-    max-width:550px;
+width:100%;
+
+max-width:420px;
+
+background:var(--glass);
+
+backdrop-filter:blur(18px);
+
+border:1px solid var(--border);
+
+border-radius:28px;
+
+padding:28px;
+
+text-align:center;
+
+box-shadow:
+
+0 20px 45px rgba(0,0,0,.35);
 
 }
 
 .gateIcon{
 
-    font-size:75px;
+font-size:55px;
 
-    margin-bottom:15px;
+margin-bottom:15px;
 
 }
 
 .gateCard h2{
 
-    font-size:34px;
+font-size:26px;
 
-    margin-bottom:15px;
+line-height:1.4;
+
+margin-bottom:10px;
 
 }
 
 .gateCard p{
 
-    opacity:.85;
+color:var(--light);
 
-    margin-bottom:20px;
+margin-bottom:18px;
 
 }
 
 #loveInput{
 
-    margin-bottom:18px;
+width:100%;
+
+padding:16px;
+
+border:none;
+
+outline:none;
+
+border-radius:16px;
+
+background:#181818;
+
+color:white;
+
+font-size:16px;
+
+}
+
+#loveInput::placeholder{
+
+color:#999;
+
+}
+
+#unlockBtn{
+
+width:100%;
+
+margin-top:18px;
+
+padding:15px;
+
+border:none;
+
+border-radius:16px;
+
+background:var(--primary);
+
+color:white;
+
+font-size:17px;
+
+font-weight:600;
+
+cursor:pointer;
+
+transition:var(--transition);
+
+}
+
+#unlockBtn:active{
+
+transform:scale(.97);
 
 }
 
 #gateMessage{
 
-    margin-top:18px;
+margin-top:15px;
 
-    min-height:28px;
+min-height:24px;
 
-    font-weight:600;
+font-size:15px;
 
-    color:#ffb3c6;
-
-}
-
-/* =====================================
-ANIMATIONS
-===================================== */
-
-@keyframes heartbeat{
-
-    0%{
-
-        transform:scale(1);
-
-    }
-
-    20%{
-
-        transform:scale(1.15);
-
-    }
-
-    40%{
-
-        transform:scale(.95);
-
-    }
-
-    60%{
-
-        transform:scale(1.12);
-
-    }
-
-    100%{
-
-        transform:scale(1);
-
-    }
+color:#FFD5E4;
 
 }
 
-@keyframes floating{
-
-    0%{
-
-        transform:
-        translateY(0);
-
-    }
-
-    50%{
-
-        transform:
-        translateY(-12px);
-
-    }
-
-    100%{
-
-        transform:
-        translateY(0);
-
-    }
-
-}
-/* =====================================
-STYLE.CSS
-PART 2
-Hero • Letter • Camera • Selfie
-Memory Wall
-=====================================*/
-
-/* =====================================
-HERO PAGE
-=====================================*/
+/*=========================
+Hero
+=========================*/
 
 #heroPage{
-    padding:0;
-    background:#000;
+
+overflow:hidden;
+
 }
 
 #heroVideo{
-    position:absolute;
-    inset:0;
-    width:100%;
-    height:100%;
-    object-fit:cover;
-    z-index:0;
+
+position:absolute;
+
+inset:0;
+
+width:100%;
+
+height:100%;
+
+object-fit:cover;
+
+z-index:-2;
+
 }
 
 .heroOverlay{
-    position:relative;
-    z-index:2;
-    width:100%;
-    height:100%;
-    display:flex;
-    flex-direction:column;
-    justify-content:center;
-    align-items:center;
-    text-align:center;
-    padding:30px;
-    background:linear-gradient(
-    rgba(0,0,0,.35),
-    rgba(0,0,0,.65));
+
+position:absolute;
+
+inset:0;
+
+display:flex;
+
+justify-content:center;
+
+align-items:center;
+
+flex-direction:column;
+
+text-align:center;
+
+padding:25px;
+
+background:rgba(0,0,0,.45);
+
 }
 
 .heroOverlay h1{
-    font-size:68px;
-    font-weight:700;
-    text-shadow:0 8px 30px rgba(0,0,0,.45);
+
+font-size:46px;
+
+font-weight:700;
+
 }
 
 .heroOverlay h2{
-    margin-top:10px;
-    font-size:38px;
-    color:#ffd3df;
+
+margin-top:8px;
+
+font-size:30px;
+
+color:var(--secondary);
+
 }
 
 .heroOverlay p{
-    margin:25px 0 35px;
-    max-width:650px;
-    line-height:1.8;
-    font-size:18px;
+
+margin-top:20px;
+
+max-width:340px;
+
+line-height:1.8;
+
+color:#ECECEC;
+
 }
 
-/* =====================================
-LETTER PAGE
-=====================================*/
+#beginJourney{
 
-.letterWrapper{
-    width:min(92%,760px);
-    text-align:center;
+margin-top:30px;
+
+padding:15px 42px;
+
+border:none;
+
+border-radius:50px;
+
+background:var(--primary);
+
+color:white;
+
+font-size:17px;
+
+font-weight:600;
+
+cursor:pointer;
+
+transition:var(--transition);
+
 }
 
-.letterWrapper h2{
-    margin-bottom:25px;
-    font-size:36px;
+#beginJourney:active{
+
+transform:scale(.96);
+
 }
 
-.letterCard{
-    text-align:left;
-    min-height:320px;
-    line-height:2;
-    font-size:18px;
-    overflow:hidden;
-    white-space:pre-wrap;
+/*=========================
+Animation
+=========================*/
+
+@keyframes heartbeat{
+
+0%{
+
+transform:scale(1);
+
 }
 
-#letterText{
-    color:#fff;
-}
+25%{
 
-#nextLetterBtn{
-    margin-top:30px;
-}
+transform:scale(1.12);
 
-/* =====================================
-CAMERA PAGE
-=====================================*/
-
-.cameraWrapper{
-    width:min(92%,800px);
-    display:flex;
-    flex-direction:column;
-    align-items:center;
-    text-align:center;
-}
-
-.cameraWrapper h2{
-    font-size:36px;
-    margin-bottom:15px;
-}
-
-#cameraStatus{
-    margin-bottom:20px;
-    opacity:.
-  /* =====================================
-STYLE.CSS
-PART 3 (FINAL)
-Quiz • Stars • Future • Ending
-Effects • Responsive
-=====================================*/
-
-/* ===== QUIZ ===== */
-
-.quizContainer{
-    max-width:720px;
-}
-
-.quizTop{
-    margin-bottom:25px;
-}
-
-#questionNumber{
-    display:block;
-    margin-bottom:15px;
-    font-weight:600;
-}
-
-.progressBar{
-    width:100%;
-    height:12px;
-    background:rgba(255,255,255,.12);
-    border-radius:30px;
-    overflow:hidden;
-}
-
-#progressFill{
-    width:0%;
-    height:100%;
-    border-radius:30px;
-    background:linear-gradient(90deg,#ff4d6d,#ffb3c6);
-    transition:.4s;
-}
-
-#quizQuestion{
-    font-size:32px;
-    margin-bottom:25px;
-}
-
-#quizOptions{
-    display:flex;
-    flex-direction:column;
-    gap:15px;
-}
-
-#quizOptions button{
-    width:100%;
-}
-
-#quizResponse{
-    margin-top:20px;
-    min-height:28px;
-    color:#ffd5e1;
-}
-
-/* ===== MEMORY CONSTELLATION ===== */
-
-#starsPage{
-    background:#030311;
-}
-
-#starBackground{
-    position:absolute;
-    inset:0;
-    overflow:hidden;
-}
-
-.star{
-    position:absolute;
-    width:18px;
-    height:18px;
-    border-radius:50%;
-    background:#fff;
-    box-shadow:0 0 20px #fff;
-    animation:twinkle 2s infinite;
-    cursor:pointer;
-}
-
-@keyframes twinkle{
-
-0%,100%{
-opacity:.3;
-transform:scale(.8);
 }
 
 50%{
-opacity:1;
-transform:scale(1.3);
+
+transform:scale(.95);
+
 }
+
+75%{
+
+transform:scale(1.1);
+
+}
+
+100%{
+
+transform:scale(1);
+
+}
+
+}
+/*=================================================
+  VERSION 3
+  PART 2
+  LOVE LETTER • CAMERA • SELFIE • MEMORY WALL
+==================================================*/
+
+/*=========================
+Love Letter
+=========================*/
+
+.letterWrapper{
+
+width:100%;
+max-width:750px;
+
+display:flex;
+flex-direction:column;
+align-items:center;
+
+}
+
+.letterWrapper h2{
+
+font-size:32px;
+
+margin-bottom:25px;
+
+text-align:center;
+
+}
+
+.letterCard{
+
+width:100%;
+
+min-height:350px;
+
+padding:28px;
+
+background:var(--glass);
+
+backdrop-filter:blur(20px);
+
+border:1px solid var(--border);
+
+border-radius:28px;
+
+overflow-y:auto;
+
+line-height:2;
+
+font-size:17px;
+
+color:#F4F4F4;
+
+scrollbar-width:none;
+
+}
+
+.letterCard::-webkit-scrollbar{
+
+display:none;
+
+}
+
+#letterText{
+
+white-space:pre-wrap;
+
+}
+
+#nextLetterBtn{
+
+margin-top:30px;
+
+padding:15px 40px;
+
+border:none;
+
+border-radius:50px;
+
+background:var(--primary);
+
+color:white;
+
+font-size:17px;
+
+font-weight:600;
+
+cursor:pointer;
+
+transition:var(--transition);
+
+}
+
+#nextLetterBtn:active{
+
+transform:scale(.97);
+
+}
+
+/*=========================
+Camera
+=========================*/
+
+.cameraWrapper{
+
+width:100%;
+
+max-width:430px;
+
+display:flex;
+
+flex-direction:column;
+
+align-items:center;
+
+}
+
+.cameraWrapper h2{
+
+margin-bottom:10px;
+
+}
+
+#cameraStatus{
+
+margin-bottom:18px;
+
+color:#DDDDDD;
+
+}
+
+#camera{
+
+width:100%;
+
+aspect-ratio:1/1;
+
+border-radius:25px;
+
+background:black;
+
+object-fit:cover;
+
+border:3px solid rgba(255,255,255,.12);
+
+}
+
+#captureCanvas{
+
+display:none;
+
+}
+
+#cameraCountdown{
+
+margin-top:25px;
+
+width:85px;
+
+height:85px;
+
+display:flex;
+
+justify-content:center;
+
+align-items:center;
+
+border-radius:50%;
+
+background:rgba(255,255,255,.08);
+
+font-size:36px;
+
+font-weight:bold;
+
+}
+
+/*=========================
+Selfie
+=========================*/
+
+.selfieContainer{
+
+display:flex;
+
+justify-content:center;
+
+align-items:center;
+
+width:100%;
+
+}
+
+.polaroid{
+
+width:320px;
+
+background:white;
+
+padding:18px;
+
+border-radius:12px;
+
+box-shadow:
+
+0 18px 45px rgba(0,0,0,.35);
+
+transform:rotate(-2deg);
+
+transition:.4s;
+
+}
+
+.polaroid:active{
+
+transform:rotate(0deg) scale(.98);
+
+}
+
+.polaroid img{
+
+width:100%;
+
+aspect-ratio:1/1;
+
+object-fit:cover;
+
+display:block;
+
+border-radius:8px;
+
+}
+
+.polaroidCaption{
+
+margin-top:18px;
+
+text-align:center;
+
+color:#222;
+
+}
+
+.polaroidCaption h3{
+
+font-size:21px;
+
+margin-bottom:10px;
+
+}
+
+.polaroidCaption p{
+
+font-weight:600;
+
+margin-bottom:10px;
+
+}
+
+.polaroidCaption small{
+
+display:block;
+
+line-height:1.8;
+
+}
+
+/*=========================
+Memory Wall
+=========================*/
+
+.memoryHeading{
+
+font-size:34px;
+
+margin-bottom:30px;
+
+text-align:center;
+
+}
+
+.memoryGrid{
+
+width:100%;
+
+max-width:900px;
+
+display:grid;
+
+grid-template-columns:
+
+repeat(2,1fr);
+
+gap:16px;
+
+}
+
+.memoryVideo{
+
+width:100%;
+
+aspect-ratio:1/1;
+
+object-fit:cover;
+
+background:#111;
+
+border-radius:20px;
+
+border:2px solid rgba(255,255,255,.10);
+
+transition:.35s;
+
+}
+
+.memoryVideo:hover{
+
+transform:scale(1.03);
+
+}
+
+.memoryQuote{
+
+margin-top:28px;
+
+text-align:center;
+
+font-size:16px;
+
+line-height:1.8;
+
+color:#DDDDDD;
+
+}
+
+/*=========================
+Tablet/Desktop
+=========================*/
+
+@media(min-width:768px){
+
+.memoryGrid{
+
+grid-template-columns:
+
+repeat(3,1fr);
+
+}
+
+.polaroid{
+
+width:360px;
+
+}
+
+}
+/*=================================================
+  VERSION 3
+  PART 3
+  QUIZ • CONSTELLATION • FUTURE STAR • FINAL LETTER
+==================================================*/
+
+/*=========================
+COUPLE QUIZ
+=========================*/
+
+.quizContainer{
+
+width:100%;
+
+max-width:550px;
+
+background:var(--glass);
+
+backdrop-filter:blur(20px);
+
+border:1px solid var(--border);
+
+border-radius:28px;
+
+padding:28px;
+
+box-shadow:0 20px 45px rgba(0,0,0,.35);
+
+}
+
+.quizTop{
+
+display:flex;
+
+flex-direction:column;
+
+gap:15px;
+
+margin-bottom:30px;
+
+}
+
+#questionNumber{
+
+font-size:15px;
+
+color:#DADADA;
+
+}
+
+.progressBar{
+
+width:100%;
+
+height:10px;
+
+background:#222;
+
+border-radius:50px;
+
+overflow:hidden;
+
+}
+
+#progressFill{
+
+width:0%;
+
+height:100%;
+
+background:linear-gradient(
+90deg,
+var(--primary),
+var(--secondary)
+);
+
+transition:.4s;
+
+}
+
+#quizQuestion{
+
+font-size:26px;
+
+line-height:1.5;
+
+margin-bottom:25px;
+
+text-align:center;
+
+}
+
+#quizOptions{
+
+display:grid;
+
+gap:15px;
+
+}
+
+.quizOption{
+
+padding:16px;
+
+border:none;
+
+border-radius:18px;
+
+background:rgba(255,255,255,.08);
+
+color:white;
+
+font-size:16px;
+
+cursor:pointer;
+
+transition:.3s;
+
+}
+
+.quizOption:hover{
+
+background:var(--primary);
+
+transform:translateY(-2px);
+
+}
+
+.quizOption.correct{
+
+background:#32d583;
+
+}
+
+.quizOption.wrong{
+
+background:#ff5b5b;
+
+}
+
+#quizResponse{
+
+margin-top:20px;
+
+min-height:25px;
+
+text-align:center;
+
+color:#FFD7E5;
+
+font-size:15px;
+
+}
+
+/*=========================
+MEMORY CONSTELLATION
+=========================*/
+
+#starBackground{
+
+position:absolute;
+
+inset:0;
+
+overflow:hidden;
+
+z-index:-1;
+
+}
+
+.star{
+
+position:absolute;
+
+width:8px;
+
+height:8px;
+
+border-radius:50%;
+
+background:white;
+
+box-shadow:
+0 0 12px white,
+0 0 25px var(--secondary);
+
+animation:twinkle 2.2s infinite;
+
+cursor:pointer;
 
 }
 
 .starsContent{
-    position:relative;
-    z-index:2;
-    text-align:center;
+
+text-align:center;
+
+max-width:500px;
+
 }
 
 .starsContent h2{
-    font-size:42px;
-    margin-bottom:18px;
+
+font-size:34px;
+
+margin-bottom:18px;
+
+}
+
+.starsContent p{
+
+line-height:1.8;
+
+color:#DDDDDD;
+
 }
 
 #starsContinue{
-    position:absolute;
-    bottom:50px;
+
+margin-top:40px;
+
+padding:15px 40px;
+
+border:none;
+
+border-radius:50px;
+
+background:var(--primary);
+
+color:white;
+
+font-size:16px;
+
+cursor:pointer;
+
 }
 
-/* ===== FUTURE PAGE ===== */
+/*=========================
+FUTURE STAR
+=========================*/
 
 .futureContainer{
-    max-width:700px;
+
+width:100%;
+
+max-width:650px;
+
+display:flex;
+
+flex-direction:column;
+
+align-items:center;
+
+text-align:center;
+
+}
+
+.futureContainer h2{
+
+font-size:34px;
+
+margin-bottom:20px;
+
 }
 
 #futureTypewriter{
-    margin:25px 0;
-    min-height:170px;
-    line-height:2;
-    font-size:18px;
-    white-space:pre-wrap;
+
+min-height:150px;
+
+font-size:18px;
+
+line-height:1.9;
+
+color:#F2F2F2;
+
+white-space:pre-wrap;
+
+margin-bottom:25px;
+
 }
 
 #futureSelfie{
-    width:250px;
-    aspect-ratio:3/4;
-    object-fit:cover;
-    border-radius:20px;
-    display:none;
-    margin:25px auto;
-    border:4px solid rgba(255,255,255,.15);
+
+width:230px;
+
+height:230px;
+
+border-radius:50%;
+
+object-fit:cover;
+
+border:5px solid rgba(255,255,255,.18);
+
+box-shadow:0 15px 40px rgba(0,0,0,.35);
+
+display:none;
+
 }
 
-/* ===== FINAL LETTER ===== */
+#futureNext{
+
+margin-top:30px;
+
+padding:15px 40px;
+
+border:none;
+
+border-radius:50px;
+
+background:var(--primary);
+
+color:white;
+
+font-size:16px;
+
+cursor:pointer;
+
+}
+
+/*=========================
+FINAL LETTER
+=========================*/
 
 .finalLetterCard{
-    max-width:760px;
+
+width:100%;
+
+max-width:700px;
+
+background:var(--glass);
+
+backdrop-filter:blur(20px);
+
+border:1px solid var(--border);
+
+border-radius:28px;
+
+padding:30px;
+
+text-align:center;
+
+}
+
+.finalLetterCard h2{
+
+font-size:32px;
+
+margin-bottom:20px;
+
 }
 
 #finalLetterText{
-    margin:30px 0;
-    line-height:2;
-    white-space:pre-wrap;
+
+font-size:17px;
+
+line-height:2;
+
+white-space:pre-wrap;
+
+text-align:left;
+
+min-height:250px;
+
 }
 
-/* ===== SEAL PAGE ===== */
+#sealChapterBtn{
 
-#heartSeal{
-    font-size:120px;
-    animation:heartbeat 1.2s infinite;
+margin-top:35px;
+
+padding:15px 45px;
+
+border:none;
+
+border-radius:50px;
+
+background:var(--primary);
+
+color:white;
+
+font-size:17px;
+
+font-weight:600;
+
+cursor:pointer;
+
 }
 
-.sealContainer{
-    text-align:center;
-}
+/*=========================
+ANIMATIONS
+=========================*/
 
-.sealContainer h2{
-    margin:25px 0;
-    font-size:42px;
-}
-
-/* ===== GIFT PAGE ===== */
-
-#giftBox{
-    font-size:120px;
-    cursor:pointer;
-    animation:floating 3s infinite;
-}
-
-#giftItems{
-    margin-top:35px;
-    display:grid;
-    gap:18px;
-}
-
-#giftItems div{
-    padding:15px;
-    border-radius:18px;
-    background:rgba(255,255,255,.08);
-}
-
-/* ===== CONTINUE ===== */
-
-.continueBox h1{
-    font-size:52px;
-    margin-bottom:20px;
-}
-
-/* ===== REPLAY ===== */
-
-.replayBox{
-    background:transparent;
-    box-shadow:none;
-    border:none;
-}
-
-/* ===== CREDIT ===== */
-
-.creditBox{
-    max-width:700px;
-}
-
-#creditText{
-    min-height:180px;
-    line-height:2;
-    white-space:pre-wrap;
-}
-
-/* ===== SPECIAL EFFECTS ===== */
-
-#heartRain,
-#rosePetals,
-#fireworks,
-#flashEffect,
-#confetti{
-
-    position:fixed;
-    inset:0;
-    pointer-events:none;
-    overflow:hidden;
-    z-index:999;
-}
-
-.heart{
-    position:absolute;
-    color:#ff4d6d;
-    animation:heartFall linear forwards;
-}
-
-@keyframes heartFall{
+@keyframes twinkle{
 
 0%{
-transform:translateY(-10vh) rotate(0);
+
+opacity:.3;
+transform:scale(.8);
+
+}
+
+50%{
+
 opacity:1;
+transform:scale(1.4);
+
 }
 
 100%{
-transform:translateY(110vh) rotate(720deg);
-opacity:0;
+
+opacity:.3;
+transform:scale(.8);
+
 }
+
+}
+/*=================================================
+  VERSION 3
+  PART 4
+  SEAL • GIFT • ENDING • EFFECTS
+==================================================*/
+
+/*=========================
+SEAL PAGE
+=========================*/
+
+.sealContainer{
+
+width:100%;
+max-width:550px;
+
+display:flex;
+flex-direction:column;
+align-items:center;
+justify-content:center;
+
+text-align:center;
+
+}
+
+#heartSeal{
+
+width:140px;
+height:140px;
+
+display:flex;
+justify-content:center;
+align-items:center;
+
+font-size:70px;
+
+border-radius:50%;
+
+background:rgba(255,255,255,.08);
+
+border:2px solid rgba(255,255,255,.12);
+
+box-shadow:
+0 0 40px rgba(255,77,141,.35);
+
+animation:heartbeat 1.5s infinite;
+
+margin-bottom:30px;
+
+}
+
+.sealContainer h2{
+
+font-size:34px;
+
+margin-bottom:15px;
+
+}
+
+.sealContainer p{
+
+line-height:1.8;
+
+color:#DDDDDD;
+
+}
+
+/*=========================
+GIFT PAGE
+=========================*/
+
+.giftWrapper{
+
+display:flex;
+
+flex-direction:column;
+
+align-items:center;
+
+}
+
+#giftBox{
+
+font-size:120px;
+
+cursor:pointer;
+
+transition:.35s;
+
+}
+
+#giftBox:hover{
+
+transform:scale(1.08) rotate(6deg);
+
+}
+
+#giftItems{
+
+margin-top:30px;
+
+display:grid;
+
+grid-template-columns:
+repeat(2,1fr);
+
+gap:18px;
+
+}
+
+#giftItems div{
+
+padding:18px;
+
+background:var(--glass);
+
+border:1px solid var(--border);
+
+border-radius:18px;
+
+text-align:center;
+
+font-size:18px;
+
+}
+
+/*=========================
+TO BE CONTINUED
+=========================*/
+
+.continueBox{
+
+text-align:center;
+
+}
+
+.continueBox h1{
+
+font-size:52px;
+
+margin-bottom:20px;
+
+}
+
+.continueBox p{
+
+font-size:20px;
+
+color:#E7E7E7;
+
+}
+
+/*=========================
+REPLAY
+=========================*/
+
+.replayBox{
+
+display:flex;
+
+justify-content:center;
+
+align-items:center;
+
+}
+
+#replayBtn,
+#restartBtn{
+
+padding:16px 45px;
+
+border:none;
+
+border-radius:50px;
+
+background:var(--primary);
+
+color:#fff;
+
+font-size:17px;
+
+font-weight:600;
+
+cursor:pointer;
+
+transition:.3s;
+
+}
+
+#replayBtn:hover,
+#restartBtn:hover{
+
+transform:translateY(-2px);
+
+}
+
+/*=========================
+POST CREDIT
+=========================*/
+
+.creditBox{
+
+width:100%;
+
+max-width:700px;
+
+text-align:center;
+
+}
+
+#creditText{
+
+font-size:22px;
+
+line-height:2;
+
+white-space:pre-wrap;
+
+min-height:180px;
+
+}
+
+/*=========================
+HEART RAIN
+=========================*/
+
+#heartRain{
+
+position:fixed;
+
+inset:0;
+
+pointer-events:none;
+
+overflow:hidden;
+
+z-index:999;
+
+}
+
+.heart{
+
+position:absolute;
+
+font-size:20px;
+
+animation:fallHeart linear forwards;
+
+}
+
+@keyframes fallHeart{
+
+0%{
+
+transform:translateY(-120px);
+
+opacity:1;
+
+}
+
+100%{
+
+transform:translateY(110vh);
+
+opacity:0;
+
+}
+
+}
+
+/*=========================
+ROSE PETALS
+=========================*/
+
+#rosePetals{
+
+position:fixed;
+
+inset:0;
+
+pointer-events:none;
+
+overflow:hidden;
+
+z-index:998;
 
 }
 
 .petal{
-    position:absolute;
-    animation:petalFall linear forwards;
+
+position:absolute;
+
+font-size:18px;
+
+animation:petalFall linear forwards;
+
 }
 
 @keyframes petalFall{
 
 0%{
-transform:translateY(-10vh) rotate(0);
-opacity:1;
+
+transform:
+translateY(-100px)
+rotate(0deg);
+
 }
 
 100%{
-transform:translateY(110vh) rotate(360deg);
-opacity:0;
-}
+
+transform:
+translateY(110vh)
+rotate(360deg);
 
 }
 
-#flashEffect{
-    background:#fff;
-    opacity:0;
 }
 
-.flash{
-    animation:flash .4s;
+/*=========================
+FIREWORKS
+=========================*/
+
+#fireworks{
+
+position:fixed;
+
+inset:0;
+
+pointer-events:none;
+
+z-index:1000;
+
 }
 
-@keyframes flash{
+.firework{
+
+position:absolute;
+
+width:8px;
+
+height:8px;
+
+border-radius:50%;
+
+background:#fff;
+
+animation:explode .8s ease-out forwards;
+
+}
+
+@keyframes explode{
 
 0%{
+
+transform:scale(0);
+
 opacity:1;
+
 }
 
 100%{
+
+transform:scale(12);
+
 opacity:0;
-}
 
-}
-
-/* ===== RESPONSIVE ===== */
-
-@media(max-width:900px){
-
-.heroOverlay h1{
-font-size:52px;
-}
-
-.heroOverlay h2{
-font-size:30px;
-}
-
-.memoryGrid{
-grid-template-columns:1fr 1fr;
 }
 
 }
 
-@media(max-width:700px){
+/*=========================
+FLASH
+=========================*/
 
-.page{
-padding:20px;
-}
+#flashEffect{
 
-.heroOverlay h1{
-font-size:42px;
-}
+position:fixed;
 
-.heroOverlay h2{
-font-size:24px;
-}
+inset:0;
 
-.loadingContent,
-.gateCard,
-.quizContainer,
-.futureContainer,
-.finalLetterCard,
-.continueBox,
-.creditBox{
-padding:25px;
-}
+background:#fff;
 
-.memoryGrid{
-grid-template-columns:1fr;
-}
+opacity:0;
 
-.memoryVideo{
-height:220px;
-}
+pointer-events:none;
 
-#cameraCountdown{
-font-size:70px;
-}
+z-index:1200;
 
-#giftBox{
-font-size:90px;
-}
-
-#heartSeal{
-font-size:90px;
-}
+transition:.4s;
 
 }
+
+/*=========================
+CONFETTI
+=========================*/
+
+#confetti{
+
+position:fixed;
+
+inset:0;
+
+pointer-events:none;
+
+overflow:hidden;
+
+z-index:999;
+
+}
+
+/*=========================
+RESPONSIVE
+=========================*/
 
 @media(max-width:480px){
 
 .heroOverlay h1{
-font-size:34px;
+
+font-size:38px;
+
 }
 
-.heroOverlay p{
-font-size:15px;
+.heroOverlay h2{
+
+font-size:24px;
+
 }
 
-button{
-width:100%;
+.quizContainer,
+.finalLetterCard,
+.gateCard{
+
+padding:22px;
+
 }
 
 .memoryHeading{
-font-size:30px;
-}
 
-.quizContainer h2{
-font-size:24px;
-}
+font-size:28px;
 
-.starsContent h2{
-font-size:30px;
 }
 
 .continueBox h1{
-font-size:38px;
-}
+
+font-size:40px;
 
 }
 
-/* ===== THE END ===== */
+}
