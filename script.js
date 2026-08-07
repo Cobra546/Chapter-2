@@ -1,9 +1,8 @@
 /*=================================================
  OUR STORY - CHAPTER TWO
  SCRIPT.JS
- VERSION 3
- PART 1
-==================================================*/
+ VERSION 3 - CLEAN + TEST MODE
+=================================================*/
 
 /*==========================
 Elements
@@ -11,77 +10,51 @@ Elements
 
 const pages = document.querySelectorAll(".page");
 
-const loadingPage = document.getElementById("loadingPage");
-const loveGate = document.getElementById("loveGate");
-const heroPage = document.getElementById("heroPage");
-
 const loadingFill = document.getElementById("loadingFill");
-
 const loveInput = document.getElementById("loveInput");
 const unlockBtn = document.getElementById("unlockBtn");
 const gateMessage = document.getElementById("gateMessage");
-
-const beginJourney =
-document.getElementById("beginJourney");
-
-/*==========================
-Current Page
-==========================*/
+const beginJourney = document.getElementById("beginJourney");
+const letterText = document.getElementById("letterText");
+const nextLetterBtn = document.getElementById("nextLetterBtn");
+const selfiePage = document.getElementById("selfiePage");
+const memoryWall = document.getElementById("memoryWall");
+const replayButton = document.getElementById("replayBtn");
+const restartButton = document.getElementById("restartBtn");
+const cameraStatus = document.getElementById("cameraStatus");
 
 let currentPage = "loadingPage";
+let letterIndex = 0;
+let letterFinished = false;
 
 /*==========================
 Positive Words
 ==========================*/
 
 const positiveWords = [
-
-"love",
-
-"cute",
-
-"handsome",
-
-"beautiful",
-
-"pretty",
-
-"lovely",
-
-"amazing",
-
-"perfect",
-
-"angel",
-
-"princess",
-
-"queen",
-
-"sweet",
-
-"adorable",
-
-"mine",
-
-"soulmate",
-
-"sunshine",
-
-"i love you",
-
-"my love",
-
-"my queen",
-
-"my princess",
-
-"forever together",
-
-"always yours",
-
-"best girlfriend"
-
+    "love",
+    "cute",
+    "handsome",
+    "beautiful",
+    "pretty",
+    "lovely",
+    "amazing",
+    "perfect",
+    "angel",
+    "princess",
+    "queen",
+    "sweet",
+    "adorable",
+    "mine",
+    "soulmate",
+    "sunshine",
+    "i love you",
+    "my love",
+    "my queen",
+    "my princess",
+    "forever together",
+    "always yours",
+    "best girlfriend"
 ];
 
 /*==========================
@@ -89,27 +62,22 @@ Show Page
 ==========================*/
 
 function showPage(id){
+    pages.forEach(page => page.classList.remove("active"));
 
-pages.forEach(page=>{
+    const target = document.getElementById(id);
 
-page.classList.remove("active");
+    if(!target){
+        console.error("Page not found:", id);
+        return;
+    }
 
-});
+    target.classList.add("active");
+    currentPage = id;
 
-document
-.getElementById(id)
-.classList.add("active");
-
-currentPage=id;
-
-window.scrollTo({
-
-top:0,
-
-behavior:"auto"
-
-});
-
+    window.scrollTo({
+        top: 0,
+        behavior: "auto"
+    });
 }
 
 /*==========================
@@ -118,221 +86,151 @@ Loading Animation
 
 let loading = 0;
 
-const loadingInterval =
+const loadingInterval = setInterval(() => {
+    loading++;
 
-setInterval(()=>{
+    if(loadingFill){
+        loadingFill.style.width = loading + "%";
+    }
 
-loading++;
+    if(loading >= 100){
+        clearInterval(loadingInterval);
 
-loadingFill.style.width=
-
-loading+"%";
-
-if(loading>=100){
-
-clearInterval(
-
-loadingInterval
-
-);
-
-setTimeout(()=>{
-
-startWebsite();
-
-},500);
-
-}
-
-},30);
+        setTimeout(() => {
+            startWebsite();
+        }, 500);
+    }
+}, 30);
 
 /*==========================
-Website Start
+Website Start + TEST MODE
 ==========================*/
 
 function startWebsite(){
 
-const params =
+    const params = new URLSearchParams(window.location.search);
+    const testMode = params.get("test");
+    const page = params.get("page");
 
-new URLSearchParams(
+    /*=====================================
+      TEST MODE
 
-window.location.search
+      Examples:
+      ?test=1
+      ?test=1&page=quiz
+      ?test=1&page=memory
+      ?test=1&page=gift
+      ?test=1&page=future
+      ?test=1&page=ending
+      ?test=1&page=hero
+    =====================================*/
 
-);
+    if(testMode === "1"){
 
-const testMode =
+        console.log("🧪 TEST MODE ON");
 
-params.get("test");
+        switch(page){
 
-const page =
+            case "quiz":
+                showPage("quizPage");
+                if(typeof startQuiz === "function"){
+                    startQuiz();
+                }
+                return;
 
-params.get("page");
+            case "memory":
+                showPage("memoryWall");
+                return;
 
-/*==========
+            case "gift":
+                showPage("giftPage");
+                return;
 
-TEST MODE
+            case "future":
+                showPage("futurePage");
+                if(typeof startFutureStory === "function"){
+                    startFutureStory();
+                }
+                return;
 
-===========*/
+            case "ending":
+                showPage("postCreditPage");
+                return;
 
-if(testMode==="1"){
+            case "camera":
+                showPage("cameraPage");
+                if(typeof openCameraPage === "function"){
+                    openCameraPage();
+                }
+                return;
 
-if(page==="quiz"){
+            case "hero":
+                showPage("heroPage");
+                return;
 
-showPage("quizPage");
+            default:
+                showPage("heroPage");
+                return;
+        }
+    }
 
-return;
-
-}
-
-if(page==="memory"){
-
-showPage("memoryWall");
-
-return;
-
-}
-
-if(page==="gift"){
-
-showPage("giftPage");
-
-return;
-
-}
-
-if(page==="future"){
-
-showPage("futurePage");
-
-return;
-
-}
-
-if(page==="ending"){
-
-showPage("postCreditPage");
-
-return;
-
-}
-
-showPage("heroPage");
-
-return;
-
-}
-
-/*==========
-
-NORMAL MODE
-
-===========*/
-
-showPage("loveGate");
-
+    /* NORMAL MODE */
+    showPage("loveGate");
 }
 
 /*==========================
 Unlock Logic
 ==========================*/
 
-unlockBtn.addEventListener(
-
-"click",
-
-unlockWebsite
-
-);
-
-loveInput.addEventListener(
-
-"keydown",
-
-e=>{
-
-if(e.key==="Enter"){
-
-unlockWebsite();
-
+if(unlockBtn){
+    unlockBtn.addEventListener("click", unlockWebsite);
 }
 
-});
+if(loveInput){
+    loveInput.addEventListener("keydown", event => {
+        if(event.key === "Enter"){
+            unlockWebsite();
+        }
+    });
+}
 
 function unlockWebsite(){
 
-const value=
+    const value = loveInput.value.toLowerCase().trim();
 
-loveInput.value
+    if(value.length === 0){
+        gateMessage.textContent = "Say something sweet ❤️";
+        return;
+    }
 
-.toLowerCase()
+    const matched = positiveWords.some(word => value.includes(word));
 
-.trim();
+    if(!matched){
+        gateMessage.textContent =
+            "Only positive words can unlock our story ❤️";
+        return;
+    }
 
-if(value.length===0){
+    gateMessage.textContent = "Unlocked ❤️";
 
-gateMessage.innerHTML=
-
-"Say something sweet ❤️";
-
-return;
-
-}
-
-const matched=
-
-positiveWords.some(
-
-word=>
-
-value.includes(word)
-
-);
-
-if(!matched){
-
-gateMessage.innerHTML=
-
-"Only positive words can unlock our story ❤️";
-
-return;
-
-}
-
-gateMessage.innerHTML=
-
-"Unlocked ❤️";
-
-setTimeout(()=>{
-
-showPage("heroPage");
-
-},700);
-
+    setTimeout(() => {
+        showPage("heroPage");
+    }, 700);
 }
 
 /*==========================
-Hero Button
+Hero → Letter
 ==========================*/
 
-
-/*=================================================
- VERSION 3
- PART 2
- LOVE LETTER • TYPEWRITER • CAMERA TRANSITION
-==================================================*/
-
-/*==========================
-Elements
-==========================*/
-
-const letterText =
-document.getElementById("letterText");
-
-const nextLetterBtn =
-document.getElementById("nextLetterBtn");
+if(beginJourney){
+    beginJourney.addEventListener("click", () => {
+        showPage("letterPage");
+        startLetter();
+    });
+}
 
 /*==========================
-Letter
+Love Letter
 ==========================*/
 
 const letterMessage = `Dear ❤️,
@@ -356,642 +254,194 @@ makes you smile.
 
 Happy Anniversary ❤️`;
 
-/*==========================
-Typewriter
-==========================*/
-
-let letterIndex = 0;
-let letterFinished = false;
-
 function startLetter(){
-
-letterText.innerHTML = "";
-
-nextLetterBtn.classList.add("hidden");
-
-letterIndex = 0;
-
-letterFinished = false;
-
-typeLetter();
-
-}
-
-function typeLetter(){
-
-if(letterIndex >= letterMessage.length){
-
-letterFinished = true;
-
-nextLetterBtn.classList.remove("hidden");
-
-return;
-
-}
-
-letterText.innerHTML +=
-
-letterMessage.charAt(letterIndex);
-
-letterIndex++;
-
-setTimeout(typeLetter,35);
-
-}
-
-/*==========================
-Open Letter
-==========================*/
-
-document
-.getElementById("beginJourney")
-.addEventListener(
-
-"click",
-
-()=>{
-
-showPage("letterPage");
-
-setTimeout(startLetter,300);
-
-});
-
-/*==========================
-Continue
-==========================*/
-
-nextLetterBtn.addEventListener(
-
-"click",
-
-()=>{
-
-showPage("cameraPage");
-
-/* Camera Part 3 */
-
-});
-
-/*==========================
-Replay Protection
-==========================*/
-
-function resetLetter(){
-
-letterIndex = 0;
-
-letterFinished = false;
-
-letterText.innerHTML = "";
-
-nextLetterBtn.classList.add(
-
-"hidden"
-
-);
-
-}
-/*=================================================
- SCRIPT.JS
- VERSION 3
- PART 3
- LETTER • CAMERA • MEMORY WALL • QUIZ
-=================================================*/
-
-/*=========================
-Letter Text
-=========================*/
-
-const letterMessage = `Some stories are written with words...
-
-Ours was written with memories,
-smiles, little moments,
-and everything in between. ❤️
-
-Chapter Two is another page
-in a story I never want to forget.`;
-
-let letterIndex = 0;
-
-
-/*=========================
-Start Letter
-=========================*/
-
-function startLetter(){
-
-    letterIndex = 0;
-
     letterText.textContent = "";
-
     nextLetterBtn.classList.add("hidden");
-
+    letterIndex = 0;
+    letterFinished = false;
     typeLetter();
-
 }
 
-
-/*=========================
-Letter Typewriter
-=========================*/
-
 function typeLetter(){
-
     if(letterIndex >= letterMessage.length){
-
-        nextLetterBtn.classList.remove(
-            "hidden"
-        );
-
+        letterFinished = true;
+        nextLetterBtn.classList.remove("hidden");
         return;
-
     }
 
-    letterText.textContent +=
-        letterMessage.charAt(letterIndex);
-
+    letterText.textContent += letterMessage.charAt(letterIndex);
     letterIndex++;
 
-    setTimeout(
-        typeLetter,
-        35
-    );
-
+    setTimeout(typeLetter, 35);
 }
 
-
-/*=========================
-Hero → Letter
-=========================*/
-
-if(beginJourney){
-
-    beginJourney.addEventListener(
-        "click",
-        ()=>{
-
-            showPage("letterPage");
-
-            startLetter();
-
-        }
-    );
-
-}
-
-
-/*=========================
+/*==========================
 Letter → Camera
-=========================*/
+==========================*/
 
-/*
-   Camera navigation is handled by
-   camera.js.
-*/
+if(nextLetterBtn){
+    nextLetterBtn.addEventListener("click", () => {
+        if(typeof openCameraPage === "function"){
+            openCameraPage();
+        }else{
+            showPage("cameraPage");
+        }
+    });
+}
 
+function resetLetter(){
+    letterIndex = 0;
+    letterFinished = false;
 
-/*=========================
-Camera → Selfie
-=========================*/
+    if(letterText){
+        letterText.textContent = "";
+    }
 
-/*
-   camera.js handles capture,
-   upload and selfie display.
-*/
+    if(nextLetterBtn){
+        nextLetterBtn.classList.add("hidden");
+    }
+}
 
-
-/*=========================
+/*==========================
 Selfie → Memory Wall
-=========================*/
-
-const selfiePage =
-    document.getElementById(
-        "selfiePage"
-    );
+==========================*/
 
 if(selfiePage){
-
-    selfiePage.addEventListener(
-        "click",
-        ()=>{
-
-            showPage("memoryWall");
-
-        }
-    );
-
+    selfiePage.addEventListener("click", () => {
+        showPage("memoryWall");
+    });
 }
 
-
-/*=========================
+/*==========================
 Memory Wall → Quiz
-=========================*/
-
-const memoryWall =
-    document.getElementById(
-        "memoryWall"
-    );
+==========================*/
 
 if(memoryWall){
 
     let wallTimer = null;
 
     function startMemoryWall(){
-
         clearTimeout(wallTimer);
 
-        wallTimer = setTimeout(
-            ()=>{
-
-                showPage("quizPage");
-
-                if(
-                    typeof startQuiz ===
-                    "function"
-                ){
-
-                    startQuiz();
-
-                }
-
-            },
-            7000
-        );
-
-    }
-
-    memoryWall.addEventListener(
-        "click",
-        ()=>{
-
-            clearTimeout(wallTimer);
-
+        wallTimer = setTimeout(() => {
             showPage("quizPage");
 
-            if(
-                typeof startQuiz ===
-                "function"
-            ){
-
+            if(typeof startQuiz === "function"){
                 startQuiz();
-
             }
+        }, 7000);
+    }
 
+    memoryWall.addEventListener("click", () => {
+        clearTimeout(wallTimer);
+        showPage("quizPage");
+
+        if(typeof startQuiz === "function"){
+            startQuiz();
         }
-    );
+    });
 
-    /*
-       Start automatic transition
-       when Memory Wall becomes visible.
-    */
-
-    const observer =
-        new MutationObserver(()=>{
-
-            if(
-                memoryWall.classList.contains(
-                    "active"
-                )
-            ){
-
-                startMemoryWall();
-
-            }
-
-        });
-
-    observer.observe(
-        memoryWall,
-        {
-            attributes:true,
-            attributeFilter:["class"]
+    const observer = new MutationObserver(() => {
+        if(memoryWall.classList.contains("active")){
+            startMemoryWall();
         }
-    );
+    });
 
+    observer.observe(memoryWall, {
+        attributes: true,
+        attributeFilter: ["class"]
+    });
 }
 
-
-/*=========================
-Quiz → Stars
-=========================*/
-
-/*
-   quiz.js handles the final
-   transition to starsPage.
-*/
-
-
-/*=========================
-Stars → Future
-=========================*/
-
-/*
-   stars.js handles this flow.
-*/
-
-
-/*=========================
-Future → Final Letter
-=========================*/
-
-/*
-   stars.js handles this flow.
-*/
-
-
-/*=========================
-Final Letter → Seal
-=========================*/
-
-/*
-   stars.js handles this flow.
-*/
-
-
-/*=========================
-Seal → Gift
-=========================*/
-
-/*
-   stars.js handles this flow.
-*/
-
-
-/*=========================
-Gift → Continue
-=========================*/
-
-/*
-   stars.js handles this flow.
-*/
-
-
-/*=========================
-Continue → Replay
-=========================*/
-
-/*
-   stars.js handles this flow.
-*/
-
-
-console.log(
-    "❤️ Script.js Version 3 Part 3 loaded."
-);
-/*=================================================
- SCRIPT.JS
- VERSION 3
- PART 4
- REPLAY • RESTART • CLEANUP • EFFECTS
-=================================================*/
-
-/*=========================
-Replay Story
-=========================*/
-
-const replayButton =
-    document.getElementById("replayBtn");
+/*==========================
+Replay
+==========================*/
 
 if(replayButton){
-
-    replayButton.addEventListener(
-        "click",
-        ()=>{
-
-            resetStory();
-
-            showPage("heroPage");
-
-        }
-    );
-
+    replayButton.addEventListener("click", () => {
+        resetStory();
+        showPage("heroPage");
+    });
 }
 
-
-/*=========================
-Restart Story
-=========================*/
-
-const restartButton =
-    document.getElementById("restartBtn");
+/*==========================
+Restart
+==========================*/
 
 if(restartButton){
-
-    restartButton.addEventListener(
-        "click",
-        ()=>{
-
-            resetStory();
-
-            showPage("loveGate");
-
-        }
-    );
-
+    restartButton.addEventListener("click", () => {
+        resetStory();
+        showPage("loveGate");
+    });
 }
 
-
-/*=========================
+/*==========================
 Reset Story
-=========================*/
+==========================*/
 
 function resetStory(){
 
-    /* Stop camera */
-
-    if(
-        typeof stopCamera ===
-        "function"
-    ){
-
+    if(typeof stopCamera === "function"){
         stopCamera();
-
     }
 
-
-    /* Reset Quiz */
-
-    if(
-        typeof resetQuiz ===
-        "function"
-    ){
-
+    if(typeof resetQuiz === "function"){
         resetQuiz();
-
     }
 
-
-    /* Reset Stars */
-
-    if(
-        typeof resetStars ===
-        "function"
-    ){
-
+    if(typeof resetStars === "function"){
         resetStars();
-
     }
 
-
-    /* Reset Letter */
-
-    if(
-        typeof letterText !==
-        "undefined"
-    ){
-
-        letterText.textContent = "";
-
-    }
-
-    if(
-        typeof finalLetterText !==
-        "undefined"
-    ){
-
-        finalLetterText.textContent = "";
-
-    }
-
-
-    /* Reset Effects */
-
+    resetLetter();
     clearEffects();
 
-
-    /* Reset Camera Status */
-
-    if(cameraStatusExists()){
-
-        cameraStatus.textContent =
-            "Smile... 😊";
-
+    if(cameraStatus){
+        cameraStatus.textContent = "Smile... 😊";
     }
-
-
-    console.log(
-        "🔄 Story reset."
-    );
-
 }
 
-
-/*=========================
+/*==========================
 Clear Effects
-=========================*/
+==========================*/
 
 function clearEffects(){
-
     const effects = [
-
         "heartRain",
         "rosePetals",
         "fireworks",
         "flashEffect",
         "confetti"
-
     ];
 
-    effects.forEach(id=>{
-
-        const element =
-            document.getElementById(id);
+    effects.forEach(id => {
+        const element = document.getElementById(id);
 
         if(element){
-
             element.innerHTML = "";
-
             element.style.opacity = "";
-
         }
-
     });
-
 }
 
+/*==========================
+Cleanup
+==========================*/
 
-/*=========================
-Camera Status Check
-=========================*/
-
-function cameraStatusExists(){
-
-    return typeof cameraStatus !==
-        "undefined" &&
-        cameraStatus;
-
-}
-
-
-/*=========================
-Page Visibility Cleanup
-=========================*/
-
-document.addEventListener(
-    "visibilitychange",
-    ()=>{
-
-        if(document.hidden){
-
-            if(
-                typeof stopCamera ===
-                "function"
-            ){
-
-                stopCamera();
-
-            }
-
-        }
-
+document.addEventListener("visibilitychange", () => {
+    if(document.hidden && typeof stopCamera === "function"){
+        stopCamera();
     }
-);
+});
 
-
-/*=========================
-Prevent Camera on Exit
-=========================*/
-
-window.addEventListener(
-    "beforeunload",
-    ()=>{
-
-        if(
-            typeof stopCamera ===
-            "function"
-        ){
-
-            stopCamera();
-
-        }
-
+window.addEventListener("beforeunload", () => {
+    if(typeof stopCamera === "function"){
+        stopCamera();
     }
-);
+});
 
+window.addEventListener("error", event => {
+    console.error("Website Error:", event.error || event.message);
+});
 
-/*=========================
-Global Error Logger
-=========================*/
-
-window.addEventListener(
-    "error",
-    event=>{
-
-        console.error(
-            "Website Error:",
-            event.error ||
-            event.message
-        );
-
-    }
-);
-
-
-/*=========================
-Version 3 Complete
-=========================*/
-
-console.log(
-    "❤️ Our Story — Chapter Two | Version 3 loaded."
-);
+console.log("❤️ Our Story — Chapter Two | Version 3 loaded.");
