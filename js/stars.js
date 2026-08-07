@@ -10,6 +10,9 @@ function startStars(){
   if(!bg) return;
   bg.innerHTML=""; collectedStars=0;
   if(btn) btn.classList.add("hidden");
+  const content=document.querySelector("#starsPage .starsContent");
+  if(content){ content.style.opacity="1"; content.style.transform="none"; content.style.pointerEvents=""; }
+  setTimeout(hideStarsIntro,1500);
   for(let i=0;i<TOTAL_STARS;i++){
     const star=document.createElement("button");
     star.type="button"; star.className="star"; star.setAttribute("aria-label","Memory star");
@@ -18,6 +21,15 @@ function startStars(){
     star.addEventListener("click",()=>collectStar(star),{once:true});
     bg.appendChild(star);
   }
+}
+
+function hideStarsIntro(){
+  const content=document.querySelector("#starsPage .starsContent");
+  if(!content) return;
+  content.style.transition="opacity .4s ease, transform .4s ease";
+  content.style.opacity="0";
+  content.style.transform="translateY(-8px)";
+  content.style.pointerEvents="none";
 }
 
 function collectStar(star){
@@ -100,6 +112,8 @@ function resetStars(){
   const b=document.getElementById("starsContinue"); if(b) b.classList.add("hidden");
   const n=document.getElementById("futureNext"); if(n) n.classList.add("hidden");
   const s=document.getElementById("sealChapterBtn"); if(s) s.classList.add("hidden");
+  const content=document.querySelector("#starsPage .starsContent");
+  if(content){ content.style.opacity="1"; content.style.transform="none"; content.style.pointerEvents=""; }
 }
 
 function createFireworks(){
