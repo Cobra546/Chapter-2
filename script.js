@@ -452,3 +452,546 @@ nextLetterBtn.classList.add(
 );
 
 }
+/*=================================================
+ SCRIPT.JS
+ VERSION 3
+ PART 3
+ LETTER • CAMERA • MEMORY WALL • QUIZ
+=================================================*/
+
+/*=========================
+Letter Text
+=========================*/
+
+const letterMessage = `Some stories are written with words...
+
+Ours was written with memories,
+smiles, little moments,
+and everything in between. ❤️
+
+Chapter Two is another page
+in a story I never want to forget.`;
+
+let letterIndex = 0;
+
+
+/*=========================
+Start Letter
+=========================*/
+
+function startLetter(){
+
+    letterIndex = 0;
+
+    letterText.textContent = "";
+
+    nextLetterBtn.classList.add("hidden");
+
+    typeLetter();
+
+}
+
+
+/*=========================
+Letter Typewriter
+=========================*/
+
+function typeLetter(){
+
+    if(letterIndex >= letterMessage.length){
+
+        nextLetterBtn.classList.remove(
+            "hidden"
+        );
+
+        return;
+
+    }
+
+    letterText.textContent +=
+        letterMessage.charAt(letterIndex);
+
+    letterIndex++;
+
+    setTimeout(
+        typeLetter,
+        35
+    );
+
+}
+
+
+/*=========================
+Hero → Letter
+=========================*/
+
+if(beginJourney){
+
+    beginJourney.addEventListener(
+        "click",
+        ()=>{
+
+            showPage("letterPage");
+
+            startLetter();
+
+        }
+    );
+
+}
+
+
+/*=========================
+Letter → Camera
+=========================*/
+
+/*
+   Camera navigation is handled by
+   camera.js.
+*/
+
+
+/*=========================
+Camera → Selfie
+=========================*/
+
+/*
+   camera.js handles capture,
+   upload and selfie display.
+*/
+
+
+/*=========================
+Selfie → Memory Wall
+=========================*/
+
+const selfiePage =
+    document.getElementById(
+        "selfiePage"
+    );
+
+if(selfiePage){
+
+    selfiePage.addEventListener(
+        "click",
+        ()=>{
+
+            showPage("memoryWall");
+
+        }
+    );
+
+}
+
+
+/*=========================
+Memory Wall → Quiz
+=========================*/
+
+const memoryWall =
+    document.getElementById(
+        "memoryWall"
+    );
+
+if(memoryWall){
+
+    let wallTimer = null;
+
+    function startMemoryWall(){
+
+        clearTimeout(wallTimer);
+
+        wallTimer = setTimeout(
+            ()=>{
+
+                showPage("quizPage");
+
+                if(
+                    typeof startQuiz ===
+                    "function"
+                ){
+
+                    startQuiz();
+
+                }
+
+            },
+            7000
+        );
+
+    }
+
+    memoryWall.addEventListener(
+        "click",
+        ()=>{
+
+            clearTimeout(wallTimer);
+
+            showPage("quizPage");
+
+            if(
+                typeof startQuiz ===
+                "function"
+            ){
+
+                startQuiz();
+
+            }
+
+        }
+    );
+
+    /*
+       Start automatic transition
+       when Memory Wall becomes visible.
+    */
+
+    const observer =
+        new MutationObserver(()=>{
+
+            if(
+                memoryWall.classList.contains(
+                    "active"
+                )
+            ){
+
+                startMemoryWall();
+
+            }
+
+        });
+
+    observer.observe(
+        memoryWall,
+        {
+            attributes:true,
+            attributeFilter:["class"]
+        }
+    );
+
+}
+
+
+/*=========================
+Quiz → Stars
+=========================*/
+
+/*
+   quiz.js handles the final
+   transition to starsPage.
+*/
+
+
+/*=========================
+Stars → Future
+=========================*/
+
+/*
+   stars.js handles this flow.
+*/
+
+
+/*=========================
+Future → Final Letter
+=========================*/
+
+/*
+   stars.js handles this flow.
+*/
+
+
+/*=========================
+Final Letter → Seal
+=========================*/
+
+/*
+   stars.js handles this flow.
+*/
+
+
+/*=========================
+Seal → Gift
+=========================*/
+
+/*
+   stars.js handles this flow.
+*/
+
+
+/*=========================
+Gift → Continue
+=========================*/
+
+/*
+   stars.js handles this flow.
+*/
+
+
+/*=========================
+Continue → Replay
+=========================*/
+
+/*
+   stars.js handles this flow.
+*/
+
+
+console.log(
+    "❤️ Script.js Version 3 Part 3 loaded."
+);
+/*=================================================
+ SCRIPT.JS
+ VERSION 3
+ PART 4
+ REPLAY • RESTART • CLEANUP • EFFECTS
+=================================================*/
+
+/*=========================
+Replay Story
+=========================*/
+
+const replayButton =
+    document.getElementById("replayBtn");
+
+if(replayButton){
+
+    replayButton.addEventListener(
+        "click",
+        ()=>{
+
+            resetStory();
+
+            showPage("heroPage");
+
+        }
+    );
+
+}
+
+
+/*=========================
+Restart Story
+=========================*/
+
+const restartButton =
+    document.getElementById("restartBtn");
+
+if(restartButton){
+
+    restartButton.addEventListener(
+        "click",
+        ()=>{
+
+            resetStory();
+
+            showPage("loveGate");
+
+        }
+    );
+
+}
+
+
+/*=========================
+Reset Story
+=========================*/
+
+function resetStory(){
+
+    /* Stop camera */
+
+    if(
+        typeof stopCamera ===
+        "function"
+    ){
+
+        stopCamera();
+
+    }
+
+
+    /* Reset Quiz */
+
+    if(
+        typeof resetQuiz ===
+        "function"
+    ){
+
+        resetQuiz();
+
+    }
+
+
+    /* Reset Stars */
+
+    if(
+        typeof resetStars ===
+        "function"
+    ){
+
+        resetStars();
+
+    }
+
+
+    /* Reset Letter */
+
+    if(
+        typeof letterText !==
+        "undefined"
+    ){
+
+        letterText.textContent = "";
+
+    }
+
+    if(
+        typeof finalLetterText !==
+        "undefined"
+    ){
+
+        finalLetterText.textContent = "";
+
+    }
+
+
+    /* Reset Effects */
+
+    clearEffects();
+
+
+    /* Reset Camera Status */
+
+    if(cameraStatusExists()){
+
+        cameraStatus.textContent =
+            "Smile... 😊";
+
+    }
+
+
+    console.log(
+        "🔄 Story reset."
+    );
+
+}
+
+
+/*=========================
+Clear Effects
+=========================*/
+
+function clearEffects(){
+
+    const effects = [
+
+        "heartRain",
+        "rosePetals",
+        "fireworks",
+        "flashEffect",
+        "confetti"
+
+    ];
+
+    effects.forEach(id=>{
+
+        const element =
+            document.getElementById(id);
+
+        if(element){
+
+            element.innerHTML = "";
+
+            element.style.opacity = "";
+
+        }
+
+    });
+
+}
+
+
+/*=========================
+Camera Status Check
+=========================*/
+
+function cameraStatusExists(){
+
+    return typeof cameraStatus !==
+        "undefined" &&
+        cameraStatus;
+
+}
+
+
+/*=========================
+Page Visibility Cleanup
+=========================*/
+
+document.addEventListener(
+    "visibilitychange",
+    ()=>{
+
+        if(document.hidden){
+
+            if(
+                typeof stopCamera ===
+                "function"
+            ){
+
+                stopCamera();
+
+            }
+
+        }
+
+    }
+);
+
+
+/*=========================
+Prevent Camera on Exit
+=========================*/
+
+window.addEventListener(
+    "beforeunload",
+    ()=>{
+
+        if(
+            typeof stopCamera ===
+            "function"
+        ){
+
+            stopCamera();
+
+        }
+
+    }
+);
+
+
+/*=========================
+Global Error Logger
+=========================*/
+
+window.addEventListener(
+    "error",
+    event=>{
+
+        console.error(
+            "Website Error:",
+            event.error ||
+            event.message
+        );
+
+    }
+);
+
+
+/*=========================
+Version 3 Complete
+=========================*/
+
+console.log(
+    "❤️ Our Story — Chapter Two | Version 3 loaded."
+);
