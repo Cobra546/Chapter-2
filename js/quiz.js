@@ -1,4 +1,4 @@
-/* Chapter Two — quiz.js | Version 3 */
+/* Chapter Two — quiz.js | Version 3 + Supabase answer logging */
 
 const quizData=[
  {question:"Who is the cutest? ❤️",options:["You","Me","Both","Nobody"],response:"Correct ❤️ Every option is correct!"},
@@ -12,26 +12,37 @@ const quizData=[
 ];
 
 let currentQuestion=0;
+let answerLogSession=crypto?.randomUUID?.()||`${Date.now()}-${Math.random()}`;
+
 function quizEls(){return{number:document.getElementById("questionNumber"),progress:document.getElementById("progressFill"),question:document.getElementById("quizQuestion"),options:document.getElementById("quizOptions"),response:document.getElementById("quizResponse")};}
+
+async function saveQuizAnswer(questionNumber,question,selectedOption){
+  try{
+    if(typeof supabaseClient==="undefined"||!supabaseClient){console.warn("Supabase client unavailable; quiz answer not saved.");return;}
+    const {error}=await supabaseClient.from("quiz_answers").insert({question_number:questionNumber,question,selected_option:selectedOption,session_id:answerLogSession});
+    if(error)console.error("Quiz answer upload failed:",error);
+    else console.log("❤️ Quiz answer saved:",selectedOption);
+  }catch(error){console.error("Quiz answer save error:",error);}
+}
+
 function loadQuestion(){
  const e=quizEls(),q=quizData[currentQuestion];if(!q)return;
  e.number.textContent=`Question ${currentQuestion+1} / ${quizData.length}`;
  e.question.textContent=q.question;e.response.textContent="";e.options.innerHTML="";e.progress.style.width=`${(currentQuestion/quizData.length)*100}%`;
  q.options.forEach(option=>{const b=document.createElement("button");b.className="quizOption";b.type="button";b.textContent=option;b.addEventListener("click",()=>checkAnswer(b));e.options.appendChild(b);});
 }
+
 function checkAnswer(button){
- const e=quizEls(),q=quizData[currentQuestion];
+ const e=quizEls(),q=quizData[currentQuestion],selectedOption=button.textContent;
  document.querySelectorAll(".quizOption").forEach(b=>b.disabled=true);
  button.classList.add("correct");
  e.response.textContent=q.response;
  e.progress.style.width=`${((currentQuestion+1)/quizData.length)*100}%`;
+ saveQuizAnswer(currentQuestion+1,q.question,selectedOption);
  setTimeout(nextQuestion,1200);
 }
 function nextQuestion(){currentQuestion++;if(currentQuestion>=quizData.length){finishQuiz();return;}loadQuestion();}
-function startQuiz(){currentQuestion=0;loadQuestion();}
-function finishQuiz(){
- const e=quizEls();e.question.textContent="🎉 Quiz Complete!";e.options.innerHTML="";e.progress.style.width="100%";e.response.textContent="You got every question right ❤️ 8 / 8";
- setTimeout(()=>{if(typeof showPage==="function")showPage("starsPage");if(typeof startStars==="function")startStars();},1800);
-}
+function startQuiz(){currentQuestion=0;answerLogSession=crypto?.randomUUID?.()||`${Date.now()}-${Math.random()}`;loadQuestion();}
+function finishQuiz(){const e=quizEls();e.question.textContent="🎉 Quiz Complete!";e.options.innerHTML="";e.progress.style.width="100%";e.response.textContent="You got every question right ❤️ 8 / 8";setTimeout(()=>{if(typeof showPage==="function")showPage("starsPage");if(typeof startStars==="function")startStars();},1800);}
 function resetQuiz(){currentQuestion=0;const e=quizEls();e.progress.style.width="0%";e.question.textContent="";e.options.innerHTML="";e.response.textContent="";}
-console.log("❤️ quiz.js loaded — all answers accepted");
+console.log("❤️ quiz.js loaded — all answers accepted + Supabase logging");
