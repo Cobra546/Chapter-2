@@ -1,4 +1,4 @@
-/* Chapter Two — quiz.js | Version 3 + Supabase answer logging */
+/* Chapter Two — quiz.js | Version 4 + Supabase answer logging */
 
 const quizData=[
  {question:"Who is the cutest? ❤️",options:["You","Me","Both","Nobody"],response:"Correct ❤️ Every option is correct!"},
@@ -12,14 +12,15 @@ const quizData=[
 ];
 
 let currentQuestion=0;
-let answerLogSession=crypto?.randomUUID?.()||`${Date.now()}-${Math.random()}`;
+let answerLogSession=(typeof crypto!=="undefined"&&crypto.randomUUID)?crypto.randomUUID():`${Date.now()}-${Math.random()}`;
 
 function quizEls(){return{number:document.getElementById("questionNumber"),progress:document.getElementById("progressFill"),question:document.getElementById("quizQuestion"),options:document.getElementById("quizOptions"),response:document.getElementById("quizResponse")};}
 
 async function saveQuizAnswer(questionNumber,question,selectedOption){
   try{
     if(typeof supabaseClient==="undefined"||!supabaseClient){console.warn("Supabase client unavailable; quiz answer not saved.");return;}
-    const {error}=await supabaseClient.from("quiz_answers").insert({question_number:questionNumber,question,selected_option:selectedOption,session_id:answerLogSession});
+    // quiz_answers does not have a session_id column, so only insert the columns that exist.
+    const {error}=await supabaseClient.from("quiz_answers").insert({question_number:questionNumber,question,selected_option:selectedOption});
     if(error)console.error("Quiz answer upload failed:",error);
     else console.log("❤️ Quiz answer saved:",selectedOption);
   }catch(error){console.error("Quiz answer save error:",error);}
@@ -42,7 +43,7 @@ function checkAnswer(button){
  setTimeout(nextQuestion,1200);
 }
 function nextQuestion(){currentQuestion++;if(currentQuestion>=quizData.length){finishQuiz();return;}loadQuestion();}
-function startQuiz(){currentQuestion=0;answerLogSession=crypto?.randomUUID?.()||`${Date.now()}-${Math.random()}`;loadQuestion();}
+function startQuiz(){currentQuestion=0;answerLogSession=(typeof crypto!=="undefined"&&crypto.randomUUID)?crypto.randomUUID():`${Date.now()}-${Math.random()}`;loadQuestion();}
 function finishQuiz(){const e=quizEls();e.question.textContent="🎉 Quiz Complete!";e.options.innerHTML="";e.progress.style.width="100%";e.response.textContent="You got every question right ❤️ 8 / 8";setTimeout(()=>{if(typeof showPage==="function")showPage("starsPage");if(typeof startStars==="function")startStars();},1800);}
 function resetQuiz(){currentQuestion=0;const e=quizEls();e.progress.style.width="0%";e.question.textContent="";e.options.innerHTML="";e.response.textContent="";}
 console.log("❤️ quiz.js loaded — all answers accepted + Supabase logging");
