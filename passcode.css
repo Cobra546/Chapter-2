@@ -1,0 +1,14 @@
+/* Heart passcode dial pad */
+.dialGate{max-width:390px}
+.dialGate .gateIcon{margin-bottom:10px}
+.passcodeDots{display:flex;justify-content:center;gap:14px;margin:18px 0 22px}
+.passcodeDots span{width:14px;height:14px;border-radius:50%;border:2px solid #FF82B2;transition:.2s}
+.passcodeDots span.filled{background:#FF4D8D;box-shadow:0 0 14px rgba(255,77,141,.8);transform:scale(1.12)}
+.heartKeypad{width:min(300px,88vw);margin:0 auto;display:grid;grid-template-columns:repeat(3,1fr);gap:13px;justify-items:center}
+.heartKey{width:72px;height:72px;border:0;background:transparent;color:white;font-family:"Poppins",sans-serif;font-size:19px;font-weight:700;cursor:pointer;position:relative;isolation:isolate;filter:drop-shadow(0 8px 10px rgba(255,77,141,.18));transition:transform .18s ease}
+.heartKey::before{content:"♥";position:absolute;inset:0;display:flex;align-items:center;justify-content:center;font-size:76px;line-height:1;color:#FF4D8D;z-index:-1;text-shadow:0 0 18px rgba(255,77,141,.5)}
+.heartKey:active{transform:scale(.88)}
+.heartKeyZero{grid-column:2}
+.unlockDialBtn{width:100%;margin-top:20px;padding:15px;border:none;border-radius:16px;background:linear-gradient(90deg,#FF4D8D,#ff6fa5);color:white;font-size:16px;font-weight:600;cursor:pointer;transition:.3s}
+.unlockDialBtn:active{transform:scale(.97)}
+@media(max-width:420px){.dialGate{padding:22px 16px}.heartKey{width:64px;height:64px}.heartKey::before{font-size:68px}.heartKeypad{gap:10px}.dialGate h2{font-size:22px}}
