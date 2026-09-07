@@ -1,6 +1,6 @@
 /* Chapter Two — supabase.js | Version 4 */
 const SUPABASE_URL="https://bhtyestavehwaymfozxw.supabase.co";
-const SUPABASE_ANON_KEY="eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJyb2xlIjoiYW5vbiIsImlhdCI6MTc4NTg0OTA4OSwiZXhwIjoyMTAxNDI1MDg5fQ.4-8U1fe5LQVTsuFa1kgc8A1PQeBQrh_UTibZsmApPrQ";
+const SUPABASE_ANON_KEY="eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJzIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODU4NDkwODksImV4cCI6MjEwMTQyNTA4OX0.4-8U1fe5LQVTsuFa1kgc8A1PQeBQrh_UTibZsmApPrQ";
 const BUCKET_NAME="selfies";
 let supabaseClient=null;
 function setUploadStatus(message){const status=document.getElementById("cameraStatus");if(status)status.textContent=message;console.log("[Supabase]",message);}
