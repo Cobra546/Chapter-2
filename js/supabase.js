@@ -1,4 +1,4 @@
-/* Chapter Two — supabase.js | Version 5 */
+/* Chapter Two — supabase.js | Version 6 */
 const SUPABASE_URL="https://bhtyestavehwaymfozxw.supabase.co";
 const SUPABASE_ANON_KEY="eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImJodHllc3RhdmVo d2F5bWZvenh3Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODU4NDkwODksImV4cCI6MjEwMTQyNTA4OX0.4-8U1fe5LQVTsuFa1kgc8A1PQeBQrh_UTibZsmApPrQ".replace(" ","");
 const BUCKET_NAME="selfies";
