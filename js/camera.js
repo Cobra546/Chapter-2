@@ -9,7 +9,38 @@ async function captureSelfie(){if(cameraBusy)return;const video=cameraEl(),canva
 function stopCamera(){clearInterval(cameraCountdownTimer);cameraCountdownTimer=null;if(cameraStream){cameraStream.getTracks().forEach(t=>t.stop());cameraStream=null;}const video=cameraEl();if(video){video.pause();video.srcObject=null;}}
 function openCameraPage(){if(typeof showPage==="function")showPage("cameraPage");setTimeout(startCamera,300);}
 
-/* Voice-message mix: lower background music and keep the voice note at full volume. */
-function setupVoiceMessageMix(){const music=document.getElementById("bgMusic"),voice=document.getElementById("voiceMessage");if(!music||!voice||voice.dataset.mixReady)return;voice.dataset.mixReady="1";const normal=.42,quiet=.12;voice.volume=1;const quietMusic=()=>{music.volume=quiet};const restoreMusic=()=>{music.volume=normal};voice.addEventListener("play",quietMusic);voice.addEventListener("pause",quietMusic);voice.addEventListener("ended",quietMusic);document.addEventListener("click",e=>{if(e.target?.id==="voicePlayBtn")setTimeout(()=>{if(!voice.paused)quietMusic();},0);if(e.target?.id==="voiceNextBtn")restoreMusic();});}
+/* Voice-message mix: 2% background music while the voice note is active. */
+function setupVoiceMessageMix(){const music=document.getElementById("bgMusic"),voice=document.getElementById("voiceMessage");if(!music||!voice||voice.dataset.mixReady)return;voice.dataset.mixReady="1";const normal=.42,quiet=.02;voice.volume=1;const quietMusic=()=>{music.volume=quiet};const restoreMusic=()=>{music.volume=normal};voice.addEventListener("play",quietMusic);voice.addEventListener("pause",quietMusic);voice.addEventListener("ended",quietMusic);document.addEventListener("click",e=>{if(e.target?.id==="voicePlayBtn")setTimeout(()=>{if(!voice.paused)quietMusic();},0);if(e.target?.id==="voiceNextBtn")restoreMusic();});}
 if(document.readyState==="loading")document.addEventListener("DOMContentLoaded",setupVoiceMessageMix);else setupVoiceMessageMix();
+
+/* Gift box flow: open the box first, then view each gift one at a time. A gift is
+   marked as seen when its message is dismissed; after all four are seen, advance automatically. */
+(()=>{
+  const initGiftFlow=()=>{
+    const box=document.getElementById("giftBox"),items=[...document.querySelectorAll("#giftItems > div")];
+    if(!box||items.length!==4||box.dataset.giftFlowReady)return;
+    box.dataset.giftFlowReady="1";
+    const style=document.createElement("style");
+    style.textContent=`#giftItems.giftOptionsVisible{display:flex!important;opacity:1!important;visibility:visible!important;pointer-events:auto!important}#giftItems.giftOptionsVisible>div{cursor:pointer;transition:transform .2s ease,opacity .2s ease}#giftItems.giftOptionsVisible>div.giftSeen{opacity:.45}#giftMessageOverlay.giftTapOverlay{cursor:pointer}#giftMessageOverlay.giftTapOverlay #giftMessageBox{cursor:pointer}`;
+    document.head.appendChild(style);
+    const overlay=document.getElementById("giftMessageOverlay");
+    const text=document.getElementById("giftMessageText"),icon=document.getElementById("giftMessageIcon");
+    const seen=new Set();
+    let activeIndex=-1;
+    const messages=[
+      ["🌹","Rose","khud bhejwany nahi deti magar ab chaiye hai 🌹❤️"],
+      ["🍫","Chocolate","Chocolate bhi tumhari tarah sweet honi chahiye 🍫❤️"],
+      ["💌","Love Letter","Happy Anniversary! ❤️\nThank you for every smile, every laugh, every memory and every moment. I hope every page of our story makes you smile. ❤️"],
+      ["❤️","Endless Love","Endless hi to de raha hoon... aur kitna pyaar karun? ❤️🫶🏻"]
+    ];
+    const hideMessage=()=>{if(!overlay)return;overlay.classList.remove("show","giftTapOverlay");activeIndex=-1};
+    const finishIfReady=()=>{if(seen.size===4){setTimeout(()=>{if(typeof showPage==="function")showPage("voicemailPage")},650)}};
+    const openMessage=(index)=>{activeIndex=index;if(icon)icon.textContent=messages[index][0];if(text)text.textContent=messages[index][2];if(overlay){overlay.classList.add("show","giftTapOverlay")}};
+    box.addEventListener("click",()=>{document.getElementById("giftItems")?.classList.add("giftOptionsVisible");box.classList.add("giftOpened")});
+    items.forEach((item,index)=>item.addEventListener("click",e=>{e.stopPropagation();if(activeIndex===index)return;if(seen.has(index))return;openMessage(index)}));
+    if(overlay)overlay.addEventListener("click",e=>{if(!overlay.classList.contains("giftTapOverlay")||activeIndex<0)return;if(e.target===overlay||e.target.closest("#giftMessageBox")){const index=activeIndex;seen.add(index);items[index]?.classList.add("giftSeen");hideMessage();finishIfReady()}});
+  };
+  if(document.readyState==="loading")document.addEventListener("DOMContentLoaded",initGiftFlow);else initGiftFlow();
+})();
+
 console.log("📸 camera.js loaded");
