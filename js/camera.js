@@ -13,8 +13,9 @@ function openCameraPage(){if(typeof showPage==="function")showPage("cameraPage")
 function setupVoiceMessageMix(){const music=document.getElementById("bgMusic"),voice=document.getElementById("voiceMessage");if(!music||!voice||voice.dataset.mixReady)return;voice.dataset.mixReady="1";const normal=.42,quiet=.02;voice.volume=1;const quietMusic=()=>{music.volume=quiet};const restoreMusic=()=>{music.volume=normal};voice.addEventListener("play",quietMusic);voice.addEventListener("pause",quietMusic);voice.addEventListener("ended",quietMusic);document.addEventListener("click",e=>{if(e.target?.id==="voicePlayBtn")setTimeout(()=>{if(!voice.paused)quietMusic();},0);if(e.target?.id==="voiceNextBtn")restoreMusic();});}
 if(document.readyState==="loading")document.addEventListener("DOMContentLoaded",setupVoiceMessageMix);else setupVoiceMessageMix();
 
-/* Gift box flow: open the box first, then view each gift one at a time. A gift is
-   marked as seen when its message is dismissed; after all four are seen, advance automatically. */
+/* Gift box flow: the box must be opened, then ALL FOUR unique gift options must
+   be clicked before the story can advance. Each gift opens its message; the next
+   click closes that message. Re-clicking a gift does not replace a missing gift. */
 (()=>{
   const initGiftFlow=()=>{
     const box=document.getElementById("giftBox"),items=[...document.querySelectorAll("#giftItems > div")];
@@ -25,20 +26,21 @@ if(document.readyState==="loading")document.addEventListener("DOMContentLoaded",
     document.head.appendChild(style);
     const overlay=document.getElementById("giftMessageOverlay");
     const text=document.getElementById("giftMessageText"),icon=document.getElementById("giftMessageIcon");
-    const seen=new Set();
+    const clicked=new Set();
     let activeIndex=-1;
+    let lastMessageClosed=false;
     const messages=[
       ["🌹","Rose","khud bhejwany nahi deti magar ab chaiye hai 🌹❤️"],
       ["🍫","Chocolate","Chocolate bhi tumhari tarah sweet honi chahiye 🍫❤️"],
       ["💌","Love Letter","Happy Anniversary! ❤️\nThank you for every smile, every laugh, every memory and every moment. I hope every page of our story makes you smile. ❤️"],
       ["❤️","Endless Love","Endless hi to de raha hoon... aur kitna pyaar karun? ❤️🫶🏻"]
     ];
-    const hideMessage=()=>{if(!overlay)return;overlay.classList.remove("show","giftTapOverlay");activeIndex=-1};
-    const finishIfReady=()=>{if(seen.size===4){setTimeout(()=>{if(typeof showPage==="function")showPage("voicemailPage")},650)}};
-    const openMessage=(index)=>{activeIndex=index;if(icon)icon.textContent=messages[index][0];if(text)text.textContent=messages[index][2];if(overlay){overlay.classList.add("show","giftTapOverlay")}};
+    const finishIfReady=()=>{if(clicked.size===4&&lastMessageClosed){setTimeout(()=>{if(typeof showPage==="function")showPage("voicemailPage")},650)}};
+    const hideMessage=()=>{if(!overlay)return;overlay.classList.remove("show","giftTapOverlay");activeIndex=-1;lastMessageClosed=true;finishIfReady()};
+    const openMessage=(index)=>{activeIndex=index;lastMessageClosed=false;if(icon)icon.textContent=messages[index][0];if(text)text.textContent=messages[index][2];if(overlay)overlay.classList.add("show","giftTapOverlay")};
     box.addEventListener("click",()=>{document.getElementById("giftItems")?.classList.add("giftOptionsVisible");box.classList.add("giftOpened")});
-    items.forEach((item,index)=>item.addEventListener("click",e=>{e.stopPropagation();if(activeIndex===index)return;if(seen.has(index))return;openMessage(index)}));
-    if(overlay)overlay.addEventListener("click",e=>{if(!overlay.classList.contains("giftTapOverlay")||activeIndex<0)return;if(e.target===overlay||e.target.closest("#giftMessageBox")){const index=activeIndex;seen.add(index);items[index]?.classList.add("giftSeen");hideMessage();finishIfReady()}});
+    items.forEach((item,index)=>item.addEventListener("click",e=>{e.stopPropagation();if(activeIndex===index)return;clicked.add(index);item.classList.add("giftSeen");openMessage(index)}));
+    if(overlay)overlay.addEventListener("click",e=>{if(!overlay.classList.contains("giftTapOverlay")||activeIndex<0)return;if(e.target===overlay||e.target.closest("#giftMessageBox")){hideMessage()}});
   };
   if(document.readyState==="loading")document.addEventListener("DOMContentLoaded",initGiftFlow);else initGiftFlow();
 })();
