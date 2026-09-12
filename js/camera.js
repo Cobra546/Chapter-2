@@ -9,8 +9,8 @@ async function captureSelfie(){if(cameraBusy)return;const video=cameraEl(),canva
 function stopCamera(){clearInterval(cameraCountdownTimer);cameraCountdownTimer=null;if(cameraStream){cameraStream.getTracks().forEach(t=>t.stop());cameraStream=null;}const video=cameraEl();if(video){video.pause();video.srcObject=null;}}
 function openCameraPage(){if(typeof showPage==="function")showPage("cameraPage");setTimeout(startCamera,300);}
 
-/* Voice-message mix: 2% background music while the voice note is active. */
-function setupVoiceMessageMix(){const music=document.getElementById("bgMusic"),voice=document.getElementById("voiceMessage");if(!music||!voice||voice.dataset.mixReady)return;voice.dataset.mixReady="1";const normal=.42,quiet=.02;voice.volume=1;const quietMusic=()=>{music.volume=quiet};const restoreMusic=()=>{music.volume=normal};voice.addEventListener("play",quietMusic);voice.addEventListener("pause",quietMusic);voice.addEventListener("ended",quietMusic);document.addEventListener("click",e=>{if(e.target?.id==="voicePlayBtn")setTimeout(()=>{if(!voice.paused)quietMusic();},0);if(e.target?.id==="voiceNextBtn")restoreMusic();});}
+/* Voice-message mix: music stays at 42% everywhere else and drops to 2% only while the voice note is playing. */
+function setupVoiceMessageMix(){const music=document.getElementById("bgMusic"),voice=document.getElementById("voiceMessage");if(!music||!voice||voice.dataset.mixReady)return;voice.dataset.mixReady="1";const normal=.42,quiet=.02;const quietMusic=()=>{music.volume=quiet};const restoreMusic=()=>{music.volume=normal};voice.addEventListener("play",quietMusic);voice.addEventListener("pause",restoreMusic);voice.addEventListener("ended",restoreMusic);document.addEventListener("click",e=>{if(e.target?.id==="voicePlayBtn")setTimeout(()=>{if(!voice.paused)quietMusic();},0);if(e.target?.id==="voiceNextBtn")restoreMusic();});}
 if(document.readyState==="loading")document.addEventListener("DOMContentLoaded",setupVoiceMessageMix);else setupVoiceMessageMix();
 
 /* Gift box flow: the box must be opened, then ALL FOUR unique gift options must
