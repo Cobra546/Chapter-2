@@ -5,14 +5,26 @@
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <title>Quiz History</title>
 <style>
-*{box-sizing:border-box}body{margin:0;background:#0d0d0f;color:#f5f5f5;font-family:system-ui,-apple-system,Segoe UI,sans-serif;padding:20px}main{max-width:760px;margin:auto}.top{display:flex;justify-content:space-between;align-items:center;gap:12px;margin-bottom:20px}.top h1{font-size:1.35rem;margin:0}.top button{border:0;border-radius:12px;padding:10px 14px;background:#fff;color:#111;font-weight:700}.status{opacity:.7;margin:0 0 18px}.attempt{border:1px solid #29292e;border-radius:18px;background:#151518;padding:16px;margin:14px 0}.attempt h2{font-size:1rem;margin:0 0 4px}.time{font-size:.78rem;opacity:.55;margin-bottom:12px}.line{padding:11px 0;border-top:1px solid #28282d}.line:first-of-type{border-top:0}.q{font-weight:700;margin-bottom:5px}.answer{color:#ffb7c5}.empty{text-align:center;opacity:.65;padding:40px 10px}
+*{box-sizing:border-box}body{margin:0;background:#0d0d0f;color:#f5f5f5;font-family:system-ui,-apple-system,Segoe UI,sans-serif;padding:20px}main{max-width:760px;margin:auto}.top{display:flex;justify-content:space-between;align-items:center;gap:12px;margin-bottom:20px}.top h1{font-size:1.35rem;margin:0}.top button,.login button{border:0;border-radius:12px;padding:11px 14px;background:#fff;color:#111;font-weight:700;cursor:pointer}.status{opacity:.7;margin:0 0 18px}.login{max-width:420px;margin:10vh auto 0;padding:22px;border:1px solid #29292e;border-radius:20px;background:#151518}.login h1{margin:0 0 8px}.login p{opacity:.65;line-height:1.5}.login input{width:100%;margin:8px 0;padding:13px 14px;border-radius:12px;border:1px solid #303038;background:#0d0d0f;color:#fff;outline:none}.login button{width:100%;margin-top:8px}.error{color:#ff9eb2;min-height:20px;font-size:.9rem}.hidden{display:none!important}.attempt{border:1px solid #29292e;border-radius:18px;background:#151518;padding:16px;margin:14px 0}.attempt h2{font-size:1rem;margin:0 0 4px}.time{font-size:.78rem;opacity:.55;margin-bottom:12px}.line{padding:11px 0;border-top:1px solid #28282d}.line:first-of-type{border-top:0}.q{font-weight:700;margin-bottom:5px}.answer{color:#ffb7c5}.empty{text-align:center;opacity:.65;padding:40px 10px}
 </style>
 </head>
 <body>
 <main>
-<div class="top"><h1>❤️ Quiz History</h1><button id="refresh">Refresh</button></div>
+<section id="login" class="login">
+<h1>🔐 Quiz History</h1>
+<p>Sign in with the authorized Supabase account to view the saved quiz attempts.</p>
+<form id="loginForm">
+<input id="email" type="email" value="usmantabish26@gmail.com" autocomplete="email" required>
+<input id="password" type="password" placeholder="Password" autocomplete="current-password" required>
+<div id="loginError" class="error"></div>
+<button type="submit">Sign in</button>
+</form>
+</section>
+<section id="app" class="hidden">
+<div class="top"><h1>❤️ Quiz History</h1><div><button id="refresh">Refresh</button> <button id="logout">Logout</button></div></div>
 <p id="status" class="status">Loading...</p>
 <div id="history"></div>
+</section>
 </main>
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <script>
@@ -20,12 +32,20 @@ const SUPABASE_URL="https://bhtyestavehwaymfozxw.supabase.co";
 const SUPABASE_ANON_KEY="eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJiaHR5ZXN0YXZlaHdheW1mb3p4dyIsInJvbGUiOiJhbm9uIiwiaWF0IjoxNzg1ODQ5MDg5LCJleHAiOjIxMDE0MjUwODl9.4-8U1fe5LQVTsuFa1kgc8A1PQeBQrh_UTibZsmApPrQ";
 const client=supabase.createClient(SUPABASE_URL,SUPABASE_ANON_KEY);
 const esc=s=>String(s??"").replace(/[&<>\"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+async function showAppIfAuthorized(){
+ const {data:{user}}=await client.auth.getUser();
+ if(!user){document.getElementById('login').classList.remove('hidden');document.getElementById('app').classList.add('hidden');return false;}
+ const {data:admin,error}=await client.from('quiz_admins').select('user_id').eq('user_id',user.id).maybeSingle();
+ if(error||!admin){await client.auth.signOut();document.getElementById('loginError').textContent='This account is not authorized.';return false;}
+ document.getElementById('login').classList.add('hidden');document.getElementById('app').classList.remove('hidden');
+ await load();return true;
+}
 async function load(){
  const status=document.getElementById('status'),box=document.getElementById('history');
  status.textContent='Loading quiz attempts...';box.innerHTML='';
  const {data,error}=await client.from('quiz_answers').select('question_number,question,selected_option,session_id,attempt_number,created_at').order('created_at',{ascending:true}).order('id',{ascending:true});
  if(error){status.textContent='Could not load quiz history.';console.error(error);return;}
- if(!data?.length){status.textContent='No quiz taps recorded yet.';box.innerHTML='<div class="empty">No answers yet ❤️</div>';return;}
+ if(!data?.length){status.textContent='No quiz answers recorded yet.';box.innerHTML='<div class="empty">No answers yet ❤️</div>';return;}
  const groups=new Map();
  data.forEach(row=>{const key=row.session_id||`legacy-${row.created_at}`;if(!groups.has(key))groups.set(key,[]);groups.get(key).push(row)});
  const attempts=[...groups.values()].reverse();
@@ -36,11 +56,19 @@ async function load(){
    const start=new Date(rows[0].created_at).toLocaleString();
    const card=document.createElement('section');card.className='attempt';
    card.innerHTML=`<h2>Attempt ${esc(attempt)}</h2><div class="time">Started: ${esc(start)}</div>`;
-   rows.forEach((r,n)=>{const line=document.createElement('div');line.className='line';line.innerHTML=`<div class="q">${n+1}. ${esc(r.question)}</div><div class="answer">Tapped: ${esc(r.selected_option)}</div>`;card.appendChild(line)});
+   rows.forEach((r,n)=>{const line=document.createElement('div');line.className='line';line.innerHTML=`<div class="q">${n+1}. ${esc(r.question)}</div><div class="answer">Selected: ${esc(r.selected_option)}</div>`;card.appendChild(line)});
    box.appendChild(card);
  });
 }
-document.getElementById('refresh').addEventListener('click',load);load();
+document.getElementById('loginForm').addEventListener('submit',async e=>{
+ e.preventDefault();const error=document.getElementById('loginError');error.textContent='Signing in...';
+ const {error:signInError}=await client.auth.signInWithPassword({email:document.getElementById('email').value.trim(),password:document.getElementById('password').value});
+ if(signInError){error.textContent='Login failed. Check your email/password.';return;}
+ error.textContent='';await showAppIfAuthorized();
+});
+document.getElementById('refresh').addEventListener('click',load);
+document.getElementById('logout').addEventListener('click',async()=>{await client.auth.signOut();location.reload()});
+showAppIfAuthorized();
 </script>
 </body>
 </html>
