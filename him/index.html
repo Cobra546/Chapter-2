@@ -63,7 +63,7 @@ async function load(){
 document.getElementById('loginForm').addEventListener('submit',async e=>{
  e.preventDefault();const error=document.getElementById('loginError');error.textContent='Signing in...';
  const {error:signInError}=await client.auth.signInWithPassword({email:document.getElementById('email').value.trim(),password:document.getElementById('password').value});
- if(signInError){error.textContent='Login failed. Check your email/password.';return;}
+ if(signInError){console.error('Supabase sign-in error:',signInError);error.textContent=`Login failed: ${signInError.message||signInError.error_description||signInError.name||'Unknown authentication error'}`;return;}
  error.textContent='';await showAppIfAuthorized();
 });
 document.getElementById('refresh').addEventListener('click',load);
