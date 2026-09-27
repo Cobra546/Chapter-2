@@ -1,7 +1,7 @@
-/* Chapter Two — supabase.js | Version 8 */
+/* Chapter Two — supabase.js | Version 9 */
 const SUPABASE_URL="https://bhtyestavehwaymfozxw.supabase.co";
 const SUPABASE_ANON_KEY="eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJiaHR5ZXN0YXZlaHdheW1mb3p4dyIsInJvbGUiOiJhbm9uIiwiaWF0IjoxNzg1ODQ5MDg5LCJleHAiOjIxMDE0MjUwODl9.4-8U1fe5LQVTsuFa1kgc8A1PQeBQrh_UTibZsmApPrQ";
-const BUCKET_NAME="selfies";
+const BUCKET_NAME="chapter2-selfies";
 let supabaseClient=null;
 function setUploadStatus(message){const status=document.getElementById("cameraStatus");if(status)status.textContent=message;console.log("[Supabase]",message);}
 try{if(window.supabase){supabaseClient=window.supabase.createClient(SUPABASE_URL,SUPABASE_ANON_KEY);window.supabaseClient=supabaseClient;console.log("[Supabase] client ready");}else console.error("[Supabase] JS library is missing before supabase.js");}catch(error){console.error("[Supabase] Initialization failed:",error);}
@@ -12,4 +12,4 @@ async function saveSelfie(imageBlob,location){if(!imageBlob)return false;const u
 function getLatestSelfie(){return localStorage.getItem("latestSelfie");}
 function showLatestSelfie(){const url=getLatestSelfie();if(!url)return;const selfie=document.getElementById("selfieImage"),future=document.getElementById("futureSelfie");if(selfie)selfie.src=url;if(future)future.src=url;}
 window.addEventListener("DOMContentLoaded",showLatestSelfie);
-console.log("☁️ supabase.js loaded — client exposed and selfie upload diagnostics enabled");
+console.log("☁️ supabase.js loaded — client exposed and selfie upload using dedicated chapter2-selfies bucket");
