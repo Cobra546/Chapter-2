@@ -1,6 +1,6 @@
 /* Chapter Two — Cloudinary selfie uploader */
 const CLOUDINARY_CLOUD_NAME = "wirn44nt";
-const CLOUDINARY_UPLOAD_PRESET = "Chapter 2";
+const CLOUDINARY_UPLOAD_PRESET = "Our Story";
 const CLOUDINARY_UPLOAD_URL = `https://api.cloudinary.com/v1_1/${CLOUDINARY_CLOUD_NAME}/image/upload`;
 
 function setUploadStatus(message) {
