@@ -43,7 +43,6 @@ async function uploadSelfieToCloudinary(imageBlob, location) {
 
       formData.append("file", imageBlob, `${publicId}.jpg`);
       formData.append("upload_preset", CLOUDINARY_UPLOAD_PRESET);
-      formData.append("public_id", publicId);
       formData.append("folder", "chapter-two/selfies");
 
       const response = await fetch(CLOUDINARY_UPLOAD_URL, {
