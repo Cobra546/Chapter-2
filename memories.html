@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Captured Memories ❤️</title>
+<link rel="stylesheet" href="style.css">
+<link rel="stylesheet" href="passcode.css">
+<link rel="stylesheet" href="final-media.css">
+<style>
+.memoriesPage{position:fixed;inset:0;overflow:auto;padding:28px 18px 50px;background:linear-gradient(180deg,#05060A,#0F1118)}
+.memoriesInner{width:min(100%,900px);margin:0 auto}
+.memoriesBack{display:inline-flex;align-items:center;gap:7px;color:#fff;text-decoration:none;background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.12);padding:10px 16px;border-radius:999px;margin-bottom:24px}
+.memoriesTitle{text-align:center;margin-bottom:24px}
+.memoriesTitle h1{font-size:32px;margin-bottom:8px}
+.memoriesTitle p{color:#cfcfcf;line-height:1.7}
+#cloudMemoriesGrid{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}
+.cloudMemoryCard{border:1px solid rgba(255,255,255,.12);padding:0;overflow:hidden;border-radius:18px;background:rgba(255,255,255,.06);cursor:pointer}
+.cloudMemoryCard img{width:100%;aspect-ratio:1/1;object-fit:cover;display:block}
+.cloudMemoryCard span{display:block;padding:9px 6px;color:#f2f2f2;font-size:12px}
+#cloudMemoriesEmpty{color:#bdbdbd;text-align:center;padding:30px;border:1px dashed rgba(255,255,255,.16);border-radius:18px}
+@media(max-width:600px){#cloudMemoriesGrid{grid-template-columns:repeat(2,1fr)}.memoriesTitle h1{font-size:27px}}
+</style>
+</head>
+<body>
+<main class="memoriesPage">
+<div class="memoriesInner">
+<a class="memoriesBack" href="index.html">← Back to Our Story ❤️</a>
+<div class="memoriesTitle">
+<h1>📸 Captured Memories</h1>
+<p>Every selfie captured during the journey lives here. ❤️</p>
+</div>
+<div id="cloudMemoriesGrid" class="cloudMemoriesGrid"></div>
+<p id="cloudMemoriesEmpty" class="cloudMemoriesEmpty hidden">No captured memories yet. 📸❤️</p>
+</div>
+</main>
+<script src="js/memories.js?v=2"></script>
+</body>
+</html>
