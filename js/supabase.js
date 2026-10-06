@@ -1,7 +1,10 @@
-/* Chapter Two — Cloudinary selfie uploader */
+/* Chapter Two — Cloudinary selfie uploader + memory gallery manifest */
 const CLOUDINARY_CLOUD_NAME = "wirn44nt";
 const CLOUDINARY_UPLOAD_PRESET = "Our Story";
 const CLOUDINARY_UPLOAD_URL = `https://api.cloudinary.com/v1_1/${CLOUDINARY_CLOUD_NAME}/image/upload`;
+
+const MEMORIES_SUPABASE_URL = "https://bhtyestavehwaymfozxw.supabase.co";
+const MEMORIES_SUPABASE_KEY = "sb_publishable_VpUhQZY8bczeIYv-oo8mLQ_YHPTjm7r";
 
 function setUploadStatus(message) {
   const status = document.getElementById("cameraStatus");
@@ -57,7 +60,10 @@ async function uploadSelfieToCloudinary(imageBlob, location) {
 
       if (response.ok && result.secure_url) {
         setUploadStatus("☁️ Memory saved to Cloudinary! ❤️");
-        return result.secure_url;
+        return {
+          url: result.secure_url,
+          publicId: result.public_id || `chapter-two/selfies/${publicId}`
+        };
       }
 
       const errorText = String(result?.error?.message || "").toLowerCase();
@@ -81,11 +87,45 @@ async function uploadSelfieToCloudinary(imageBlob, location) {
   return null;
 }
 
+async function saveMemoryRecord(imageUrl, publicId, location) {
+  if (!imageUrl) return false;
+
+  try {
+    const response = await fetch(`${MEMORIES_SUPABASE_URL}/rest/v1/memories`, {
+      method: "POST",
+      headers: {
+        apikey: MEMORIES_SUPABASE_KEY,
+        Authorization: `Bearer ${MEMORIES_SUPABASE_KEY}`,
+        "Content-Type": "application/json",
+        Prefer: "return=minimal"
+      },
+      body: JSON.stringify({
+        image_url: imageUrl,
+        created_at: new Date().toISOString()
+      })
+    });
+
+    if (!response.ok) {
+      console.error("[Memories] Manifest save failed:", await response.text());
+      return false;
+    }
+
+    return true;
+  } catch (error) {
+    console.error("[Memories] Manifest save error:", error);
+    return false;
+  }
+}
+
 async function saveSelfie(imageBlob, location) {
   if (!imageBlob) return false;
 
-  const uploadedUrl = await uploadSelfieToCloudinary(imageBlob, location);
-  let url = uploadedUrl;
+  const uploaded = await uploadSelfieToCloudinary(imageBlob, location);
+  let url = uploaded?.url || null;
+
+  if (uploaded?.url) {
+    await saveMemoryRecord(uploaded.url, uploaded.publicId, location);
+  }
 
   if (!url) {
     try {
@@ -120,4 +160,4 @@ function showLatestSelfie() {
 
 window.addEventListener("DOMContentLoaded", showLatestSelfie);
 
-console.log("☁️ Cloudinary uploader loaded — Chapter Two selfie storage ready");
+console.log("☁️ Cloudinary uploader + memories manifest loaded");
