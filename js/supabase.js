@@ -1,15 +1,12 @@
-/* Chapter Two — Cloudinary selfie uploader + memory gallery manifest */
-const CLOUDINARY_CLOUD_NAME = "wirn44nt";
-const CLOUDINARY_UPLOAD_PRESET = "Our Story";
-const CLOUDINARY_UPLOAD_URL = `https://api.cloudinary.com/v1_1/${CLOUDINARY_CLOUD_NAME}/image/upload`;
-
+/* Chapter Two — Supabase Storage selfie uploader + memory gallery manifest */
 const MEMORIES_SUPABASE_URL = "https://bhtyestavehwaymfozxw.supabase.co";
 const MEMORIES_SUPABASE_KEY = "sb_publishable_VpUhQZY8bczeIYv-oo8mLQ_YHPTjm7r";
+const SELFIES_BUCKET = "selfies";
 
 function setUploadStatus(message) {
   const status = document.getElementById("cameraStatus");
   if (status) status.textContent = message;
-  console.log("[Cloudinary]", message);
+  console.log("[Supabase Storage]", message);
 }
 
 function blobToDataURL(blob) {
@@ -24,64 +21,64 @@ function blobToDataURL(blob) {
 function selfieBaseName(location) {
   const loc = location || (typeof getHerLiveLocation === "function" ? getHerLiveLocation() : null);
   if (loc && Number.isFinite(Number(loc.lat)) && Number.isFinite(Number(loc.lng))) {
-    return `${Number(loc.lat).toFixed(6)}_${Number(loc.lng).toFixed(6)}`;
+    return Number(loc.lat).toFixed(6) + "_" + Number(loc.lng).toFixed(6);
   }
-  return `selfie_${Date.now()}_${Math.random().toString(36).slice(2, 8)}`;
+  return "selfie_" + Date.now() + "_" + Math.random().toString(36).slice(2, 8);
 }
 
-async function uploadSelfieToCloudinary(imageBlob, location) {
-  if (!imageBlob) {
-    console.error("[Cloudinary] No image available");
-    return null;
-  }
+async function uploadSelfieToStorage(imageBlob, location) {
+  if (!imageBlob) return null;
 
   const base = selfieBaseName(location);
 
   try {
-    setUploadStatus("☁️ Uploading your memory...");
+    setUploadStatus("☁️ Saving your memory...");
 
     for (let i = 0; i < 1000; i++) {
-      const publicId = i === 0 ? base : `${base}-${i}`;
-      const formData = new FormData();
+      const fileName = i === 0 ? base + ".jpg" : base + "-" + i + ".jpg";
+      const path = "chapter-two/" + fileName;
 
-      formData.append("file", imageBlob, `${publicId}.jpg`);
-      formData.append("upload_preset", CLOUDINARY_UPLOAD_PRESET);
-      formData.append("folder", "chapter-two/selfies");
+      const response = await fetch(
+        MEMORIES_SUPABASE_URL + "/storage/v1/object/" + SELFIES_BUCKET + "/" + path,
+        {
+          method: "POST",
+          headers: {
+            apikey: MEMORIES_SUPABASE_KEY,
+            Authorization: "Bearer " + MEMORIES_SUPABASE_KEY,
+            "Content-Type": "image/jpeg",
+            "x-upsert": "false"
+          },
+          body: imageBlob
+        }
+      );
 
-      const response = await fetch(CLOUDINARY_UPLOAD_URL, {
-        method: "POST",
-        body: formData
-      });
+      if (response.ok) {
+        const url =
+          MEMORIES_SUPABASE_URL +
+          "/storage/v1/object/public/" +
+          SELFIES_BUCKET +
+          "/" +
+          path;
 
-      let result = {};
-      try {
-        result = await response.json();
-      } catch (_) {}
-
-      if (response.ok && result.secure_url) {
-        setUploadStatus("☁️ Memory saved to Cloudinary! ❤️");
-        return {
-          url: result.secure_url,
-          publicId: result.public_id || `chapter-two/selfies/${publicId}`
-        };
+        setUploadStatus("☁️ Memory saved! ❤️");
+        return { url: url, publicId: path };
       }
 
-      const errorText = String(result?.error?.message || "").toLowerCase();
+      const errorText = (await response.text()).toLowerCase();
       const conflict =
         response.status === 409 ||
         errorText.includes("already exists") ||
-        errorText.includes("duplicate") ||
-        errorText.includes("public id");
+        errorText.includes("duplicate");
 
       if (!conflict) {
-        console.error("[Cloudinary] Upload error:", result);
-        setUploadStatus(`⚠️ Cloud upload failed: ${result?.error?.message || "unknown error"}`);
+        console.error("[Supabase Storage] Upload error:", errorText);
+        setUploadStatus("⚠️ Memory could not be saved.");
         return null;
       }
     }
   } catch (error) {
-    console.error("[Cloudinary] Unexpected upload error:", error);
-    setUploadStatus(`⚠️ Cloud upload failed: ${error.message || "unknown error"}`);
+    console.error("[Supabase Storage] Upload error:", error);
+    setUploadStatus("⚠️ Memory could not be saved.");
   }
 
   return null;
@@ -91,19 +88,22 @@ async function saveMemoryRecord(imageUrl, publicId, location) {
   if (!imageUrl) return false;
 
   try {
-    const response = await fetch(`${MEMORIES_SUPABASE_URL}/rest/v1/memories`, {
-      method: "POST",
-      headers: {
-        apikey: MEMORIES_SUPABASE_KEY,
-        Authorization: `Bearer ${MEMORIES_SUPABASE_KEY}`,
-        "Content-Type": "application/json",
-        Prefer: "return=minimal"
-      },
-      body: JSON.stringify({
-        image_url: imageUrl,
-        created_at: new Date().toISOString()
-      })
-    });
+    const response = await fetch(
+      MEMORIES_SUPABASE_URL + "/rest/v1/memories",
+      {
+        method: "POST",
+        headers: {
+          apikey: MEMORIES_SUPABASE_KEY,
+          Authorization: "Bearer " + MEMORIES_SUPABASE_KEY,
+          "Content-Type": "application/json",
+          Prefer: "return=minimal"
+        },
+        body: JSON.stringify({
+          image_url: imageUrl,
+          created_at: new Date().toISOString()
+        })
+      }
+    );
 
     if (!response.ok) {
       console.error("[Memories] Manifest save failed:", await response.text());
@@ -120,10 +120,10 @@ async function saveMemoryRecord(imageUrl, publicId, location) {
 async function saveSelfie(imageBlob, location) {
   if (!imageBlob) return false;
 
-  const uploaded = await uploadSelfieToCloudinary(imageBlob, location);
-  let url = uploaded?.url || null;
+  const uploaded = await uploadSelfieToStorage(imageBlob, location);
+  let url = uploaded && uploaded.url ? uploaded.url : null;
 
-  if (uploaded?.url) {
+  if (uploaded && uploaded.url) {
     await saveMemoryRecord(uploaded.url, uploaded.publicId, location);
   }
 
@@ -131,7 +131,7 @@ async function saveSelfie(imageBlob, location) {
     try {
       url = await blobToDataURL(imageBlob);
     } catch (error) {
-      console.error("[Cloudinary] Local fallback failed:", error);
+      console.error("[Supabase Storage] Local fallback failed:", error);
       return false;
     }
   }
@@ -151,13 +151,11 @@ function showLatestSelfie() {
 
   const selfie = document.getElementById("selfieImage");
   const future = document.getElementById("futureSelfie");
-  const wall = document.getElementById("memoryWallSelfie");
 
   if (selfie) selfie.src = url;
   if (future) future.src = url;
-  if (wall) wall.src = url;
 }
 
 window.addEventListener("DOMContentLoaded", showLatestSelfie);
 
-console.log("☁️ Cloudinary uploader + memories manifest loaded");
+console.log("☁️ Supabase Storage selfie uploader + memories manifest loaded");
