@@ -1938,3 +1938,12 @@ font-size:40px;
     font-size:28px;
   }
 }
+
+#memoryWall{
+  overflow-y:auto;
+  justify-content:flex-start;
+  padding-top:30px;
+  padding-bottom:45px;
+  scrollbar-width:none;
+}
+#memoryWall::-webkit-scrollbar{display:none}
