@@ -1692,3 +1692,249 @@ font-size:40px;
 }
 
 }
+
+
+/*=================================================
+  CLOUD MEMORIES + STORY TIMELINE
+==================================================*/
+
+.memoryWallTop{
+  text-align:center;
+  margin-bottom:18px;
+}
+
+.memoryWallIntro{
+  color:#cfcfcf;
+  margin-top:-18px;
+  margin-bottom:24px;
+  font-size:14px;
+}
+
+.cloudMemoriesSection{
+  width:100%;
+  max-width:900px;
+  margin-top:28px;
+  text-align:center;
+}
+
+.cloudMemoriesSection h3{
+  font-size:22px;
+  margin-bottom:7px;
+}
+
+.cloudMemoriesHint{
+  color:#bdbdbd;
+  font-size:13px;
+  margin-bottom:15px;
+}
+
+.cloudMemoriesGrid{
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:12px;
+  width:100%;
+}
+
+.cloudMemoryCard{
+  border:1px solid rgba(255,255,255,.12);
+  padding:0;
+  overflow:hidden;
+  border-radius:18px;
+  background:rgba(255,255,255,.06);
+  cursor:pointer;
+  box-shadow:0 12px 30px rgba(0,0,0,.22);
+  transition:transform .25s ease, box-shadow .25s ease;
+}
+
+.cloudMemoryCard:active{
+  transform:scale(.97);
+}
+
+.cloudMemoryCard img{
+  width:100%;
+  aspect-ratio:1/1;
+  object-fit:cover;
+  display:block;
+}
+
+.cloudMemoryCard span{
+  display:block;
+  padding:8px 5px;
+  color:#f2f2f2;
+  font-size:12px;
+}
+
+.cloudMemoriesEmpty{
+  color:#bdbdbd;
+  padding:20px;
+  border:1px dashed rgba(255,255,255,.16);
+  border-radius:18px;
+}
+
+.storyContinueBtn{
+  margin-top:25px;
+  border:0;
+  border-radius:999px;
+  padding:14px 28px;
+  background:var(--primary);
+  color:#fff;
+  font-size:15px;
+  font-weight:700;
+  cursor:pointer;
+  box-shadow:0 12px 30px rgba(255,77,141,.22);
+}
+
+.timelineContainer{
+  width:100%;
+  max-width:650px;
+  max-height:90vh;
+  overflow:auto;
+  padding:8px 4px 25px;
+  scrollbar-width:none;
+}
+
+.timelineContainer::-webkit-scrollbar{
+  display:none;
+}
+
+.timelineHeader{
+  text-align:center;
+  margin-bottom:30px;
+}
+
+.timelineHeader span{
+  font-size:11px;
+  letter-spacing:3px;
+  color:var(--secondary);
+  font-weight:700;
+}
+
+.timelineHeader h2{
+  margin-top:8px;
+  font-size:32px;
+}
+
+.timelineHeader p{
+  margin-top:8px;
+  color:#c9c9c9;
+}
+
+.storyTimeline{
+  position:relative;
+  padding-left:28px;
+}
+
+.storyTimeline::before{
+  content:"";
+  position:absolute;
+  left:11px;
+  top:5px;
+  bottom:5px;
+  width:2px;
+  background:linear-gradient(var(--primary),rgba(255,130,178,.12));
+}
+
+.timelineItem{
+  position:relative;
+  margin-bottom:18px;
+}
+
+.timelineDot{
+  position:absolute;
+  left:-28px;
+  top:12px;
+  width:26px;
+  height:26px;
+  border-radius:50%;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  background:#151720;
+  border:1px solid rgba(255,255,255,.16);
+  box-shadow:0 0 18px rgba(255,77,141,.25);
+  font-size:13px;
+  z-index:2;
+}
+
+.timelineCard{
+  padding:18px;
+  border-radius:20px;
+  background:rgba(255,255,255,.07);
+  border:1px solid rgba(255,255,255,.11);
+  backdrop-filter:blur(14px);
+}
+
+.timelineDate{
+  display:block;
+  color:var(--secondary);
+  font-size:12px;
+  font-weight:700;
+  margin-bottom:6px;
+}
+
+.timelineCard h3{
+  font-size:19px;
+  margin-bottom:7px;
+}
+
+.timelineCard p{
+  color:#d6d6d6;
+  font-size:14px;
+  line-height:1.7;
+}
+
+#memoryLightbox{
+  position:fixed;
+  inset:0;
+  z-index:99999;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  padding:18px;
+  background:rgba(0,0,0,.88);
+  backdrop-filter:blur(10px);
+  opacity:0;
+  visibility:hidden;
+  transition:.25s ease;
+}
+
+#memoryLightbox.show{
+  opacity:1;
+  visibility:visible;
+}
+
+#memoryLightboxImage{
+  max-width:94vw;
+  max-height:84vh;
+  object-fit:contain;
+  border-radius:18px;
+  box-shadow:0 25px 70px rgba(0,0,0,.6);
+}
+
+#memoryLightboxClose{
+  position:absolute;
+  top:18px;
+  right:18px;
+  width:42px;
+  height:42px;
+  border:0;
+  border-radius:50%;
+  background:rgba(255,255,255,.12);
+  color:#fff;
+  font-size:20px;
+  cursor:pointer;
+}
+
+@media(max-width:480px){
+  .cloudMemoriesGrid{
+    grid-template-columns:repeat(2,1fr);
+  }
+
+  .cloudMemoriesSection h3{
+    font-size:19px;
+  }
+
+  .timelineHeader h2{
+    font-size:28px;
+  }
+}
