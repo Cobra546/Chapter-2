@@ -52,22 +52,39 @@ async function loadCloudMemories() {
     if (!response.ok) throw new Error(await response.text());
 
     const memories = await response.json();
+    const latest = typeof getLatestSelfie === "function" ? getLatestSelfie() : localStorage.getItem("latestSelfie");
+
     grid.innerHTML = "";
 
-    if (!memories.length) {
+    // Show the most recently captured selfie first.
+    if (latest) {
+      const currentCard = document.createElement("button");
+      currentCard.type = "button";
+      currentCard.className = "cloudMemoryCard";
+      currentCard.innerHTML = `
+        <img src="${latest}" alt="Current Captured Memory">
+        <span>Current Memory ❤️</span>
+      `;
+      currentCard.addEventListener("click", () => openMemoryLightbox(latest));
+      grid.appendChild(currentCard);
+    }
+
+    const olderMemories = memories.filter(memory => memory.image_url !== latest);
+
+    if (!latest && !olderMemories.length) {
       if (empty) empty.classList.remove("hidden");
       return;
     }
 
     if (empty) empty.classList.add("hidden");
 
-    memories.forEach((memory, index) => {
+    olderMemories.forEach((memory, index) => {
       const card = document.createElement("button");
       card.type = "button";
       card.className = "cloudMemoryCard";
       card.innerHTML = `
-        <img src="${memory.image_url}" alt="Memory ${memories.length - index}" loading="lazy">
-        <span>Memory ${memories.length - index} ❤️</span>
+        <img src="${memory.image_url}" alt="Memory ${olderMemories.length - index}" loading="lazy">
+        <span>Memory ${olderMemories.length - index} ❤️</span>
       `;
       card.addEventListener("click", () => openMemoryLightbox(memory.image_url));
       grid.appendChild(card);
@@ -80,7 +97,6 @@ async function loadCloudMemories() {
     }
   }
 }
-
 function openMemoryLightbox(url) {
   let overlay = document.getElementById("memoryLightbox");
 
