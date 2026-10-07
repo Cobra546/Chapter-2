@@ -52,15 +52,17 @@ async function loadCloudMemories() {
     if (!response.ok) throw new Error(await response.text());
 
     const memories = await response.json();
-    const latest = typeof getLatestSelfie === "function" ? getLatestSelfie() : localStorage.getItem("latestSelfie");
+    const localLatest = typeof getLatestSelfie === "function" ? getLatestSelfie() : localStorage.getItem("latestSelfie");
+    const latestCloud = memories[0]?.image_url || null;
+    const latest = latestCloud || localLatest;
 
     grid.innerHTML = "";
 
-    // Show the most recently captured selfie first.
+    // Always show the newest captured selfie first.
     if (latest) {
       const currentCard = document.createElement("button");
       currentCard.type = "button";
-      currentCard.className = "cloudMemoryCard";
+      currentCard.className = "cloudMemoryCard currentMemoryCard";
       currentCard.innerHTML = `
         <img src="${latest}" alt="Current Captured Memory">
         <span>Current Memory ❤️</span>
