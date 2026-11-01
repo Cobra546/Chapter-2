@@ -1,6 +1,6 @@
 /* Chapter Two — Leaflet + OSRM location map */
 const MY_LOCATION={lat:24.989972,lng:67.057583};
-const HER_FALLBACK_LOCATION={lat:24.96215102611671,lng:67.05567540257583};
+const HER_FALLBACK_LOCATION={lat:24.962271,lng:67.055827};
 const FALLBACK_DISTANCE_MILES=1.92;
 let prewarmedHerLocation=null,lastLiveHerLocation=null,locationMap=null,hisMarker=null,herMarker=null,routeLine=null,routeAnimationTimer=null,locationRequestInFlight=false,locationPrewarmPromise=null;
 function distanceMiles(a,b){const R=3958.7613,toRad=v=>v*Math.PI/180,dLat=toRad(b.lat-a.lat),dLng=toRad(b.lng-a.lng),x=Math.sin(dLat/2)**2+Math.cos(toRad(a.lat))*Math.cos(toRad(b.lat))*Math.sin(dLng/2)**2;return R*2*Math.atan2(Math.sqrt(x),Math.sqrt(1-x));}
